@@ -12,10 +12,10 @@ import br.com.setebit.sgr.security.enums.ProfileEnum;
 
 
 @SpringBootApplication
-public class HelpDeskApplication {
+public class IeadamApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HelpDeskApplication.class, args);
+		SpringApplication.run(IeadamApplication.class, args);
 	}
 	
     @Bean
