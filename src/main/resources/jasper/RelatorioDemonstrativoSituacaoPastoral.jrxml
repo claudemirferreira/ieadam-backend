@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioDebitoPastoral" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="797" leftMargin="25" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5341f1aa-8b61-499b-8428-20556817ff85">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.4641000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="149"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<import value="java.util.*"/>
+	<style name="Cor da Fonte" forecolor="#FF0000" backcolor="#FFFFFF" pattern=""/>
+	<parameter name="data_inicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{data_inicio}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="area" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SET DATEFORMAT DMY
+EXECUTE SIIAD_TES.dbo.ProcRetornaNadaConstaTesourariaSecretaria
+@P_ID_AREA = $P{area},
+@P_DT_INICIO = $P{data_inicio}]]>
+	</queryString>
+	<field name="qt_RelFinPend" class="java.lang.Integer"/>
+	<field name="qt_RelSecPend" class="java.lang.Integer"/>
+	<field name="qt_RelPasPend" class="java.lang.Integer"/>
+	<field name="vl_Sdo" class="java.math.BigDecimal"/>
+	<field name="vl_RetPend" class="java.math.BigDecimal"/>
+	<field name="id_Area" class="java.lang.Integer"/>
+	<field name="nm_Pastor" class="java.lang.String"/>
+	<group name="area">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="65">
+				<line>
+					<reportElement uuid="5a588176-0ff3-488f-af27-f6f9087639b1" x="1" y="1" width="796" height="2"/>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="35183fbb-6069-4f95-a55a-f41270e32991" x="1" y="6" width="795" height="21"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Declaramos abaixo, para os devidos fins, a situação do Pastor "+$F{nm_Pastor}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="14041eb0-ade7-4810-80ed-d478b533a05f" x="1" y="27" width="239" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["da Área "+$F{id_Area}+":"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="59">
+				<staticText>
+					<reportElement uuid="51af57f3-5d33-4187-a5e0-ac0fe249d32d" x="88" y="30" width="100" height="27"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ilacy Galvão
+CDP
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="b7a18df6-d830-4953-8633-9a972136fadd" x="536" y="30" width="115" height="29"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pr. Siqueira
+Administração Geral]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="f9636afe-6a17-4db5-8d0e-927676858a65" x="25" y="27" width="236" height="2"/>
+				</line>
+				<line>
+					<reportElement uuid="618143d9-3200-4b6f-9bae-5523b82b134b" x="469" y="27" width="236" height="2"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="92">
+			<staticText>
+				<reportElement uuid="4e8c857b-8cfe-404d-9981-4d663d111498" key="staticText" x="1" y="25" width="454" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[Rua Duque de Caxias, 340 - Centro - Manaus - AM - Cep:69020-140]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f79fb939-2333-4c05-8b92-79d8d2c2f900" key="staticText" x="1" y="0" width="454" height="24"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Igreja Evangélica Assembléia de Deus no Amazonas]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d871b4ef-0d88-4e97-98c4-662e67d23109" x="0" y="46" width="797" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Demonstrativo de Situação Pastoral"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37e4a92b-f13a-4e5d-bb3f-40238990ae43" x="694" y="30" width="50" height="15" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="5471e0ab-2269-4062-920a-edc34186522e" x="744" y="30" width="53" height="15" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="a7fccb80-f5f2-471c-a0f1-f2d9ffd577c3" x="729" y="1" width="68" height="15" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="10da3497-e828-4c38-b298-0010276bf643" x="694" y="1" width="35" height="15" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Emissão:]]></text>
+			</staticText>
+			<textField pattern="HH.mm">
+				<reportElement uuid="f49fe6f2-a9f9-4edd-bd92-db6bea63ba3b" x="717" y="15" width="80" height="15" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c08f5117-b29f-4c76-83fb-da9a31993690" x="694" y="15" width="23" height="15" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="02a91ed1-1a00-4bf0-9cb4-73de995f59ff" x="1" y="70" width="797" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Data de Início da Apuração: "+$P{data_inicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="325">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="503af1cb-2990-427d-a552-17da273a8d6d" x="14" y="38" width="562" height="20"/>
+				<textElement markup="html">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qt_RelFinPend}.intValue() > new Integer(0) ? "<font color = 'red'> - Relatório Financeiro: Constam débitos </font>" : "- Relatório Financeiro: Não constam débitos"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c4764058-403f-4285-ab35-425abdfc70cf" x="14" y="77" width="562" height="20"/>
+				<textElement markup="html">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qt_RelSecPend}.intValue() > new Integer(0) ? "<font color = 'red'> - Relatório de Secretaria: Constam débitos </font>" : "- Relatório de Secretaria: Não constam débitos"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="abd9ba67-0cd8-4f83-a07d-7e6060c754a0" x="14" y="158" width="562" height="20"/>
+				<textElement markup="html">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vl_Sdo}.intValue() < new Integer(0) ? "<font color = 'red'> - Saldo de Congregações: Constam saldos negativos </font>" : "- Saldo de Congregações: Não constam saldos negativos"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9f817a04-044e-419b-9da1-f3d67ac649a1" x="14" y="199" width="562" height="20"/>
+				<textElement markup="html">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vl_RetPend}.intValue() > new Integer(0) ? "<font color = 'red'> - Retiradas: Constam retiradas não justificadas </font>" : "- Retiradas: Não constam pedendências"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f6dbce5a-df01-4023-acc1-8a1f3ede993c" x="14" y="118" width="562" height="20"/>
+				<textElement markup="html">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qt_RelPasPend}.intValue() > new Integer(0) ? "<font color = 'red'> - Relatório Pastoral: Constam débitos </font>" : "- Relatório Pastoral: Não constam débitos"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a1e76599-c8b2-49ee-9e20-f4da69630f80" x="14" y="264" width="562" height="24"/>
+				<textElement markup="html">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qt_RelFinPend}.intValue() > new Integer(0) ? "<font color = 'red'> SITUAÇÃO GERAL: CONSTAM DÉBITOS </font>" : $F{qt_RelSecPend}.intValue() > new Integer(0) ? "<font color = 'red'> SITUAÇÃO GERAL: CONSTAM DÉBITOS </font>" : $F{qt_RelPasPend}.intValue() > new Integer(0) ? "<font color = 'red'> SITUAÇÃO GERAL: CONSTAM DÉBITOS </font>" : $F{vl_Sdo}.intValue() < new Integer(0) ? "<font color = 'red'> SITUAÇÃO GERAL: CONSTAM DÉBITOS </font>" : $F{vl_RetPend}.intValue() > new Integer(0) ? "<font color = 'red'> SITUAÇÃO GERAL: CONSTAM DÉBITOS </font>" : "SITUAÇÃO GERAL: NÃO CONSTAM DÉBITOS"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+</jasperReport>
