@@ -16,57 +16,55 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.setebit.sgr.security.entity.User;
+import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.jwt.JwtAuthenticationRequest;
 import br.com.setebit.sgr.security.jwt.JwtTokenUtil;
 import br.com.setebit.sgr.security.model.CurrentUser;
-import br.com.setebit.sgr.service.UserService;
+import br.com.setebit.sgr.service.UsuarioServico;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class AuthenticationRestController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-    
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    @PostMapping(value="/api/auth")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
+	@Autowired
+	private UsuarioServico usuarioService;
 
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getEmail(),
-                        authenticationRequest.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        final User user = userService.findByEmail(authenticationRequest.getEmail());
-        user.setPassword(null);
-        return ResponseEntity.ok(new CurrentUser(token, user));
-    }
+	@PostMapping(value = "/api/auth")
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest)
+			throws AuthenticationException {
 
-    @PostMapping(value="/api/refresh")
-    public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        String username = jwtTokenUtil.getUsernameFromToken(token);
-        final User user = userService.findByEmail(username);
-        
-        if (jwtTokenUtil.canTokenBeRefreshed(token)) {
-            String refreshedToken = jwtTokenUtil.refreshToken(token);
-            return ResponseEntity.ok(new CurrentUser(refreshedToken, user));
-        } else {
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
+		final Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+						authenticationRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+		final String token = jwtTokenUtil.generateToken(userDetails);
+		final Usuario user = usuarioService.findByEmail(authenticationRequest.getEmail());
+		user.setSenha(null);
+		return ResponseEntity.ok(new CurrentUser(token, user));
+	}
+
+	@PostMapping(value = "/api/refresh")
+	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		String username = jwtTokenUtil.getUsernameFromToken(token);
+		final Usuario user = usuarioService.findByEmail(username);
+
+		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
+			String refreshedToken = jwtTokenUtil.refreshToken(token);
+			return ResponseEntity.ok(new CurrentUser(refreshedToken, user));
+		} else {
+			return ResponseEntity.badRequest().body(null);
+		}
+	}
 
 }

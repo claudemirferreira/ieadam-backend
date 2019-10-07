@@ -5,9 +5,11 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 
 import br.com.setebit.sgr.security.entity.Usuario;
 
+@Component
 public interface UsuarioServico extends UserDetailsService {
 
 	public List<Usuario> listarTodos();
@@ -17,6 +19,8 @@ public interface UsuarioServico extends UserDetailsService {
 	public void remover(Usuario usuario);
 
 	public Usuario findByLogin(String login);
+	
+	public Usuario findByEmail(String email);
 
 	public Usuario findByLoginAndSenha(String login, String senha) throws NoResultException;
 

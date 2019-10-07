@@ -1,15 +1,15 @@
 package br.com.setebit.sgr.security.model;
 
-import br.com.setebit.sgr.security.entity.User;
+import br.com.setebit.sgr.security.entity.Usuario;
 
 public class CurrentUser {
-	
-	private String token;
-	private User user;
 
-	public CurrentUser(String token, User user) {
+	private String token;
+	private Usuario usuario;
+
+	public CurrentUser(String token, Usuario usuario) {
 		this.token = token;
-		this.user = user;
+		this.usuario = usuario;
 	}
 
 	public String getToken() {
@@ -20,11 +20,12 @@ public class CurrentUser {
 		this.token = token;
 	}
 
-	public User getUser() {
-		return user;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
+
 }

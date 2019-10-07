@@ -65,4 +65,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 		}
 	}
 
+	@Override
+	public Usuario findByEmail(String email) {
+		return this.usuarioRepositorio.findByEmail(email);
+	}
+
 }
