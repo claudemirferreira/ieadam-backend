@@ -22,4 +22,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 	public Usuario findByLoginAndSenha(@Param("login") String login, @Param("senha") String senha)
 			throws NoResultException;
 
+	@Query("select u from Usuario u where u.email = :email")
+	public Usuario findByEmail(@Param("email") String email);
+
 }

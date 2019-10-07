@@ -6,10 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import br.com.setebit.sgr.repository.UserRepository;
-import br.com.setebit.sgr.security.entity.User;
+import br.com.setebit.sgr.repository.UsuarioRepositorio;
+import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.enums.ProfileEnum;
-
 
 @SpringBootApplication
 public class IeadamApplication {
@@ -17,24 +16,30 @@ public class IeadamApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IeadamApplication.class, args);
 	}
-	
-    @Bean
-    CommandLineRunner init(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        return args -> {
-            initUsers(userRepository, passwordEncoder);
-        };
 
-    }
-    
-	private void initUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        User admin = new User();
-        admin.setEmail("admin@helpdesk.com");
-        admin.setPassword(passwordEncoder.encode("123456"));
-        admin.setProfile(ProfileEnum.ROLE_ADMIN);
+	@Bean
+	CommandLineRunner init(UsuarioRepositorio rep, PasswordEncoder passwordEncoder) {
+		return args -> {
+			initUsuario(rep, passwordEncoder);
+		};
 
-        User find = userRepository.findByEmail("admin@helpdesk.com");
-        if (find == null) {
-            userRepository.save(admin);
-        }
-    }
+	}
+
+	private void initUsuario(UsuarioRepositorio rep, PasswordEncoder passwordEncoder) {
+		Usuario admin = new Usuario();
+		admin.setEmail("admin@gmail.com");
+		admin.setSenha(passwordEncoder.encode("123456"));
+		admin.setProfile(ProfileEnum.ROLE_ADMIN);
+		admin.setArea(true);
+		admin.setLogin("admin");
+		admin.setNome("Administrador");
+		admin.setNucleo(true);
+		admin.setStatus("1");
+		admin.setZona(true);
+
+		Usuario find = rep.findByEmail("admin@gmail.com");
+		if (find == null) {
+			rep.save(admin);
+		}
+	}
 }

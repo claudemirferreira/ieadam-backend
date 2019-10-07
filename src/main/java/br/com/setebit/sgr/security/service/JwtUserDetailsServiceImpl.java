@@ -11,12 +11,10 @@ import br.com.setebit.sgr.security.jwt.JwtUserFactory;
 import br.com.setebit.sgr.service.UserService;
 
 @Service
-public class JwtUserDetailsServiceImpl  implements UserDetailsService {
+public class JwtUserDetailsServiceImpl  {
 
-    @Autowired
     private UserService userService;
 
-    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
     		User user = userService.findByEmail(email);

@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.setebit.sgr.security.enums.ProfileEnum;
+
 /**
  * 
  * @author altitdb
@@ -36,30 +38,32 @@ public class Usuario implements Serializable {
 	@Column(unique = true, length = 30)
 	private String login;
 
-	@Column
+	@Column(name = "senha")
 	private String senha;
 
 	@Column(name = "status", length = 1, columnDefinition = "CHAR(1)", nullable = false)
 	private String status;
+
+	private ProfileEnum profile;
 
 	private boolean zona;
 
 	private boolean area;
 
 	private boolean nucleo;
-	
+
 	private boolean in_privilegio;
-	
-	 @Lob 
-	 @Column(name = "logomarca")  
-	 private byte[] logomarca;  
-	
+
+	@Lob
+	@Column(name = "logomarca")
+	private byte[] logomarca;
+
 	@Column
 	private String telefone;
-	
+
 	@Column
 	private String email;
-	
+
 	@OneToMany(mappedBy = "sistema")
 	private List<Perfil> perfils;
 
@@ -68,7 +72,7 @@ public class Usuario implements Serializable {
 
 	@Column
 	private String nome;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -198,5 +202,25 @@ public class Usuario implements Serializable {
 
 	public void setLogomarca(byte[] logomarca) {
 		this.logomarca = logomarca;
+	}
+
+	public ProfileEnum getProfile() {
+		return profile;
+	}
+
+	public void setProfile(ProfileEnum profile) {
+		this.profile = profile;
+	}
+
+	public List<Perfil> getPerfils() {
+		return perfils;
+	}
+
+	public void setPerfils(List<Perfil> perfils) {
+		this.perfils = perfils;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

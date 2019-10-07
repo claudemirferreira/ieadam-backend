@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import br.com.setebit.sgr.security.entity.Usuario;
 
-public interface UsuarioServico {
+public interface UsuarioServico extends UserDetailsService {
 
 	public List<Usuario> listarTodos();
 
