@@ -19,8 +19,8 @@ import javax.persistence.Transient;
  */
 @Entity
 @AssociationOverrides({
-		@AssociationOverride(name = "perfilRotinaPk.rotina", joinColumns = @JoinColumn(name = "idRotina")),
-		@AssociationOverride(name = "perfilRotinaPk.perfil", joinColumns = @JoinColumn(name = "idPerfil")) })
+		@AssociationOverride(name = "perfilRotinaPk.rotina", joinColumns = @JoinColumn(name = "id_rotina")),
+		@AssociationOverride(name = "perfilRotinaPk.perfil", joinColumns = @JoinColumn(name = "id_perfil")) })
 @Table( name = "saa_perfil_rotina" )
 public class PerfilRotina implements Serializable {
 

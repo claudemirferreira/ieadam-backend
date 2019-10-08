@@ -28,7 +28,7 @@ public class Perfil implements Serializable {
 	private static final long serialVersionUID = 7371241296081749393L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_perfil")
 	private int id;
 
@@ -57,12 +57,8 @@ public class Perfil implements Serializable {
 		return id;
 	}
 
-	public int getIdPerfil() {
-		return id;
-	}
-
-	public void setIdPerfil(int idPerfil) {
-		this.id = idPerfil;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public List<UsuarioPerfil> getUsuarioPerfil() {

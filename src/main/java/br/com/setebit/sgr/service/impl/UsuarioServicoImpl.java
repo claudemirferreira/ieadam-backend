@@ -56,7 +56,6 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
 		Usuario usuario = usuarioRepositorio.findByEmail(email);
 		if (usuario == null) {
 			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email));
@@ -68,6 +67,11 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	@Override
 	public Usuario findByEmail(String email) {
 		return this.usuarioRepositorio.findByEmail(email);
+	}
+
+	@Override
+	public Usuario findByOne(Long id) {
+		return usuarioRepositorio.getOne(id);
 	}
 
 }

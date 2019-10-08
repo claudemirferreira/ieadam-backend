@@ -16,10 +16,10 @@ public class PerfilRotinaPk implements Serializable {
 	private static final long serialVersionUID = -8682045998279798805L;
 
 	@ManyToOne
-	@JoinColumn(name = "idRotina")
+	@JoinColumn(name = "id_rotina")
 	private Rotina rotina;
 	@ManyToOne
-	@JoinColumn(name = "idPerfil")
+	@JoinColumn(name = "id_perfil")
 	private Perfil perfil;
 
 	public Perfil getPerfil() {

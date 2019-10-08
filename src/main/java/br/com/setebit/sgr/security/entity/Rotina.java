@@ -24,7 +24,7 @@ public class Rotina implements Serializable {
 	private static final long serialVersionUID = 55549693990924773L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_rotina")
 	private int id;
 
@@ -55,12 +55,8 @@ public class Rotina implements Serializable {
 		return id;
 	}
 
-	public int getIdRotina() {
-		return id;
-	}
-
-	public void setIdRotina(int idRotina) {
-		this.id = idRotina;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {

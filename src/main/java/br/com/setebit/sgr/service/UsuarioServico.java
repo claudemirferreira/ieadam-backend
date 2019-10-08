@@ -21,6 +21,8 @@ public interface UsuarioServico extends UserDetailsService {
 	public Usuario findByLogin(String login);
 	
 	public Usuario findByEmail(String email);
+	
+	public Usuario findByOne(Long id);
 
 	public Usuario findByLoginAndSenha(String login, String senha) throws NoResultException;
 

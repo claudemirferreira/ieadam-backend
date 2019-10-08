@@ -17,30 +17,37 @@ public class Membro implements Serializable {
 	private static final long serialVersionUID = -3975677754400788911L;
 
 	@Id
+	@Column(name = "id_membro")
 	private int idMembro;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_decisao")
 	private Date dataDecisao;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_recebimento")
 	private Date dataRecebimento;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_batismo")
 	private Date dataBatismo;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_bat_espirito")
 	private Date dataBatEspirito;
 
 	@Column(name = "situacao", length = 1, columnDefinition = "CHAR(1)", nullable = false)
 	private String situacao;
 
-	@Column(name = "estadoCivil", length = 20)
+	@Column(name = "estado_civil", length = 20)
 	private String estadoCivil;
 
 	@Column(length = 60, nullable = false)
@@ -63,28 +70,28 @@ public class Membro implements Serializable {
 	@Column(length = 20)
 	private String cpf;
 
-	@Column(length = 10)
+	@Column(name = "rg_orgao_emissor", length = 10)
 	private String rgOrgaoEmissor;
 
-	@Column(length = 10)
+	@Column(name = "titulo_eleitor", length = 10)
 	private String tituloEleitor;
 
-	@Column(length = 60)
+	@Column(name = "nome_pai", length = 60)
 	private String nomePai;
 
-	@Column(length = 10)
+	@Column(name = "titulo_zona", length = 10)
 	private String tituloZona;
 
-	@Column(length = 60)
+	@Column(name = "nome_mae", length = 60)
 	private String nomeMae;
 
-	@Column(length = 6)
+	@Column(name = "titulo_secao", length = 6)
 	private String tituloSecao;
 
 	@Column(length = 60)
 	private String conjuge;
 
-	@Column(length = 2)
+	@Column(name = "qtde_filhos", length = 2)
 	private int qtdeFilhos;
 
 	@Column(length = 60)
@@ -99,7 +106,7 @@ public class Membro implements Serializable {
 	@Column(length = 60)
 	private String procedencia;
 
-	@Column(length = 60)
+	@Column(name = "formacao_teologico", length = 60)
 	private String formacaoTeologico;
 
 	public int getIdMembro() {

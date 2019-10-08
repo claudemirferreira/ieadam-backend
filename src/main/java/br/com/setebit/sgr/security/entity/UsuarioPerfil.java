@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient; 
+import javax.persistence.Transient;
 
 /**
  * 
@@ -19,9 +19,9 @@ import javax.persistence.Transient;
  */
 @Entity
 @AssociationOverrides({
-		@AssociationOverride(name = "usuarioPerfilPk.usuario", joinColumns = @JoinColumn(name = "idUsuario")),
-		@AssociationOverride(name = "usuarioPerfilPk.perfil", joinColumns = @JoinColumn(name = "idPerfil")) })
-@Table( name = "saa_usuario_perfil" )
+		@AssociationOverride(name = "usuarioPerfilPk.usuario", joinColumns = @JoinColumn(name = "id_usuario")),
+		@AssociationOverride(name = "usuarioPerfilPk.perfil", joinColumns = @JoinColumn(name = "id_perfil")) })
+@Table(name = "saa_usuario_perfil")
 public class UsuarioPerfil implements Serializable {
 
 	private static final long serialVersionUID = -1220797610390530939L;
@@ -38,11 +38,9 @@ public class UsuarioPerfil implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 
-	
 	@Transient
 	private String nomePerfil;
-	
-	
+
 	public Perfil getPerfil() {
 		return usuarioPerfilPk.getPerfil();
 	}
@@ -77,14 +75,13 @@ public class UsuarioPerfil implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		return usuarioPerfilPk.equals( ( ( UsuarioPerfil ) obj ).getUsuarioPerfilPk() );
+		return usuarioPerfilPk.equals(((UsuarioPerfil) obj).getUsuarioPerfilPk());
 	}
 
 	@Override
 	public int hashCode() {
 		return usuarioPerfilPk.hashCode();
 	}
-
 
 	public String getNomePerfil() {
 		return nomePerfil;
@@ -93,5 +90,5 @@ public class UsuarioPerfil implements Serializable {
 	public void setNomePerfil(String nomePerfil) {
 		this.nomePerfil = nomePerfil;
 	}
-	
+
 }

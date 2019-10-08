@@ -16,10 +16,10 @@ public class UsuarioPerfilPk implements Serializable {
 	private static final long serialVersionUID = -8682045998279798805L;
 
 	@ManyToOne
-	@JoinColumn(name = "idUsuario")
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	@ManyToOne
-	@JoinColumn(name = "idPerfil")
+	@JoinColumn(name = "id_perfil")
 	private Perfil perfil;
 
 	public Perfil getPerfil() {

@@ -22,7 +22,7 @@ public class Sistema implements Serializable {
 	private static final long serialVersionUID = -1348896933495695497L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_sistema")
 	private int id;
 
@@ -44,20 +44,17 @@ public class Sistema implements Serializable {
 	public Sistema() {
 	}
 
-	public Sistema(int idSistema) {
-		this.id = idSistema;
+	public Sistema(int id) {
+		this.id = id;
 	}
 
 	public int getId() {
 		return this.id;
 	}
 
-	public int getIdSistema() {
-		return id;
-	}
 
-	public void setIdSistema(int idSistema) {
-		this.id = idSistema;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getDescricao() {

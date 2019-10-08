@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.setebit.sgr.dto.ParametroRelatorioDTO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -25,7 +26,7 @@ public class RelatorioUtil {
 	public RelatorioUtil() {
 	}
 
-	/*
+	
 	public JasperPrint gerarPdf(ParametroRelatorioDTO dto) throws JRException, SQLException {
 		Map<String, Object> parametros = setParamentros(dto);
 		// Pega o arquivo .jasper localizado em resources
@@ -47,5 +48,5 @@ public class RelatorioUtil {
 
 		return parametros;
 	}
-	*/
+	
 }

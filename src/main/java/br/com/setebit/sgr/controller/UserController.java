@@ -1,12 +1,11 @@
 package br.com.setebit.sgr.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,33 +22,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.setebit.sgr.response.Response;
-import br.com.setebit.sgr.security.entity.User;
-import br.com.setebit.sgr.service.UserService;
+import br.com.setebit.sgr.security.entity.Usuario;
+import br.com.setebit.sgr.service.UsuarioServico;
 
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin(origins = "*")
 public class UserController {
-	
+
 	@Autowired
-	private UserService userService;
-	
+	private UsuarioServico service;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@PostMapping()
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<User>> create(HttpServletRequest request, @RequestBody User user,
+	public ResponseEntity<Response<Usuario>> create(HttpServletRequest request, @RequestBody Usuario user,
 			BindingResult result) {
-		Response<User> response = new Response<User>();
+		Response<Usuario> response = new Response<Usuario>();
 		try {
-			validateCreateUser(user, result);
+			validateCreateUsuario(user, result);
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 				return ResponseEntity.badRequest().body(response);
 			}
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			User userPersisted = (User) userService.createOrUpdate(user);
+			user.setSenha(passwordEncoder.encode(user.getSenha()));
+			Usuario userPersisted = (Usuario) service.salvar(user);
 			response.setData(userPersisted);
 		} catch (DuplicateKeyException dE) {
 			response.getErrors().add("E-mail already registered !");
@@ -61,26 +60,26 @@ public class UserController {
 		return ResponseEntity.ok(response);
 	}
 
-	private void validateCreateUser(User user, BindingResult result) {
+	private void validateCreateUsuario(Usuario user, BindingResult result) {
 		if (user.getEmail() == null) {
-			result.addError(new ObjectError("User", "Email no information"));
+			result.addError(new ObjectError("Usuario", "Email no information"));
 			return;
 		}
 	}
-	
+
 	@PutMapping()
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<User>> update(HttpServletRequest request, @RequestBody User user,
+	public ResponseEntity<Response<Usuario>> update(HttpServletRequest request, @RequestBody Usuario user,
 			BindingResult result) {
-		Response<User> response = new Response<User>();
+		Response<Usuario> response = new Response<Usuario>();
 		try {
 			validateUpdate(user, result);
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 				return ResponseEntity.badRequest().body(response);
 			}
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			User userPersisted = (User) userService.createOrUpdate(user);
+			user.setSenha(passwordEncoder.encode(user.getSenha()));
+			Usuario userPersisted = (Usuario) service.salvar(user);
 			response.setData(userPersisted);
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
@@ -88,24 +87,23 @@ public class UserController {
 		}
 		return ResponseEntity.ok(response);
 	}
-	
-	private void validateUpdate(User user, BindingResult result) {
-		if (user.getId() == null) {
-			result.addError(new ObjectError("User", "Id no information"));
+
+	private void validateUpdate(Usuario user, BindingResult result) {
+		if (user.getId() == 0) {
+			result.addError(new ObjectError("Usuario", "Id no information"));
 			return;
 		}
 		if (user.getEmail() == null) {
-			result.addError(new ObjectError("User", "Email no information"));
+			result.addError(new ObjectError("Usuario", "Email no information"));
 			return;
 		}
 	}
-	
+
 	@GetMapping(value = "{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<User>> findById(@PathVariable("id") String id) {
-		Response<User> response = new Response<User>();
-		Optional<User> userOptional = userService.findById(id);
-		User user = userOptional.get();
+	public ResponseEntity<Response<Usuario>> findById(@PathVariable("id") String id) {
+		Response<Usuario> response = new Response<Usuario>();
+		Usuario user = service.findByOne(Long.parseLong(id));
 		if (user == null) {
 			response.getErrors().add("Register not found id:" + id);
 			return ResponseEntity.badRequest().body(response);
@@ -113,29 +111,28 @@ public class UserController {
 		response.setData(user);
 		return ResponseEntity.ok(response);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<String>> delete(@PathVariable("id") String id) {
 		Response<String> response = new Response<String>();
-		Optional<User> userOptional = userService.findById(id);
-		User user = userOptional.get();
+		Usuario user = service.findByOne(Long.parseLong(id));
 		if (user == null) {
 			response.getErrors().add("Register not found id:" + id);
 			return ResponseEntity.badRequest().body(response);
 		}
-		userService.delete(id);
+		service.remover(user);
+		;
 		return ResponseEntity.ok(new Response<String>());
 	}
-	
-	
+
 	@GetMapping(value = "{page}/{count}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-    public  ResponseEntity<Response<Page<User>>> findAll(@PathVariable int page, @PathVariable int count) {
-		Response<Page<User>> response = new Response<Page<User>>();
-		Page<User> users = userService.findAll(page, count);
+	public ResponseEntity<Response<List<Usuario>>> findAll(@PathVariable int page, @PathVariable int count) {
+		Response<List<Usuario>> response = new Response<List<Usuario>>();
+		List<Usuario> users = service.listarTodos();
 		response.setData(users);
 		return ResponseEntity.ok(response);
-    }
-	
+	}
+
 }

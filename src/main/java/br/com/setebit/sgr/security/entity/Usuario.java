@@ -28,7 +28,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = -7789936704890560797L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario")
 	private int id;
 
@@ -61,17 +61,23 @@ public class Usuario implements Serializable {
 	@Column
 	private String telefone;
 
-	@Column
+	@Column(unique = true, length = 100)
 	private String email;
 
 	@OneToMany(mappedBy = "sistema")
 	private List<Perfil> perfils;
 
-	@Column
+	@Column(name = "id_membro")
 	private Integer idMembro;
 
 	@Column
 	private String nome;
+	
+	public Usuario() {}
+
+	public Usuario(int id) {
+		this.id = id;
+	}
 
 	public int getId() {
 		return id;
@@ -98,14 +104,6 @@ public class Usuario implements Serializable {
 
 	public void setUsuarioPerfil(List<UsuarioPerfil> usuarioPerfil) {
 		this.usuarioPerfil = usuarioPerfil;
-	}
-
-	public int getIdUsuario() {
-		return id;
-	}
-
-	public void setIdUsuario(int idUsuario) {
-		this.id = idUsuario;
 	}
 
 	public String getLogin() {
