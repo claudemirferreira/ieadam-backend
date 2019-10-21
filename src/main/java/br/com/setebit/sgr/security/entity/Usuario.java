@@ -203,6 +203,9 @@ public class Usuario implements Serializable {
 	}
 
 	public ProfileEnum getProfile() {
+		if(profile == null) 
+			profile = ProfileEnum.ROLE_TECHNICIAN;
+		
 		return profile;
 	}
 

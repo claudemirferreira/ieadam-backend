@@ -26,6 +26,7 @@ public class Zona implements Serializable {
 	private int idZona;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_ultima_atualizacao")
 	private Date dataUltimaAtualizacao;
 
 	@Column(nullable = false, length = 60)
@@ -34,10 +35,10 @@ public class Zona implements Serializable {
 	@Column(name = "situacao", length = 1, columnDefinition = "CHAR(1)", nullable = false)
 	private String situacao;
 
-	@Column
+	@Column(name = "id_primeiro_resp")
 	private int idPrimeiroResp;
 
-	@Column
+	@Column(name = "id_segundo_resp")
 	private int idSegundoResp;
 
 	@Transient

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.setebit.sgr.security.entity.Nucleo;
 import br.com.setebit.sgr.security.entity.Zona;
 
 public class NucleoDTO implements Serializable {
@@ -39,11 +40,11 @@ public class NucleoDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public static NucleoDTO toDTO(Zona entity) {
-		return new NucleoDTO(entity.getIdZona(), entity.getNome());
+	public static NucleoDTO toDTO(Nucleo entity) {
+		return new NucleoDTO(entity.getId(), entity.getNome());
 	}
 
-	public static List<NucleoDTO> toDTO(List<Zona> list) {
+	public static List<NucleoDTO> toDTO(List<Nucleo> list) {
 		List<NucleoDTO> dtos = new ArrayList<NucleoDTO>();
 		list.forEach(item -> dtos.add(toDTO(item)));
 		return dtos;

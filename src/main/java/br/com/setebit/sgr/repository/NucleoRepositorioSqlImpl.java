@@ -59,18 +59,18 @@ public class NucleoRepositorioSqlImpl implements NucleoRepositorioSql {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Nucleo> listaNucleoToUsuarioAndZona(Usuario usuario, Zona zona) {
+	public List<Nucleo> listaNucleoToUsuarioAndZona(int idUsuario, int idZona) {
 
 		String SQL;
 
 		String SQL1 = "select DISTINCT R.* from ( "
 				+ " select b.* from ieadam_nucleo b,  ieadam_usuario_nucleo c, ieadam_zona d "
 				+ " where b.id_nucleo = c.id_nucleo and b.id_zona = d.id_zona " + " and c.id_usuario = "
-				+ usuario.getId() + " and d.id_zona = " + zona.getIdZona();
+				+ idUsuario + " and d.id_zona = " + idZona;
 
 		String SQL2 = " union select c.* from ieadam_usuario_area a, ieadam_area b, ieadam_nucleo c	"
 				+ " where a.id_area = b.id_area and c.id_nucleo = b.id_nucleo " + " and a.id_usuario = "
-				+ usuario.getId() + " and c.id_zona = " + zona.getIdZona() + " ) as R; ";
+				+ idUsuario + " and c.id_zona = " + idZona + " ) as R; ";
 
 		SQL = SQL1 + SQL2;
 

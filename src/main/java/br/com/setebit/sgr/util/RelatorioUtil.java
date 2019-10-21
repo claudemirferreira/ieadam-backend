@@ -42,7 +42,7 @@ public class RelatorioUtil {
 	private Map<String, Object> setParamentros(ParametroRelatorioDTO dto) {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("DATA_ANO", dto.getAno());
-		// parametros.put("ZONA", dto.getIdZona());
+		parametros.put("ZONA", dto.getIdZona());
 		parametros.put("NUCLEO", dto.getIdNucleo());
 		parametros.put("AREA", dto.getIdArea());
 

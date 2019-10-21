@@ -35,6 +35,7 @@ public class Nucleo implements Serializable {
 	private String nome;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_ultima_atualizacao")
 	private Date dataUltimaAtualizacao;
 
 	@Transient

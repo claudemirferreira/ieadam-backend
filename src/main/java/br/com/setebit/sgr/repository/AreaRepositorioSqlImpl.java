@@ -20,10 +20,10 @@ public class AreaRepositorioSqlImpl implements AreaRepositorioSql {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Area> listaAreaToUsuarioAndNucleo(Usuario usuario, Nucleo nucleo) {
+	public List<Area> listaAreaToUsuarioAndNucleo(int idUsuario, int idNucleo) {
 
 		String SQL = "select b.* from ieadam_area b, ieadam_usuario_area c " + " where b.id_area = c.id_area "
-				+ " and b.id_nucleo = " + nucleo.getId() + " and c.id_usuario = " + usuario.getId();
+				+ " and b.id_nucleo = " + idNucleo + " and c.id_usuario = " + idUsuario;
 		return entityManager.createNativeQuery(SQL, Area.class).getResultList();
 	}
 

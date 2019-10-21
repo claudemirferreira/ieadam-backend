@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.setebit.sgr.dto.NucleoDTO;
 import br.com.setebit.sgr.repository.NucleoRepositorio;
 import br.com.setebit.sgr.repository.NucleoRepositorioSql;
 import br.com.setebit.sgr.security.entity.Nucleo;
 import br.com.setebit.sgr.security.entity.Usuario;
-import br.com.setebit.sgr.security.entity.Zona;
 import br.com.setebit.sgr.service.NucleoServico;
 
 @Service
@@ -41,8 +41,8 @@ public class NucleoServicoImpl implements NucleoServico, Serializable {
 	}
 
 	@Override
-	public List<Nucleo> findByZona(int zona) {
-		return this.repositorio.findByZona(zona);
+	public List<NucleoDTO> findByZona(int zona) {
+		return NucleoDTO.toDTO(this.repositorio.findByZona(zona));
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class NucleoServicoImpl implements NucleoServico, Serializable {
 	}
 
 	@Override
-	public List<Nucleo> listaNucleoToUsuarioAndZona(Usuario usuario, Zona zona) {
-		return repositorioSql.listaNucleoToUsuarioAndZona(usuario, zona);
+	public List<NucleoDTO> listaNucleoToUsuarioAndZona(int idUsuario, int idZona) {
+		return NucleoDTO.toDTO(repositorioSql.listaNucleoToUsuarioAndZona(idUsuario, idZona));
 	}
 
 	@Override

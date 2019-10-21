@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.setebit.sgr.security.entity.Area;
 import br.com.setebit.sgr.security.entity.Zona;
 
 
@@ -40,11 +41,11 @@ public class AreaDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public static AreaDTO toDTO(Zona entity) {
-		return new AreaDTO(entity.getIdZona(), entity.getNome());
+	public static AreaDTO toDTO(Area entity) {
+		return new AreaDTO(entity.getIdArea(), entity.getNome());
 	}
 
-	public static List<AreaDTO> toDTO(List<Zona> list) {
+	public static List<AreaDTO> toDTO(List<Area> list) {
 		List<AreaDTO> dtos = new ArrayList<AreaDTO>();
 		list.forEach(item -> dtos.add(toDTO(item)));
 		return dtos;

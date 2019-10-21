@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.setebit.sgr.security.entity.Usuario;
+import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.security.jwt.JwtAuthenticationRequest;
 import br.com.setebit.sgr.security.jwt.JwtTokenUtil;
 import br.com.setebit.sgr.security.model.CurrentUser;
@@ -48,7 +48,7 @@ public class AuthenticationRestController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		final Usuario user = usuarioService.findByEmail(authenticationRequest.getEmail());
+		final UsuarioDTO user = UsuarioDTO.getDTO(usuarioService.findByEmail(authenticationRequest.getEmail()));
 		user.setSenha(null);
 		return ResponseEntity.ok(new CurrentUser(token, user));
 	}
@@ -57,7 +57,7 @@ public class AuthenticationRestController {
 	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
 		String token = request.getHeader("Authorization");
 		String username = jwtTokenUtil.getUsernameFromToken(token);
-		final Usuario user = usuarioService.findByEmail(username);
+		final UsuarioDTO user = UsuarioDTO.toDTO(usuarioService.findByEmail(username));
 
 		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
 			String refreshedToken = jwtTokenUtil.refreshToken(token);

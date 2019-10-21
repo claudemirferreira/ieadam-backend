@@ -37,7 +37,7 @@ public class IeadamApplication {
 		admin.setStatus("1");
 		admin.setZona(true);
 
-		Usuario find = rep.findByEmail("admin@gmail.com");
+		Usuario find = rep.findByLogin("admin");
 		if (find == null) {
 			rep.save(admin);
 		}

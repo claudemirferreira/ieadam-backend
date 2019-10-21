@@ -6,11 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.setebit.sgr.dto.AreaDTO;
 import br.com.setebit.sgr.repository.AreaRepositorio;
 import br.com.setebit.sgr.repository.AreaRepositorioSql;
 import br.com.setebit.sgr.security.entity.Area;
-import br.com.setebit.sgr.security.entity.Nucleo;
-import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.Zona;
 import br.com.setebit.sgr.service.AreaServico;
 
@@ -42,8 +41,8 @@ public class AreaServicoImpl implements AreaServico, Serializable {
 	}
 
 	@Override
-	public List<Area> findByNucleo(int nucleo) {
-		return this.repositorio.findByNucleo(nucleo);
+	public List<AreaDTO> findByNucleo(int nucleo) {
+		return AreaDTO.toDTO(this.repositorio.findByNucleo(nucleo));
 	}
 
 	@Override
@@ -56,14 +55,13 @@ public class AreaServicoImpl implements AreaServico, Serializable {
 		return this.repositorio.findByMembroAndNucleo(membro, idNucleo);
 	}
 
-	@Override
-	public List<Area> listaAreaToUsuarioAndNucleo(Usuario usuario, Nucleo nucleo) {
-		return repositorioSql.listaAreaToUsuarioAndNucleo(usuario, nucleo);
+	public List<AreaDTO> listaAreaToUsuarioAndNucleo(int idUsuario, int idNucleo) {
+		return AreaDTO.toDTO( repositorioSql.listaAreaToUsuarioAndNucleo(idUsuario, idNucleo));
 	}
 
 	@Override
 	public List<Area> listaAreaToZona(Zona zona) {
 		return repositorioSql.listaAreaToZona(zona);
 	}
-	
+
 }

@@ -5,10 +5,22 @@ import java.util.List;
 
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.Zona;
+import br.com.setebit.sgr.security.enums.Mes;
+import br.com.setebit.sgr.util.DataUtil;
 
-public class ParametroRelatorioDTO2 {
+public class FiltroRelatorioDTO {
+	
+	private Mes mes = Mes.JANEIRO;
 
-	private String ano;
+	private Mes mesInicio = Mes.JANEIRO;
+
+	private Mes mesFim = Mes.JANEIRO;
+
+	private String usuario;
+
+	private int ano;
+
+	private List<Integer> anos;
 
 	private ZonaDTO zona;
 
@@ -32,32 +44,36 @@ public class ParametroRelatorioDTO2 {
 
 	private Usuario usuarioLogado;
 
-	public ParametroRelatorioDTO2(String nomeRelatorio, String ano, Zona zona, int idNucleo, int idArea) {
+	private int anoInicio;
+
+	private int anoFim;
+	
+	private List<Mes> meses = new ArrayList<Mes>();
+
+	public FiltroRelatorioDTO(String nomeRelatorio, int ano, Zona zona, int idNucleo, int idArea) {
 		this.nomeRelatorio = nomeRelatorio;
 		this.ano = ano;
-		// this.zona = zona;
 		this.idNucleo = idNucleo;
 		this.idArea = idArea;
 		this.zonas = new ArrayList<ZonaDTO>();
 		this.areas = new ArrayList<AreaDTO>();
 		this.nucleos = new ArrayList<NucleoDTO>();
 		this.usuarioLogado = new Usuario();
-		// this.setUsuarioLogado((Usuario)
-		// SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 	}
 
-	public ParametroRelatorioDTO2() {
+	public FiltroRelatorioDTO() {
 		this.setZonas(new ArrayList<ZonaDTO>());
-		// this.setNucleos(new ArrayList<Nucleo>());
-		// this.setAreas(new ArrayList<Area>());
 		this.usuarioLogado = new Usuario();
+		this.anos = DataUtil.pegarAnos();
+		this.anoInicio = DataUtil.pegarAnocorrente();
+		this.anoFim = DataUtil.pegarAnocorrente();
 	}
 
-	public String getAno() {
+	public int getAno() {
 		return ano;
 	}
 
-	public void setAno(String ano) {
+	public void setAno(int ano) {
 		this.ano = ano;
 	}
 
@@ -147,5 +163,69 @@ public class ParametroRelatorioDTO2 {
 
 	public void setNucleo(NucleoDTO nucleo) {
 		this.nucleo = nucleo;
+	}
+
+	public List<Integer> getAnos() {
+		return anos;
+	}
+
+	public void setAnos(List<Integer> anos) {
+		this.anos = anos;
+	}
+
+	public int getAnoInicio() {
+		return anoInicio;
+	}
+
+	public void setAnoInicio(int anoInicio) {
+		this.anoInicio = anoInicio;
+	}
+
+	public int getAnoFim() {
+		return anoFim;
+	}
+
+	public void setAnoFim(int anoFim) {
+		this.anoFim = anoFim;
+	}
+
+	public List<Mes> getMeses() {
+		return meses;
+	}
+
+	public void setMeses(List<Mes> meses) {
+		this.meses = meses;
+	}
+
+	public Mes getMes() {
+		return mes;
+	}
+
+	public void setMes(Mes mes) {
+		this.mes = mes;
+	}
+
+	public Mes getMesInicio() {
+		return mesInicio;
+	}
+
+	public void setMesInicio(Mes mesInicio) {
+		this.mesInicio = mesInicio;
+	}
+
+	public Mes getMesFim() {
+		return mesFim;
+	}
+
+	public void setMesFim(Mes mesFim) {
+		this.mesFim = mesFim;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 }
