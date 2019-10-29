@@ -90,6 +90,7 @@ public class RelatorioController {
 	@RequestMapping(value = "/downloadPDF", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<byte[]> getPDF(HttpServletResponse response)
 			throws JRException, SQLException, IOException {
+    	System.out.println("########## getPDF");
         try {
         	ParametroRelatorioDTO dto = new ParametroRelatorioDTO();
     		dto.setAno("2019");
@@ -122,8 +123,9 @@ public class RelatorioController {
     }
 	
 	@GetMapping(value = "/carregarDados")
-	@PreAuthorize("hasAnyRole('ADMIN','CUSTOMER','TECHNICIAN')")
+	//@PreAuthorize("hasAnyRole('ADMIN','CUSTOMER','TECHNICIAN')")
 	public ResponseEntity<Response<FiltroRelatorioDTO>> carregarDados() {
+		System.out.println("##############carregarDados()");
 		FiltroRelatorioDTO dto = service.garregarDadosTela();
 		Response<FiltroRelatorioDTO> response = new Response<FiltroRelatorioDTO>();
 		response.setData(dto);
@@ -131,7 +133,7 @@ public class RelatorioController {
 	}
 	
 	@GetMapping(value = "/carregarNucleo/{idZona}")
-	@PreAuthorize("hasAnyRole('ADMIN','CUSTOMER','TECHNICIAN')")
+	//@PreAuthorize("hasAnyRole('ADMIN','CUSTOMER','TECHNICIAN')")
 	public ResponseEntity<Response<List<NucleoDTO>>> carregarNucleo(@PathVariable("idZona") String idZona) {
 		List<NucleoDTO> lista = service.carregarNucleo(Integer.parseInt(idZona));
 		Response<List<NucleoDTO>> response = new Response<List<NucleoDTO>>();
