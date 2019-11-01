@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.setebit.sgr.security.entity.Nucleo;
-import br.com.setebit.sgr.security.entity.Zona;
 
 public class NucleoDTO implements Serializable {
 
@@ -16,6 +15,10 @@ public class NucleoDTO implements Serializable {
 	private String nome;
 
 	public NucleoDTO() {
+	}
+	
+	public NucleoDTO(int id) {
+		this.id = id;
 	}
 
 	public NucleoDTO(int id, String nome) {

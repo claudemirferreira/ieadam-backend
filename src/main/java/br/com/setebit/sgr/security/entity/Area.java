@@ -35,6 +35,7 @@ public class Area implements Serializable {
 	private String situacao;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "data_ultima_atualizacao")
 	private Date dataUltimaAtualizacao;
 
 	@ManyToOne

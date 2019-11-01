@@ -51,5 +51,9 @@ public class ParametroRelatorioDTO implements Serializable{
 	public void setNomeRelatorio(String nomeRelatorio) {
 		this.nomeRelatorio = nomeRelatorio;
 	}
+	
+	public String toString() {
+		return "ano = " + ano + "; idZona=" + idZona + "; idNucleo"+ idNucleo + "; idArea=" + idArea + "; nome=" + nomeRelatorio;
+	}
 
 }

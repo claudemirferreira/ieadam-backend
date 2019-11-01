@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.setebit.sgr.security.entity.Area;
-import br.com.setebit.sgr.security.entity.Zona;
-
 
 public class AreaDTO implements Serializable {
 

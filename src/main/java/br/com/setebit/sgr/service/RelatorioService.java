@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.setebit.sgr.dto.ParametroRelatorioDTO;
+import br.com.setebit.sgr.dto.AreaDTO;
 import br.com.setebit.sgr.dto.FiltroRelatorioDTO;
 import br.com.setebit.sgr.dto.NucleoDTO;
 import net.sf.jasperreports.engine.JRException;
@@ -15,6 +16,8 @@ public interface RelatorioService {
 
 	public FiltroRelatorioDTO garregarDadosTela();
 	
-	public List<NucleoDTO> carregarNucleo(int id) ;
+	public List<NucleoDTO> carregarNucleo(int id);
+	
+	public List<AreaDTO> carregarArea(int idNucleo);
 
 }

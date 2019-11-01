@@ -37,7 +37,6 @@ public class DataUtil {
 		List<Integer> lista = new ArrayList<Integer>();
 
 		for (int anoInicio = 2012; anoInicio <= anoCorrente; anoCorrente--) {
-			System.out.println(anoCorrente);
 			lista.add(anoCorrente);
 		}
 

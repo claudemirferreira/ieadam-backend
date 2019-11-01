@@ -193,5 +193,57 @@ public class RelatorioServiceImpl implements RelatorioService {
 	public List<NucleoDTO> carregarNucleo(int id) {
 		return nucleoServico.findByZona(id);
 	}
+	
+	public List<NucleoDTO> setarNucleo(int id) {
+		atualizarNucleo();
+		return nucleoServico.findByZona(id);
+	}
+	
+	public List<AreaDTO> carregarArea(int idNucleo) {
+
+		this.parametroRelatorioDTO.setAreas(new ArrayList<AreaDTO>());
+		this.parametroRelatorioDTO.setArea(new AreaDTO());
+		this.parametroRelatorioDTO.setNucleo(new NucleoDTO(idNucleo));
+
+		boolean nucleoAssociado = false;
+
+		if (this.parametroRelatorioDTO.getNucleo().getId() != 0) {
+			/*
+			 * Verifica se o nucleo escolhido no combo esta associado ao usuario. SE
+			 * estiver, devera listar todas as Areas deste nucleo e nao apenas a Area
+			 * associada.
+			 */
+			nucleoAssociado = this.nucleoServico.isUsuarioDeNucleo(
+					this.parametroRelatorioDTO.getUsuarioLogado().getId(),
+					this.parametroRelatorioDTO.getNucleo().getId());
+
+			/*
+			 * SE o NUCLEO nao estiver associada ao usuario, deverah ser pesquisada as AREAS
+			 * que o usuario faz parte DESTE nucleo
+			 */
+			if (!nucleoAssociado) {
+
+				this.parametroRelatorioDTO.setAreas(this.areaServico.listaAreaToUsuarioAndNucleo(
+						this.parametroRelatorioDTO.getUsuarioLogado().getId(),
+						this.parametroRelatorioDTO.getNucleo().getId()));
+				/*
+				 * SE a lista de AREA estiver com tamanho 1, deverah ser setado a AREA da lista
+				 * no objeto AREA
+				 */
+				if (this.parametroRelatorioDTO.getAreas().size() == 1)
+					this.parametroRelatorioDTO.setArea(this.parametroRelatorioDTO.getAreas().iterator().next());
+			}
+
+			/*
+			 * SE a lista de areas estiver vazia, significa que o Usuario eh de NUCLEO
+			 */
+			if (this.parametroRelatorioDTO.getAreas().size() == 0) {
+				this.parametroRelatorioDTO
+						.setAreas(this.areaServico.findByNucleo(this.parametroRelatorioDTO.getNucleo().getId()));
+			}
+		}
+		
+		return this.parametroRelatorioDTO.getAreas();
+	}
 
 }
