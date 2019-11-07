@@ -5,19 +5,10 @@ import java.util.List;
 
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.Zona;
-import br.com.setebit.sgr.security.enums.Mes;
 import br.com.setebit.sgr.util.DataUtil;
 
 public class FiltroRelatorioDTO {
 	
-	private Mes mes = Mes.JANEIRO;
-
-	private Mes mesInicio = Mes.JANEIRO;
-
-	private Mes mesFim = Mes.JANEIRO;
-
-	private String usuario;
-
 	private int ano;
 
 	private List<Integer> anos;
@@ -34,12 +25,6 @@ public class FiltroRelatorioDTO {
 
 	private List<NucleoDTO> nucleos;
 
-	private int idNucleo;
-
-	private int idZona;
-
-	private int idArea;
-
 	private String nomeRelatorio;
 
 	private Usuario usuarioLogado;
@@ -48,17 +33,16 @@ public class FiltroRelatorioDTO {
 
 	private int anoFim;
 	
-	private List<Mes> meses = new ArrayList<Mes>();
+	private List<MesDto> meses = new ArrayList<MesDto>();
 
-	public FiltroRelatorioDTO(String nomeRelatorio, int ano, Zona zona, int idNucleo, int idArea) {
+	public FiltroRelatorioDTO(String nomeRelatorio, int ano, Zona zona) {
 		this.nomeRelatorio = nomeRelatorio;
 		this.ano = ano;
-		this.idNucleo = idNucleo;
-		this.idArea = idArea;
 		this.zonas = new ArrayList<ZonaDTO>();
 		this.areas = new ArrayList<AreaDTO>();
 		this.nucleos = new ArrayList<NucleoDTO>();
-		this.usuarioLogado = new Usuario();
+		this.usuarioLogado = new Usuario();		
+		this.meses = MesDto.pegarMeses();
 	}
 
 	public FiltroRelatorioDTO() {
@@ -66,7 +50,9 @@ public class FiltroRelatorioDTO {
 		this.usuarioLogado = new Usuario();
 		this.anos = DataUtil.pegarAnos();
 		this.anoInicio = DataUtil.pegarAnocorrente();
-		this.anoFim = DataUtil.pegarAnocorrente();
+		this.anoFim = this.anoInicio;	
+		this.ano = this.anoInicio;
+		this.meses = MesDto.pegarMeses();
 	}
 
 	public int getAno() {
@@ -75,22 +61,6 @@ public class FiltroRelatorioDTO {
 
 	public void setAno(int ano) {
 		this.ano = ano;
-	}
-
-	public int getIdNucleo() {
-		return idNucleo;
-	}
-
-	public void setIdNucleo(int idNucleo) {
-		this.idNucleo = idNucleo;
-	}
-
-	public int getIdArea() {
-		return idArea;
-	}
-
-	public void setIdArea(int idArea) {
-		this.idArea = idArea;
 	}
 
 	public String getNomeRelatorio() {
@@ -107,14 +77,6 @@ public class FiltroRelatorioDTO {
 
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
-	}
-
-	public int getIdZona() {
-		return idZona;
-	}
-
-	public void setIdZona(int idZona) {
-		this.idZona = idZona;
 	}
 
 	public List<ZonaDTO> getZonas() {
@@ -189,43 +151,11 @@ public class FiltroRelatorioDTO {
 		this.anoFim = anoFim;
 	}
 
-	public List<Mes> getMeses() {
+	public List<MesDto> getMeses() {
 		return meses;
 	}
 
-	public void setMeses(List<Mes> meses) {
+	public void setMeses(List<MesDto> meses) {
 		this.meses = meses;
-	}
-
-	public Mes getMes() {
-		return mes;
-	}
-
-	public void setMes(Mes mes) {
-		this.mes = mes;
-	}
-
-	public Mes getMesInicio() {
-		return mesInicio;
-	}
-
-	public void setMesInicio(Mes mesInicio) {
-		this.mesInicio = mesInicio;
-	}
-
-	public Mes getMesFim() {
-		return mesFim;
-	}
-
-	public void setMesFim(Mes mesFim) {
-		this.mesFim = mesFim;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
 	}
 }

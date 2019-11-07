@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.setebit.sgr.dto.ParametroRelatorioDTO;
+import br.com.setebit.sgr.dto.FiltroDTO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -27,7 +27,7 @@ public class RelatorioUtil {
 	}
 
 	
-	public JasperPrint gerarPdf(ParametroRelatorioDTO dto) throws JRException, SQLException {
+	public JasperPrint gerarPdf(FiltroDTO dto) throws JRException, SQLException {
 		Map<String, Object> parametros = setParamentros(dto);
 		// Pega o arquivo .jasper localizado em resources
 		InputStream jasperStream = this.getClass().getResourceAsStream("/jasper/" + dto.getNomeRelatorio());
@@ -39,12 +39,12 @@ public class RelatorioUtil {
 		return jasperPrint;
 	}
 
-	private Map<String, Object> setParamentros(ParametroRelatorioDTO dto) {
+	private Map<String, Object> setParamentros(FiltroDTO dto) {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("DATA_ANO", dto.getAno());
-		parametros.put("ZONA", dto.getIdZona());
-		parametros.put("NUCLEO", dto.getIdNucleo());
-		parametros.put("AREA", dto.getIdArea());
+		parametros.put("ZONA", dto.getZona().getId());
+		parametros.put("NUCLEO", dto.getNucleo().getId());
+		parametros.put("AREA", dto.getArea().getId());
 
 		return parametros;
 	}

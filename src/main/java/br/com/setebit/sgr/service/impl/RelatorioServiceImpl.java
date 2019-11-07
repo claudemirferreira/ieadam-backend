@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.setebit.sgr.dto.AreaDTO;
 import br.com.setebit.sgr.dto.FiltroRelatorioDTO;
 import br.com.setebit.sgr.dto.NucleoDTO;
-import br.com.setebit.sgr.dto.ParametroRelatorioDTO;
+import br.com.setebit.sgr.dto.FiltroDTO;
 import br.com.setebit.sgr.dto.ZonaDTO;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.jwt.JwtUser;
@@ -41,27 +41,16 @@ public class RelatorioServiceImpl implements RelatorioService {
 	@Autowired
 	private AreaServico areaServico;
 
-	@Autowired
-	private UsuarioZonaServico usuarioZonaServico;
-
-	@Autowired
-	private UsuarioNucleoServico usuarioNucleoServico;
-
-	@Autowired
-	private UsuarioAreaServico usuarioAreaServico;
-
 	private FiltroRelatorioDTO parametroRelatorioDTO;
 
 	@Override
-	public JasperPrint gerarPdf(ParametroRelatorioDTO dto) throws JRException, SQLException {
+	public JasperPrint gerarPdf(FiltroDTO dto) throws JRException, SQLException {
 		return relatorioUtil.gerarPdf(dto);
 	}
 
 	public FiltroRelatorioDTO garregarDadosTela() {
 		this.parametroRelatorioDTO = new FiltroRelatorioDTO();
-
 		this.parametroRelatorioDTO.setZonas(new ArrayList<ZonaDTO>());
-
 		JwtUser user = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		this.parametroRelatorioDTO.getUsuarioLogado().setId(Integer.parseInt(user.getId()));
 		this.parametroRelatorioDTO.getUsuarioLogado().setLogin(user.getUsername());
@@ -110,7 +99,7 @@ public class RelatorioServiceImpl implements RelatorioService {
 		 * devera listar todos os Nucleos desta zona e nao apenas o Nucleo associado.
 		 */
 		zonaAssociada = this.zonaServico.isUsuarioDeZona(this.parametroRelatorioDTO.getUsuarioLogado().getId(),
-				this.parametroRelatorioDTO.getZona().getIdZona());
+				this.parametroRelatorioDTO.getZona().getId());
 
 		this.parametroRelatorioDTO.setAreas(new ArrayList<AreaDTO>());
 
@@ -121,7 +110,7 @@ public class RelatorioServiceImpl implements RelatorioService {
 		if (!zonaAssociada) {
 			this.parametroRelatorioDTO.setNucleos(this.nucleoServico.listaNucleoToUsuarioAndZona(
 					this.parametroRelatorioDTO.getUsuarioLogado().getId(),
-					this.parametroRelatorioDTO.getZona().getIdZona()));
+					this.parametroRelatorioDTO.getZona().getId()));
 		}
 
 		/*
@@ -129,7 +118,7 @@ public class RelatorioServiceImpl implements RelatorioService {
 		 */
 		if (this.parametroRelatorioDTO.getNucleos().size() == 0) {
 			this.parametroRelatorioDTO
-					.setNucleos(this.nucleoServico.findByZona(this.parametroRelatorioDTO.getZona().getIdZona()));
+					.setNucleos(this.nucleoServico.findByZona(this.parametroRelatorioDTO.getZona().getId()));
 		}
 
 		/*

@@ -23,12 +23,12 @@ public class ZonaDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getIdZona() {
+	public int getId() {
 		return id;
 	}
 
-	public void setIdZona(int idZona) {
-		this.id = idZona;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {

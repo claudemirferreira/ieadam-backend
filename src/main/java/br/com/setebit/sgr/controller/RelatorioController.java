@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.setebit.sgr.dto.AreaDTO;
 import br.com.setebit.sgr.dto.FiltroRelatorioDTO;
 import br.com.setebit.sgr.dto.NucleoDTO;
-import br.com.setebit.sgr.dto.ParametroRelatorioDTO;
+import br.com.setebit.sgr.dto.FiltroDTO;
 import br.com.setebit.sgr.response.Response;
 import br.com.setebit.sgr.service.RelatorioService;
 import br.com.setebit.sgr.util.RelatorioUtil;
@@ -46,77 +46,6 @@ public class RelatorioController {
 	@Autowired
 	private RelatorioService service;
 
-	@PostMapping(path = "/pdf")
-	public void imprimir(@RequestBody ParametroRelatorioDTO dto, HttpServletResponse response)
-			throws JRException, SQLException, IOException {
-		// CALL proc_rel_fin_debito_financeiro ($P{DATA_ANO}, $P{ZONA} , $P{NUCLEO} ,
-		// $P{AREA}, 0);
-		// CALL proc_rel_fin_debito_financeiro ('2019', 1 , 17 , 13, 0);
-		dto.setAno("2019");
-		dto.setIdZona(1);
-		dto.setIdNucleo(17);
-		dto.setIdArea(13);
-		JasperPrint jasperPrint = relatorioUtil.gerarPdf(dto);
-		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "inline; filename=Relatorio.pdf");
-		// Faz a exportação do relatório para o HttpServletResponse
-		final OutputStream outStream = response.getOutputStream();
-		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-	}
-
-	@GetMapping(path = "/pdf")
-	public void imprimir(HttpServletResponse response) throws JRException, SQLException, IOException {
-		// CALL proc_rel_fin_debito_financeiro ($P{DATA_ANO}, $P{ZONA} , $P{NUCLEO} ,
-		// $P{AREA}, 0);
-		// CALL proc_rel_fin_debito_financeiro ('2019', 1 , 17 , 13, 0);
-		ParametroRelatorioDTO dto = new ParametroRelatorioDTO();
-		dto.setAno("2019");
-		dto.setIdZona(1);
-		dto.setIdNucleo(17);
-		dto.setIdArea(13);
-		dto.setNomeRelatorio("RelatorioDebitoFinanceiro.jasper");
-		JasperPrint jasperPrint = relatorioUtil.gerarPdf(dto);
-		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "inline; filename=Relatorio.pdf");
-		// Faz a exportação do relatório para o HttpServletResponse
-		final OutputStream outStream = response.getOutputStream();
-		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-	}
-
-	@RequestMapping(value = "/downloadPDF", method = RequestMethod.GET, produces = "application/pdf")
-	public ResponseEntity<byte[]> getPDF(HttpServletResponse response) throws JRException, SQLException, IOException {
-		System.out.println("########## getPDF");
-		try {
-			ParametroRelatorioDTO dto = new ParametroRelatorioDTO();
-			dto.setAno("2019");
-			dto.setIdZona(1);
-			dto.setIdNucleo(17);
-			dto.setIdArea(13);
-			dto.setNomeRelatorio("RelatorioDebitoFinanceiro.jasper");
-			JasperPrint jasperPrint = relatorioUtil.gerarPdf(dto);
-			response.setContentType("application/pdf");
-			response.setHeader("Content-Disposition", "inline; filename=Relatorio.pdf");
-			// Faz a exportação do relatório para o HttpServletResponse
-			final OutputStream outStream = response.getOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-
-			byte[] output = JasperExportManager.exportReportToPdf(jasperPrint);
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.parseMediaType("application/pdf"));
-			String filename = "relatorio.pdf";
-			headers.setContentDispositionFormData(filename, filename);
-			ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(output, headers, HttpStatus.OK);
-
-			return responseEntity;
-		} catch (FileNotFoundException e) {
-			System.err.println(e);
-		} catch (IOException e) {
-			System.err.println(e);
-		}
-		return null;
-	}
-
 	@GetMapping(value = "/carregarDados")
 	public ResponseEntity<Response<FiltroRelatorioDTO>> carregarDados() {
 		System.out.println("##############carregarDados()");
@@ -133,7 +62,6 @@ public class RelatorioController {
 		Response<List<NucleoDTO>> response = new Response<List<NucleoDTO>>();
 		response.setData(lista);
 		return ResponseEntity.ok(response);
-
 	}
 
 	@GetMapping(value = "/carregarArea/{idNucleo}")
@@ -146,12 +74,12 @@ public class RelatorioController {
 	}
 
 	@RequestMapping(value = "/geraPdf", method = RequestMethod.POST)
-	public ResponseEntity<byte[]> geraPdf(HttpServletResponse response, @RequestBody ParametroRelatorioDTO dto)
+	public ResponseEntity<byte[]> geraPdf(HttpServletResponse response, @RequestBody FiltroDTO dto)
 			throws JRException, SQLException, IOException {
 		System.out.println("########## getPDF");
 		try {
 
-			System.out.println(dto);
+			System.out.println(dto.toString());
 			
 			JasperPrint jasperPrint = relatorioUtil.gerarPdf(dto);
 			response.setContentType("application/pdf");
