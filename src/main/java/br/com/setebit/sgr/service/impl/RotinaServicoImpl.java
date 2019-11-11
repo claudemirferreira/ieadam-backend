@@ -47,4 +47,9 @@ public class RotinaServicoImpl implements RotinaServico, Serializable {
 	public List<Rotina> findByNomeLike(String nome) {
 		return this.rotinaRepositorio.findByNomeLike(nome);
 	}
+
+	@Override
+	public List<Rotina> listarRotinaPorPerfil(Integer idPerfil) {
+		return this.rotinaRepositorio.listarRotinaPorPerfil(idPerfil);
+	}
 }

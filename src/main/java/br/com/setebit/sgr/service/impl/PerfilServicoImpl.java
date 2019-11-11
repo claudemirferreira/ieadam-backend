@@ -3,11 +3,13 @@ package br.com.setebit.sgr.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import br.com.setebit.sgr.repository.PerfilRepositorio;
 import br.com.setebit.sgr.repository.PerfilRepositorioSql;
 import br.com.setebit.sgr.security.entity.Perfil;
+import br.com.setebit.sgr.security.jwt.JwtUser;
 import br.com.setebit.sgr.service.PerfilServico;
 
 @Service
@@ -42,5 +44,16 @@ public class PerfilServicoImpl implements PerfilServico {
 	@Override
 	public List<Perfil> listaPerfilPorSistemaPorUsuario(int sistemaId, int usuarioId) {
 		return this.perfilRepositorioSql.listaPerfilPorSistemaPorUsuario(sistemaId, usuarioId);
+	}
+
+	@Override
+	public List<Perfil> listarPerfilUsuario(Integer idSistema, Integer idUsuario) {
+		return this.perfilRepositorio.listarPerfilUsuario(idSistema, idUsuario);
+	}
+
+	@Override
+	public List<Perfil> listarPerfil() {
+		JwtUser user = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return this.perfilRepositorio.listarPerfilUsuario(2, Integer.parseInt(user.getId()));
 	}
 }

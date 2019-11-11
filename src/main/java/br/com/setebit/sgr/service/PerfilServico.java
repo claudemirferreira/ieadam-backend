@@ -16,4 +16,8 @@ public interface PerfilServico {
 
 	public List<Perfil> listaPerfilPorSistemaPorUsuario(int sistemaId, int usuarioId);
 
+	public List<Perfil> listarPerfilUsuario(Integer idSistema, Integer idUsuario);
+	
+	public List<Perfil> listarPerfil();
+
 }

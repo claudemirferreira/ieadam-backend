@@ -28,5 +28,10 @@ public interface RotinaRepositorio extends JpaRepository<Rotina, Long> {
 
 	@Query("select u from Rotina u where u.sistema = :sistema and u.nome like :nome")
 	public List<Rotina> findBySistemaByNomeLike(@Param("sistema") Sistema sistema, @Param("nome") String nome);
+	
+	@Query(value = "select a.* from saa_rotina a, saa_perfil_rotina b \n" + 
+			" where a.id_rotina = b.id_rotina \n" + 
+			" and b.id_perfil = :idPerfil", nativeQuery = true)
+	public List<Rotina> listarRotinaPorPerfil(@Param("idPerfil") Integer idPerfil);
 
 }

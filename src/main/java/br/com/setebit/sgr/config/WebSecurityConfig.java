@@ -63,10 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js",
-                        "http://www.suframa.gov.br/**"
+                        "/**/*.js"
                 ).permitAll()
-                .antMatchers("/api/auth/**", "/api/relatorio/**").permitAll()
+                .antMatchers("/api/auth/**", "/api/**").permitAll()
                 //.antMatchers("**").permitAll()
                 .anyRequest().authenticated();
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

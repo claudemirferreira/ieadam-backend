@@ -6,29 +6,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.setebit.sgr.dto.PerfilDTO;
+import br.com.setebit.sgr.dto.RotinaDTO;
 import br.com.setebit.sgr.response.Response;
-import br.com.setebit.sgr.service.PerfilServico;
+import br.com.setebit.sgr.service.RotinaServico;
 
 @RestController
-@RequestMapping("/api/perfil")
+@RequestMapping("/api/rotina")
 @CrossOrigin(origins = "*")
-public class PerfilController {
+public class RotinaController {
 
 	@Autowired
-	private PerfilServico perfilServico;
+	private RotinaServico servico;
 
-	@GetMapping(value = "/usuario")
-	public ResponseEntity<Response<List<PerfilDTO>>> listarPerfilUsuario() {
+	@GetMapping(value = "/perfil/{idPerfil}")
+	public ResponseEntity<Response<List<RotinaDTO>>> listarPerfilUsuario(@PathVariable("idPerfil") Integer idPerfil) {
 		System.out.println("###############listarPerfilUsuario");
-		Response<List<PerfilDTO>> response = new Response<List<PerfilDTO>>();
-		List<PerfilDTO> list = PerfilDTO.toDTO(perfilServico.listarPerfil());
+		Response<List<RotinaDTO>> response = new Response<List<RotinaDTO>>();
+		List<RotinaDTO> list = RotinaDTO.toDTO(servico.listarRotinaPorPerfil(idPerfil));
 		response.setData(list);
 		return ResponseEntity.ok(response);
-		
+
 	}
 
 }

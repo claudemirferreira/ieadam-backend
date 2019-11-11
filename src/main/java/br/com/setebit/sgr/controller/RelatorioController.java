@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +13,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.setebit.sgr.dto.AreaDTO;
+import br.com.setebit.sgr.dto.FiltroDTO;
 import br.com.setebit.sgr.dto.FiltroRelatorioDTO;
 import br.com.setebit.sgr.dto.NucleoDTO;
-import br.com.setebit.sgr.dto.FiltroDTO;
+import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.response.Response;
+import br.com.setebit.sgr.service.PerfilServico;
 import br.com.setebit.sgr.service.RelatorioService;
 import br.com.setebit.sgr.util.RelatorioUtil;
 import net.sf.jasperreports.engine.JRException;
@@ -42,6 +41,9 @@ public class RelatorioController {
 
 	@Autowired
 	private RelatorioUtil relatorioUtil;
+	
+	@Autowired
+	private PerfilServico perfilServico;
 
 	@Autowired
 	private RelatorioService service;
@@ -80,7 +82,7 @@ public class RelatorioController {
 		try {
 
 			System.out.println(dto.toString());
-			
+
 			JasperPrint jasperPrint = relatorioUtil.gerarPdf(dto);
 			response.setContentType("application/pdf");
 			response.setHeader("Content-Disposition", "inline; filename=Relatorio.pdf");
@@ -103,6 +105,15 @@ public class RelatorioController {
 			System.err.println(e);
 		}
 		return null;
+	}
+	
+	@GetMapping(value = "/perfilUsuario")
+	public ResponseEntity<Response<List<PerfilDTO>>> listarPerfilUsuario() {
+		System.out.println("###############listarPerfilUsuario");
+		Response<List<PerfilDTO>> response = new Response<List<PerfilDTO>>();
+		List<PerfilDTO> list = PerfilDTO.toDTO(perfilServico.listarPerfil());
+		response.setData(list);
+		return ResponseEntity.ok(response);
 	}
 
 }

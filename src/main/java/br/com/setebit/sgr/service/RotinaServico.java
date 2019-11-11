@@ -16,4 +16,6 @@ public interface RotinaServico {
 
 	public List<Rotina> findByNomeLike(String nome);
 
+	public List<Rotina> listarRotinaPorPerfil(Integer idPerfil);
+
 }
