@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.klayrocha</groupId>
-	<artifactId>HelpDesk</artifactId>
+	<groupId>br.com.setebit</groupId>
+	<artifactId>ieadam-service-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>HelpDesk</name>
-	<description>Project HelpDesk</description>
+	<name>ieadam-service-app</name>
+	<description>Project ieadam-service.app</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,7 +24,6 @@
 		 <jjwt.version>0.7.0</jjwt.version>
 		<java.version>1.8</java.version>
 	</properties>
-
 
 	<dependencies>
 	

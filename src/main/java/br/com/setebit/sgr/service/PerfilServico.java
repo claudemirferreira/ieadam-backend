@@ -2,6 +2,7 @@ package br.com.setebit.sgr.service;
 
 import java.util.List;
 
+import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.security.entity.Perfil;
 
 public interface PerfilServico {
@@ -19,5 +20,7 @@ public interface PerfilServico {
 	public List<Perfil> listarPerfilUsuario(Integer idSistema, Integer idUsuario);
 	
 	public List<Perfil> listarPerfil();
+	
+	public List<PerfilDTO> listarPerfilDto();
 
 }

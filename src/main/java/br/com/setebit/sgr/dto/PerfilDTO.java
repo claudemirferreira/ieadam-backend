@@ -13,6 +13,8 @@ public class PerfilDTO implements Serializable {
 	private int id;
 
 	private String nome;
+	
+	private List<RotinaDTO> rotinas = new ArrayList<RotinaDTO>();
 
 	public PerfilDTO() {
 	}
@@ -32,12 +34,19 @@ public class PerfilDTO implements Serializable {
 	}
 
 	public String getNome() {
-		//if (this.nome.equals(anObject))
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<RotinaDTO> getRotinas() {
+		return rotinas;
+	}
+
+	public void setRotinas(List<RotinaDTO> rotinas) {
+		this.rotinas = rotinas;
 	}
 
 	public static PerfilDTO toDTO(Perfil entity) {

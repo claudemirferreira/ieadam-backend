@@ -25,7 +25,7 @@ public class PerfilController {
 	public ResponseEntity<Response<List<PerfilDTO>>> listarPerfilUsuario() {
 		System.out.println("###############listarPerfilUsuario");
 		Response<List<PerfilDTO>> response = new Response<List<PerfilDTO>>();
-		List<PerfilDTO> list = PerfilDTO.toDTO(perfilServico.listarPerfil());
+		List<PerfilDTO> list = perfilServico.listarPerfilDto();
 		response.setData(list);
 		return ResponseEntity.ok(response);
 		

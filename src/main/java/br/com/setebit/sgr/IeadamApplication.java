@@ -14,6 +14,7 @@ import br.com.setebit.sgr.security.enums.ProfileEnum;
 public class IeadamApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(IeadamApplication.class, args);
 	}
 
