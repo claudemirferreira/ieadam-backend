@@ -2,6 +2,9 @@ package br.com.setebit.sgr.util;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,12 +43,34 @@ public class RelatorioUtil {
 	}
 
 	private Map<String, Object> setParamentros(FiltroDTO dto) {
+		
+		Calendar dataAno = new GregorianCalendar( Integer.parseInt(dto.getAno()), dto.getMesInicio().getId(), 1);
+		
+		Calendar dataMesAnoInicio = new GregorianCalendar(
+				Integer.parseInt( dto.getAnoInicio()), dto.getMesInicio().getId(), 1);
+		
+		Calendar dataMesAnoFim = new GregorianCalendar(
+				Integer.parseInt(dto.getAnoFim()), 
+				dto.getMesFim().getId(), 
+				1);
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
 		Map<String, Object> parametros = new HashMap<String, Object>();
+
+		parametros.put("DATA_MES_ANO_INICIO", dateFormat.format(dataMesAnoInicio.getTime()));
+		parametros.put("DATA_MES_ANO_FIM", dateFormat.format(dataMesAnoFim.getTime()));
+		
+		parametros.put("MES_ANO_INICIO", IEADAMUtils.getMesByIndice(dto.getMesInicio().getId()) + "/" + dto.getAnoInicio());
+		parametros.put("MES_ANO_FIM", IEADAMUtils.getMesByIndice(dto.getMesFim().getId()) + "/" + dto.getAnoFim());
+		
+		parametros.put("DATA_MES_ANO", dateFormat.format(dataAno.getTime()));
+		parametros.put("MES_ANO", IEADAMUtils.getMesByIndice(dto.getMes().getId())+"/"+dto.getAno());
 		parametros.put("DATA_ANO", dto.getAno());
 		parametros.put("ZONA", dto.getZona().getId());
 		parametros.put("NUCLEO", dto.getNucleo().getId());
 		parametros.put("AREA", dto.getArea().getId());
-
+		
 		return parametros;
 	}
 	

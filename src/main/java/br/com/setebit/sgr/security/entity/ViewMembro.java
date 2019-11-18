@@ -21,25 +21,25 @@ public class ViewMembro {
 	@Column
 	private String membro;
 	
-	@Column
+	@Column(name = "id_area")
 	private Integer idArea;
 
 	@Column
 	private String area;
 	
-	@Column
+	@Column(name = "id_nucleo")
 	private Integer idNucleo;
 
 	@Column
 	private String nucleo;
 
-	@Column
+	@Column(name = "id_zona")
 	private Integer idZona;
 
 	@Column
 	private String zona;
 	
-	@Column
+	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 	
 	@Column
@@ -57,28 +57,22 @@ public class ViewMembro {
 	@Column
 	private String cidade;
 
-//	@Column
-//	private String escolaridade;
-
-//	@Column
-//	private String profissao;
-
-	@Column
+	@Column(name = "nome_pai")
 	private String nomePai;
 	
-	@Column
+	@Column(name = "nome_mae")
 	private String nomeMae;
 	
-	@Column
+	@Column(name = "estado_civil")
 	private String estadoCivil;
 
 	@Column
 	private String conjuge;
 
-	@Column
+	@Column(name = "data_cadastro")
 	private Date dataCadastro;
 	
-	@Column
+	@Column(name = "data_batismo")
 	private Date dataBatismo;
 
 	@Column

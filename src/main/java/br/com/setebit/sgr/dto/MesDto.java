@@ -8,20 +8,20 @@ public class MesDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+	private int id;
 	
 	private String nome;
 
-	public MesDto(Integer id, String nome) {
+	public MesDto(int id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

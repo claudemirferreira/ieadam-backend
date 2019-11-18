@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import br.com.setebit.sgr.dto.FiltroDTO;
 import br.com.setebit.sgr.security.entity.ViewMembro;
 
 @SuppressWarnings("unchecked")
@@ -19,23 +20,23 @@ public class MembroRepositorioSqlImpl extends RepositorioGenerico implements Mem
 	private EntityManager entityManager;
 
 	@Override
-	public List<ViewMembro> listarMembrosByFiltros(ViewMembro viewMembro) {
+	public List<ViewMembro> listarMembrosByFiltros(FiltroDTO filtroDTO) {
 
 		StringBuilder sb = new StringBuilder();
 		List<String> condictions = new ArrayList<String>();
 
 		sb.append(" select vm from ViewMembro vm ");
-		if (notEmpty(viewMembro)) {
-			if (notEmpty(viewMembro.getMembro())) {
+		if (notEmpty(filtroDTO)) {
+			if (notEmpty(filtroDTO.getMembro())) {
 				condictions.add(" vm.membro  like :membro ");
 			}
-			if (notEmpty(viewMembro.getIdArea()) && viewMembro.getIdArea() >= 0) {
+			if (notEmpty(filtroDTO.getArea().getId()) && filtroDTO.getArea().getId() >= 0) {
 				condictions.add(" vm.idArea = :idArea ");
 			}
-			if (notEmpty(viewMembro.getIdNucleo()) && viewMembro.getIdNucleo() >= 0) {
+			if (notEmpty(filtroDTO.getNucleo().getId()) && filtroDTO.getNucleo().getId() >= 0) {
 				condictions.add(" vm.idNucleo = :idNucleo ");
 			}
-			if (notEmpty(viewMembro.getIdZona()) && viewMembro.getIdZona() >= 0) {
+			if (notEmpty(filtroDTO.getZona().getId()) && filtroDTO.getZona().getId() >= 0) {
 				condictions.add(" vm.idZona = :idZona ");
 			}
 		}
@@ -44,18 +45,18 @@ public class MembroRepositorioSqlImpl extends RepositorioGenerico implements Mem
 
 		Query query = entityManager.createQuery(generateHql(sb.toString(), condictions) + orderBy);
 
-		if (notEmpty(viewMembro)) {
-			if (notEmpty(viewMembro.getMembro())) {
-				query.setParameter("membro", viewMembro.getMembro() + "%");
+		if (notEmpty(filtroDTO)) {
+			if (notEmpty(filtroDTO.getMembro())) {
+				query.setParameter("membro", filtroDTO.getMembro() + "%");
 			}
-			if (notEmpty(viewMembro.getIdArea()) && viewMembro.getIdArea() >= 0) {
-				query.setParameter("idArea", viewMembro.getIdArea());
+			if (notEmpty(filtroDTO.getArea().getId()) && filtroDTO.getArea().getId() >= 0) {
+				query.setParameter("idArea", filtroDTO.getArea().getId());
 			}
-			if (notEmpty(viewMembro.getIdNucleo()) && viewMembro.getIdNucleo() >= 0) {
-				query.setParameter("idNucleo", viewMembro.getIdNucleo());
+			if (notEmpty(filtroDTO.getNucleo().getId()) && filtroDTO.getNucleo().getId() >= 0) {
+				query.setParameter("idNucleo", filtroDTO.getNucleo().getId());
 			}
-			if (notEmpty(viewMembro.getIdZona()) && viewMembro.getIdZona() >= 0) {
-				query.setParameter("idZona", viewMembro.getIdZona());
+			if (notEmpty(filtroDTO.getZona().getId()) && filtroDTO.getZona().getId() >= 0) {
+				query.setParameter("idZona", filtroDTO.getZona().getId());
 			}
 		}
 
