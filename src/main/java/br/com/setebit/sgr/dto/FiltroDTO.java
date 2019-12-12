@@ -1,6 +1,11 @@
 package br.com.setebit.sgr.dto;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import br.com.setebit.sgr.util.IEADAMUtils;
 
 public class FiltroDTO implements Serializable {
 
@@ -17,6 +22,7 @@ public class FiltroDTO implements Serializable {
 	private MesDto mes;
 	private MesDto mesInicio;
 	private MesDto mesFim;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	public ZonaDTO getZona() {
 		return zona;
@@ -106,9 +112,81 @@ public class FiltroDTO implements Serializable {
 		this.mes = mes;
 	}
 
+	public String getDataMesAnoInicio() {
+		try {
+			Calendar dataMesAnoInicio = new GregorianCalendar(Integer.parseInt(getAnoInicio()), getMesInicio().getId(),
+					1);
+			return dateFormat.format(dataMesAnoInicio.getTime());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	public String getDataMesAnoFim() {
+		try {
+			Calendar dataMesAnoFim = new GregorianCalendar(Integer.parseInt(getAnoFim()), getMesFim().getId(), 1);
+			return dateFormat.format(dataMesAnoFim.getTime());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	public String getMesAnoInicio() {
+		try {
+			return IEADAMUtils.getMesByIndice(getMesInicio().getId()) + "/" + getAnoInicio();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	public String getMesAnoFim() {
+		try {
+			return IEADAMUtils.getMesByIndice(getMesFim().getId()) + "/" + getAnoFim();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	public String getMesAno() {
+		try {
+			return IEADAMUtils.getMesByIndice(getMes().getId()) + "/" + getAno();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	public String getDataAno() {
+		try {
+			Calendar dataAno = new GregorianCalendar(Integer.parseInt(getAno()), getMesInicio().getId(), 1);
+			return dateFormat.format(dataAno.getTime());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return null;
+	}
+
 	public String toString() {
-		return "ano = " + ano + "; zona.getId=" + zona.getId() + "; nucleo.getId=" + nucleo.getId() + "; area.getId="
-				+ area.getId() + "; nome=" + nomeRelatorio;
+		return "========================================================"
+				+ "\n DATA_MES_ANO = " + getDataAno() 
+				+ "\n DATA_MES_ANO_INICIO = " + getDataMesAnoInicio()
+				+ "\n DATA_MES_ANO_FIM = " + getDataMesAnoFim()
+				+ "\n MES_ANO_INICIO = " + getMesAnoInicio()
+				+ "\n MES_ANO_FIM = " + getMesAnoFim()
+				+ "\n MES_ANO = " + getMesAno()
+				+ "\n DATA_ANO = " + getAno()
+				+ "\n ZONA =" + zona.getId() 
+				+ "\n NUCLEO=" + nucleo.getId() 
+				+ "\n AREA="	+ area.getId() 
+				+ "\n NOME=" + nomeRelatorio;
+		//CALL proc_rel_fin_proventos_pastoral ($P{DATA_MES_ANO}, $P{ZONA} , $P{NUCLEO} , $P{AREA}, 0);
 	}
 
 }

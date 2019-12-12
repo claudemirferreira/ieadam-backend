@@ -15,6 +15,14 @@
 		@P_MESANOFIM = $P{data_fim},
 		@P_ID_AREA = $P{area};
 		
+2 - proc_rel_fin_proventos_pastoral -> provento-pastoral ok
+3 - proc_rel_fin_saldo_congregacao -> saldo-congregacao ok
+4 - proc_rel_sec_debito_pastoral debito pastoral ok
+5 - proc_rel_sec_debito_secretaria -> debito-secretaria ok 
+ - proc_rel_fin_debito_financeiro -> ok
+
+6 - proc_rel_sec_estatistico -> 
+		
 	Verificar com o dryen
 	
 	

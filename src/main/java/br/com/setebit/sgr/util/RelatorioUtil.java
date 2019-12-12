@@ -26,10 +26,11 @@ public class RelatorioUtil {
 	@Autowired
 	private DataSource dataSource;
 
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 	public RelatorioUtil() {
 	}
 
-	
 	public JasperPrint gerarPdf(FiltroDTO dto) throws JRException, SQLException {
 		Map<String, Object> parametros = setParamentros(dto);
 		// Pega o arquivo .jasper localizado em resources
@@ -43,35 +44,28 @@ public class RelatorioUtil {
 	}
 
 	private Map<String, Object> setParamentros(FiltroDTO dto) {
-		
-		Calendar dataAno = new GregorianCalendar( Integer.parseInt(dto.getAno()), dto.getMesInicio().getId(), 1);
-		
-		Calendar dataMesAnoInicio = new GregorianCalendar(
-				Integer.parseInt( dto.getAnoInicio()), dto.getMesInicio().getId(), 1);
-		
-		Calendar dataMesAnoFim = new GregorianCalendar(
-				Integer.parseInt(dto.getAnoFim()), 
-				dto.getMesFim().getId(), 
-				1);
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		Map<String, Object> parametros = new HashMap<String, Object>();
 
-		parametros.put("DATA_MES_ANO_INICIO", dateFormat.format(dataMesAnoInicio.getTime()));
-		parametros.put("DATA_MES_ANO_FIM", dateFormat.format(dataMesAnoFim.getTime()));
+		parametros.put("DATA_MES_ANO", dto.getDataAno());
+
+		parametros.put("DATA_MES_ANO_INICIO", dto.getDataMesAnoInicio());
 		
-		parametros.put("MES_ANO_INICIO", IEADAMUtils.getMesByIndice(dto.getMesInicio().getId()) + "/" + dto.getAnoInicio());
-		parametros.put("MES_ANO_FIM", IEADAMUtils.getMesByIndice(dto.getMesFim().getId()) + "/" + dto.getAnoFim());
+		parametros.put("DATA_MES_ANO_FIM", dto.getDataMesAnoFim());
+
+		parametros.put("MES_ANO_INICIO",dto.getMesAnoInicio());
 		
-		parametros.put("DATA_MES_ANO", dateFormat.format(dataAno.getTime()));
-		parametros.put("MES_ANO", IEADAMUtils.getMesByIndice(dto.getMes().getId())+"/"+dto.getAno());
+		parametros.put("MES_ANO_FIM", dto.getMesAnoFim());
+		
+		parametros.put("MES_ANO",dto.getMesAnoInicio());	
+		
 		parametros.put("DATA_ANO", dto.getAno());
 		parametros.put("ZONA", dto.getZona().getId());
 		parametros.put("NUCLEO", dto.getNucleo().getId());
 		parametros.put("AREA", dto.getArea().getId());
 		
+		System.out.println(dto.toString());
+
 		return parametros;
 	}
-	
 }

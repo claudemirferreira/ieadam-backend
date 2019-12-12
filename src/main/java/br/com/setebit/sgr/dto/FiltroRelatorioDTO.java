@@ -33,6 +33,8 @@ public class FiltroRelatorioDTO {
 
 	private int anoFim;
 	
+	private MesDto mesInicio;
+	
 	private List<MesDto> meses = new ArrayList<MesDto>();
 
 	public FiltroRelatorioDTO(String nomeRelatorio, int ano, Zona zona) {
@@ -53,6 +55,7 @@ public class FiltroRelatorioDTO {
 		this.anoFim = this.anoInicio;	
 		this.ano = this.anoInicio;
 		this.meses = MesDto.pegarMeses();
+		this.mesInicio = new MesDto(0,"Janeiro");
 	}
 
 	public int getAno() {
@@ -157,5 +160,13 @@ public class FiltroRelatorioDTO {
 
 	public void setMeses(List<MesDto> meses) {
 		this.meses = meses;
+	}
+
+	public MesDto getMesInicio() {
+		return mesInicio;
+	}
+
+	public void setMesInicio(MesDto mesInicio) {
+		this.mesInicio = mesInicio;
 	}
 }
