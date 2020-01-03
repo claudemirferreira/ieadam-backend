@@ -11,8 +11,12 @@ import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.dto.RotinaDTO;
 import br.com.setebit.sgr.repository.PerfilRepositorio;
 import br.com.setebit.sgr.repository.PerfilRepositorioSql;
+import br.com.setebit.sgr.repository.PerfilRotinaRepositorioSql;
 import br.com.setebit.sgr.repository.RotinaRepositorio;
+import br.com.setebit.sgr.repository.ViewPerfilRotinaRepositorioSql;
 import br.com.setebit.sgr.security.entity.Perfil;
+import br.com.setebit.sgr.security.entity.Rotina;
+import br.com.setebit.sgr.security.entity.ViewPerfilRotina;
 import br.com.setebit.sgr.security.jwt.JwtUser;
 import br.com.setebit.sgr.service.PerfilServico;
 
@@ -27,6 +31,9 @@ public class PerfilServicoImpl implements PerfilServico {
 	
 	@Autowired
 	private RotinaRepositorio rotinaRepositorio;
+	
+	@Autowired
+	private PerfilRotinaRepositorioSql perfilRotinaRepositorioSql;
 
 	@Override
 	public List<Perfil> listarTodos() {
@@ -79,5 +86,31 @@ public class PerfilServicoImpl implements PerfilServico {
 		}
 		
 		return listDto;
+	}
+	
+	public PerfilDTO listarPerfilDto(Long idPerfil) {		
+		Perfil perfil = perfilRepositorioSql.getPerfil(idPerfil);
+		PerfilDTO perfilDTO = PerfilDTO.toDTO(perfil);
+		perfilDTO.setRotinas( RotinaDTO.toDTO( rotinaRepositorio.findByPerfil(perfil)));		
+		return perfilDTO;
+	}
+
+	@Override
+	public List<RotinaDTO> listarRotinaPorPerfil(int idPerfil) {
+		List<RotinaDTO> list = RotinaDTO.toDTO(rotinaRepositorio.findAll());
+		List<RotinaDTO> dtos = new ArrayList<RotinaDTO>();
+		Rotina rotina;
+		for (RotinaDTO rotinaDTO : list) {	
+			try {
+				rotina = perfilRotinaRepositorioSql.existeRotinaAssociada(idPerfil, rotinaDTO.getId());
+				if(rotina != null)
+					rotinaDTO.setChecked(true);
+				
+				
+			} catch (Exception e) {
+			}
+			dtos.add(rotinaDTO);
+		}		
+		return dtos;
 	}
 }

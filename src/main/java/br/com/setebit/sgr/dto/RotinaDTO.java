@@ -17,6 +17,8 @@ public class RotinaDTO implements Serializable {
 	private String acao;
 
 	private String imagem;
+	
+	private boolean checked;
 
 	public RotinaDTO() {
 	}
@@ -25,6 +27,7 @@ public class RotinaDTO implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.imagem = imagem;
+		this.checked = false;
 		
 		if(acao.equals("relatorioSaldoCongregacao.init")) {
 			this.setAcao("saldo-congregacao");
@@ -107,6 +110,14 @@ public class RotinaDTO implements Serializable {
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 	
 	public static RotinaDTO toDTO(Rotina entity) {

@@ -10,7 +10,7 @@ public class PerfilDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private Long id;
 
 	private String nome;
 	
@@ -19,17 +19,17 @@ public class PerfilDTO implements Serializable {
 	public PerfilDTO() {
 	}
 
-	public PerfilDTO(int id, String nome) {
+	public PerfilDTO(Long id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

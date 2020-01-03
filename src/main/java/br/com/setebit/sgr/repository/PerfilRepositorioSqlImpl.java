@@ -22,4 +22,9 @@ public class PerfilRepositorioSqlImpl implements PerfilRepositorioSql {
 				+ "where i.id_perfil = b.id_perfil and i.id_sistema = " + sistemaId + " and b.id_usuario =  "
 				+ usuarioId, Perfil.class).getResultList();
 	}
+	
+	public Perfil getPerfil(Long id) {
+		return (Perfil) entityManager.createNativeQuery("SELECT distinct i.* FROM saa_perfil i  "
+				+ "where i.id_perfil = " + id , Perfil.class).getSingleResult();
+	}
 }
