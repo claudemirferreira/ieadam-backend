@@ -63,6 +63,7 @@ public class RelatorioUtil {
 		parametros.put("ZONA", dto.getZona().getId());
 		parametros.put("NUCLEO", dto.getNucleo().getId());
 		parametros.put("AREA", dto.getArea().getId());
+		parametros.put("MEMBRO", dto.getIdMembro());
 		
 		System.out.println(dto.toString());
 

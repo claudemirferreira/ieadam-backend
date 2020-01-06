@@ -22,6 +22,7 @@ public class FiltroDTO implements Serializable {
 	private MesDto mes;
 	private MesDto mesInicio;
 	private MesDto mesFim;
+	private int idMembro;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	public ZonaDTO getZona() {
@@ -110,6 +111,14 @@ public class FiltroDTO implements Serializable {
 
 	public void setMes(MesDto mes) {
 		this.mes = mes;
+	}
+
+	public int getIdMembro() {
+		return idMembro;
+	}
+
+	public void setIdMembro(int idMembro) {
+		this.idMembro = idMembro;
 	}
 
 	public String getDataMesAnoInicio() {

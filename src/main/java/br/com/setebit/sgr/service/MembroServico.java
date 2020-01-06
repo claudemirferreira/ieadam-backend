@@ -16,8 +16,10 @@ public interface MembroServico {
 
 	public void remover(Membro membro);
 
-	public List<Membro> listarMembrosPorNomeLike(@Param("nome") String nome);
+	public List<Membro> listarMembrosPorNomeLike( String nome);
 
 	public List<ViewMembro> listarMembrosByFiltros(FiltroDTO filtroDTO);
+	
+	public ViewMembro findById(int idMembro);
 
 }

@@ -47,12 +47,15 @@ public class MembroServicoImpl implements MembroServico {
 		if (filtroDTO.getArea().getId() > 0) {
 			filtroDTO.getZona().setId(0);
 			filtroDTO.getNucleo().setId(0);
-
 		} else if (filtroDTO.getNucleo().getId() > 0) {
 			filtroDTO.getZona().setId(0);
 			filtroDTO.getArea().setId(0);
 		}
 
 		return this.repositorioSql.listarMembrosByFiltros(filtroDTO);
+	}
+	
+	public ViewMembro findById(int idMembro) {
+		return this.repositorioSql.findById(idMembro);
 	}
 }

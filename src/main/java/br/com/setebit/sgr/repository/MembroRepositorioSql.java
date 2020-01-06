@@ -8,5 +8,7 @@ import br.com.setebit.sgr.security.entity.ViewMembro;
 public interface MembroRepositorioSql {
 
 	public List<ViewMembro> listarMembrosByFiltros(FiltroDTO filtroDTO);
+	
+	public ViewMembro findById(int idMembro);
 
 }

@@ -33,10 +33,10 @@ public class MembroRepositorioSqlImpl extends RepositorioGenerico implements Mem
 			if (notEmpty(filtroDTO.getArea().getId()) && filtroDTO.getArea().getId() >= 0) {
 				condictions.add(" vm.idArea = :idArea ");
 			}
-			if (notEmpty(filtroDTO.getNucleo().getId()) && filtroDTO.getNucleo().getId() >= 0) {
+			if (notEmpty(filtroDTO.getNucleo().getId()) && filtroDTO.getNucleo().getId() > 0) {
 				condictions.add(" vm.idNucleo = :idNucleo ");
 			}
-			if (notEmpty(filtroDTO.getZona().getId()) && filtroDTO.getZona().getId() >= 0) {
+			if (notEmpty(filtroDTO.getZona().getId()) && filtroDTO.getZona().getId() > 0) {
 				condictions.add(" vm.idZona = :idZona ");
 			}
 		}
@@ -52,15 +52,40 @@ public class MembroRepositorioSqlImpl extends RepositorioGenerico implements Mem
 			if (notEmpty(filtroDTO.getArea().getId()) && filtroDTO.getArea().getId() >= 0) {
 				query.setParameter("idArea", filtroDTO.getArea().getId());
 			}
-			if (notEmpty(filtroDTO.getNucleo().getId()) && filtroDTO.getNucleo().getId() >= 0) {
+			if (notEmpty(filtroDTO.getNucleo().getId()) && filtroDTO.getNucleo().getId() > 0) {
 				query.setParameter("idNucleo", filtroDTO.getNucleo().getId());
 			}
-			if (notEmpty(filtroDTO.getZona().getId()) && filtroDTO.getZona().getId() >= 0) {
+			if (notEmpty(filtroDTO.getZona().getId()) && filtroDTO.getZona().getId() > 0) {
 				query.setParameter("idZona", filtroDTO.getZona().getId());
 			}
 		}
 
+		System.out.println("pesquisa de membros =========");
+		System.out.println("membro = " + filtroDTO.getMembro() + "%");
+		System.out.println("idArea = " + filtroDTO.getArea().getId());
+		System.out.println("idNucleo = " + filtroDTO.getNucleo().getId());
+		System.out.println("idZona = " + filtroDTO.getZona().getId());
+		
 		return query.getResultList();
+	}
+	
+	public ViewMembro findById(int idMembro) {
+
+		StringBuilder sb = new StringBuilder();
+		List<String> condictions = new ArrayList<String>();
+
+		sb.append(" select vm from ViewMembro vm ");
+		condictions.add(" vm.idMembro = :idMembro ");
+
+		String orderBy = " order by vm.membro ";
+
+		Query query = entityManager.createQuery(generateHql(sb.toString(), condictions) + orderBy);
+
+		query.setParameter("idMembro", idMembro);
+
+		System.out.println("pesquisa de membros =========");
+		
+		return (ViewMembro) query.getSingleResult();
 	}
 
 }
