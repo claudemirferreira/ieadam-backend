@@ -183,6 +183,13 @@ public class FiltroDTO implements Serializable {
 	}
 
 	public String toString() {
+		if (zona == null)
+			zona = new ZonaDTO();
+		if (nucleo == null)
+			nucleo = new NucleoDTO();
+		if (area == null)
+			area = new AreaDTO();
+		
 		return "========================================================"
 				+ "\n DATA_MES_ANO = " + getDataAno() 
 				+ "\n DATA_MES_ANO_INICIO = " + getDataMesAnoInicio()
