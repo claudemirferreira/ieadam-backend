@@ -56,6 +56,8 @@ public class RelatorioUtil {
 		parametros.put("MES_ANO_INICIO",dto.getMesAnoInicio());
 		
 		parametros.put("MES_ANO_FIM", dto.getMesAnoFim());
+		parametros.put("MESANOFIM", dto.getMesAnoFim());
+		parametros.put("MESANOFIM", dto.getMesAnoInicio());
 		
 		parametros.put("MES_ANO",dto.getMesAnoInicio());	
 		

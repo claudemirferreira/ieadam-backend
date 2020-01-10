@@ -20,3 +20,26 @@ password = root12!@
 6 - RELATORIO MEMBROS;
 7 - PDF VAZIO;
 8 - LAYOUT;
+
+-----
+relatorio de membro
+	- remover o botao imprimir da listagem
+	- incluir todos os campos no detalhe
+Geral 
+	- incluir o botao voltar em todas as telas.
+	- Layout dos campos de todas as telas.
+		- tamanho dos campos.
+		- Cores do sistema
+		- icones
+		- logo
+	
+---RELATORIO COM ERRO
+RelatorioEstatistico -> PROCEDURE SIIAD.dbo.STP_EXPORTA_REL_EST_TER não existe
+
+
+--RELATORIO OK
+RelatorioDebitoSecretaria
+RelatorioDebitoPastoral
+RelatorioFichaMembro
+RelatorioSaldoCongregacao
+
