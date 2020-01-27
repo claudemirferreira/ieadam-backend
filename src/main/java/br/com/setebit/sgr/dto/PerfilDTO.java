@@ -13,6 +13,8 @@ public class PerfilDTO implements Serializable {
 	private Long id;
 
 	private String nome;
+
+	private String imagem;
 	
 	private List<RotinaDTO> rotinas = new ArrayList<RotinaDTO>();
 
@@ -23,6 +25,14 @@ public class PerfilDTO implements Serializable {
 		super();
 		this.id = id;
 		this.nome = nome;
+	}
+	
+
+
+	public PerfilDTO(Perfil perfil) {
+		this.id = perfil.getId();
+		this.nome = perfil.getNome();
+		this.imagem = perfil.getImagem().replace("resources/imagens/perfil/", "").replace(".png", "");
 	}
 
 	public Long getId() {
@@ -49,8 +59,16 @@ public class PerfilDTO implements Serializable {
 		this.rotinas = rotinas;
 	}
 
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
 	public static PerfilDTO toDTO(Perfil entity) {
-		return new PerfilDTO(entity.getId(), entity.getNome());
+		return new PerfilDTO(entity);
 	}
 
 	public static List<PerfilDTO> toDTO(List<Perfil> list) {

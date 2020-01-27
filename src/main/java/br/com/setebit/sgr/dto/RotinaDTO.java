@@ -26,7 +26,7 @@ public class RotinaDTO implements Serializable {
 	public RotinaDTO(int id, String nome, String acao, String imagem) {
 		this.id = id;
 		this.nome = nome;
-		this.imagem = imagem;
+		this.imagem = imagem.replace("resources/imagens/rotina/", "").replace(".png", "");;
 		this.checked = false;
 		
 		if(acao.equals("relatorioSaldoCongregacao.init")) {
