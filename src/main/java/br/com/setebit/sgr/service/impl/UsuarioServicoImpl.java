@@ -5,6 +5,9 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -72,6 +75,12 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	@Override
 	public Usuario findByOne(Long id) {
 		return usuarioRepositorio.getOne(id);
+	}
+
+	@Override
+	public Page<Usuario> findByNomeLike(String nome, int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
+		return usuarioRepositorio.findByNomeLike(nome, pageRequest);
 	}
 
 }

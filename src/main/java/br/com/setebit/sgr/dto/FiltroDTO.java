@@ -145,7 +145,16 @@ public class FiltroDTO implements Serializable {
 
 	public String getMesAnoInicio() {
 		try {
-			return IEADAMUtils.getMesByIndice(getMesInicio().getId()) + "/" + getAnoInicio();
+			return IEADAMUtils.getMesByIndice(getMesInicio().getId()) + "/" + getDataAno();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	
+	public String getMesAno() {
+		try {
+			return IEADAMUtils.getMesByIndice(getMesInicio().getId()) + "/" + getDataAno();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -161,9 +170,9 @@ public class FiltroDTO implements Serializable {
 		return null;
 	}
 
-	public String getMesAno() {
+	public String getMesAnoString() {
 		try {
-			return IEADAMUtils.getMesByIndice(getMes().getId()) + "/" + getAno();
+			return IEADAMUtils.getMesByIndice(getMesInicio().getId()) + "/" + getAno();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

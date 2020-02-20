@@ -59,7 +59,7 @@ public class RelatorioUtil {
 		parametros.put("MESANOFIM", dto.getMesAnoFim());
 		parametros.put("MESANOFIM", dto.getMesAnoInicio());
 		
-		parametros.put("MES_ANO",dto.getMesAnoInicio());	
+		parametros.put("MES_ANO",dto.getMesAnoString());	
 		
 		parametros.put("DATA_ANO", dto.getAno());
 		parametros.put("ZONA", dto.getZona().getId());

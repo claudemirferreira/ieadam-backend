@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.setebit.sgr.response.Response;
@@ -122,17 +124,26 @@ public class UserController {
 			return ResponseEntity.badRequest().body(response);
 		}
 		service.remover(user);
-		;
 		return ResponseEntity.ok(new Response<String>());
 	}
 
 	@GetMapping(value = "{page}/{count}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<List<Usuario>>> findAll(@PathVariable int page, @PathVariable int count) {
 		Response<List<Usuario>> response = new Response<List<Usuario>>();
 		List<Usuario> users = service.listarTodos();
 		response.setData(users);
 		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("search")
+	public Page<Usuario> search(
+			@RequestParam(value = "nome", required = false, defaultValue = "0") String nome,
+			@RequestParam(value = "page", required = false, defaultValue = "0") int page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		System.out.println("search");
+
+		return service.findByNomeLike(nome, page, size);
+
 	}
 
 }
