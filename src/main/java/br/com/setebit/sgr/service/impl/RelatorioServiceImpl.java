@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.setebit.sgr.dto.AreaDTO;
 import br.com.setebit.sgr.dto.FiltroRelatorioDTO;
 import br.com.setebit.sgr.dto.NucleoDTO;
+import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.dto.FiltroDTO;
 import br.com.setebit.sgr.dto.ZonaDTO;
 import br.com.setebit.sgr.security.entity.Usuario;
@@ -18,9 +19,7 @@ import br.com.setebit.sgr.security.jwt.JwtUser;
 import br.com.setebit.sgr.service.AreaServico;
 import br.com.setebit.sgr.service.NucleoServico;
 import br.com.setebit.sgr.service.RelatorioService;
-import br.com.setebit.sgr.service.UsuarioAreaServico;
-import br.com.setebit.sgr.service.UsuarioNucleoServico;
-import br.com.setebit.sgr.service.UsuarioZonaServico;
+import br.com.setebit.sgr.service.UsuarioServico;
 import br.com.setebit.sgr.service.ZonaServico;
 import br.com.setebit.sgr.util.RelatorioUtil;
 import net.sf.jasperreports.engine.JRException;
@@ -40,6 +39,9 @@ public class RelatorioServiceImpl implements RelatorioService {
 
 	@Autowired
 	private AreaServico areaServico;
+	
+	@Autowired
+	private UsuarioServico usuarioServico;
 
 	private FiltroRelatorioDTO parametroRelatorioDTO;
 
@@ -48,19 +50,47 @@ public class RelatorioServiceImpl implements RelatorioService {
 		return relatorioUtil.gerarPdf(dto);
 	}
 
+	//TODO inicio
 	public FiltroRelatorioDTO garregarDadosTela() {
 		this.parametroRelatorioDTO = new FiltroRelatorioDTO();
 		this.parametroRelatorioDTO.setZonas(new ArrayList<ZonaDTO>());
+		this.parametroRelatorioDTO.setZona(new ZonaDTO());
+		this.parametroRelatorioDTO.setNucleo(new NucleoDTO());
+		this.parametroRelatorioDTO.setArea(new AreaDTO());		
+		
 		JwtUser user = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		this.parametroRelatorioDTO.getUsuarioLogado().setId(Integer.parseInt(user.getId()));
-		this.parametroRelatorioDTO.getUsuarioLogado().setLogin(user.getUsername());
-
+		//TODO pega o usuario no banco de dados
+		UsuarioDTO usuario = UsuarioDTO.toDTO(usuarioServico.findByOne( Integer.parseInt(user.getId())));
+		this.parametroRelatorioDTO.setUsuarioLogado(usuario);
 		this.preencherCombos(this.parametroRelatorioDTO.getUsuarioLogado());
 
 		return parametroRelatorioDTO;
 	}
+	
+	public void preencherCombos(UsuarioDTO usuario) {
 
-	public void preencherCombos(Usuario usuario) {
+		this.parametroRelatorioDTO.setZonas(new ArrayList<ZonaDTO>());
+		this.parametroRelatorioDTO.setNucleos(new ArrayList<NucleoDTO>());
+		this.parametroRelatorioDTO.setAreas(new ArrayList<AreaDTO>());
+
+		// Flag para identificar se o usuario eh administrador do Sistema
+		if (usuario.isZona() && usuario.isNucleo() && usuario.isArea()) {
+			this.parametroRelatorioDTO.setZonas(ZonaDTO.toDTO(this.zonaServico.listarTodos()));
+		} else {
+			this.parametroRelatorioDTO.setZonas(ZonaDTO.toDTO(this.zonaServico
+					.listaZonaUsuario(usuario.getId())));
+			if (this.parametroRelatorioDTO.getZonas().size() == 1) {
+				this.parametroRelatorioDTO.setZona(this.parametroRelatorioDTO.getZonas().iterator().next());
+				this.atualizarNucleo();
+			}
+			if (this.parametroRelatorioDTO.getNucleos().size() == 1) {
+				this.parametroRelatorioDTO.setNucleo(this.parametroRelatorioDTO.getNucleos().iterator().next());
+				this.atualizarArea();
+			}
+		}
+	}
+
+	public void preencherCombosOld(Usuario usuario) {
 
 		this.parametroRelatorioDTO.setZonas(new ArrayList<ZonaDTO>());
 		this.parametroRelatorioDTO.setNucleos(new ArrayList<NucleoDTO>());

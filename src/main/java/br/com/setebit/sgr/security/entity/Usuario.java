@@ -224,4 +224,9 @@ public class Usuario implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public Usuario(int id, String login) {
+		this.id = id;
+		this.login = login;
+	}
 }

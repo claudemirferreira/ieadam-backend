@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,7 @@ public interface UsuarioServico extends UserDetailsService {
 	
 	public Usuario findByEmail(String email);
 	
-	public Usuario findByOne(Long id);
+	public Usuario findByOne(Integer id);
 
 	public Usuario findByLoginAndSenha(String login, String senha) throws NoResultException;
 

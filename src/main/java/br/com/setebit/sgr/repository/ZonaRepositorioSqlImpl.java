@@ -18,7 +18,11 @@ public class ZonaRepositorioSqlImpl implements ZonaRepositorioSql {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Zona> listaZonaUsuario(int usuarioId) {
+		
+		//TODO TESTE
+		String SQL = "select p.* from ieadam_usuario_zona z, ieadam_zona p where z.id_zona = p.id_zona and z.id_usuario = 1673 and p.id_zona = 1";
 
+		/*
 		String SQL1 = "select distinct r.* from " + " (select p.* from ieadam_usuario_zona z, ieadam_zona p "
 				+ " where z.id_zona = p.id_zona and z.id_usuario = " + usuarioId;
 
@@ -31,7 +35,7 @@ public class ZonaRepositorioSqlImpl implements ZonaRepositorioSql {
 				+ " and z.id_zona = o.id_zona and n.id_usuario = " + usuarioId + " ) as r;";
 
 		String SQL = SQL1 + SQL2 + SQL3;
-
+		*/
 		System.out.println("=========== inicio listaZonaUsuario ============= ");
 		System.out.println(SQL);
 		System.out.println("=========== fim listaZonaUsuario ============= ");

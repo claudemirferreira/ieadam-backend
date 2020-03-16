@@ -105,7 +105,7 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<Usuario>> findById(@PathVariable("id") String id) {
 		Response<Usuario> response = new Response<Usuario>();
-		Usuario user = service.findByOne(Long.parseLong(id));
+		Usuario user = service.findByOne(Integer.parseInt(id));
 		if (user == null) {
 			response.getErrors().add("Register not found id:" + id);
 			return ResponseEntity.badRequest().body(response);
@@ -118,7 +118,7 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<String>> delete(@PathVariable("id") String id) {
 		Response<String> response = new Response<String>();
-		Usuario user = service.findByOne(Long.parseLong(id));
+		Usuario user = service.findByOne(Integer.parseInt(id));
 		if (user == null) {
 			response.getErrors().add("Register not found id:" + id);
 			return ResponseEntity.badRequest().body(response);

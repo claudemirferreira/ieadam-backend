@@ -3,7 +3,6 @@ package br.com.setebit.sgr.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.Zona;
 import br.com.setebit.sgr.util.DataUtil;
 
@@ -27,7 +26,7 @@ public class FiltroRelatorioDTO {
 
 	private String nomeRelatorio;
 
-	private Usuario usuarioLogado;
+	private UsuarioDTO usuarioLogado;
 
 	private int anoInicio;
 
@@ -43,13 +42,13 @@ public class FiltroRelatorioDTO {
 		this.zonas = new ArrayList<ZonaDTO>();
 		this.areas = new ArrayList<AreaDTO>();
 		this.nucleos = new ArrayList<NucleoDTO>();
-		this.usuarioLogado = new Usuario();		
+		this.usuarioLogado = new UsuarioDTO();		
 		this.meses = MesDto.pegarMeses();
 	}
 
 	public FiltroRelatorioDTO() {
 		this.setZonas(new ArrayList<ZonaDTO>());
-		this.usuarioLogado = new Usuario();
+		this.usuarioLogado = new UsuarioDTO();
 		this.anos = DataUtil.pegarAnos();
 		this.anoInicio = DataUtil.pegarAnocorrente();
 		this.anoFim = this.anoInicio;	
@@ -74,11 +73,11 @@ public class FiltroRelatorioDTO {
 		this.nomeRelatorio = nomeRelatorio;
 	}
 
-	public Usuario getUsuarioLogado() {
+	public UsuarioDTO getUsuarioLogado() {
 		return usuarioLogado;
 	}
 
-	public void setUsuarioLogado(Usuario usuarioLogado) {
+	public void setUsuarioLogado(UsuarioDTO usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
 	}
 

@@ -1,10 +1,7 @@
 package br.com.setebit.sgr.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,7 +30,6 @@ import br.com.setebit.sgr.response.Response;
 import br.com.setebit.sgr.service.PerfilServico;
 import br.com.setebit.sgr.service.RelatorioService;
 import br.com.setebit.sgr.util.RelatorioUtil;
-import br.com.setebit.sgr.util.Util;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -45,7 +41,7 @@ public class RelatorioController {
 
 	@Autowired
 	private RelatorioUtil relatorioUtil;
-	
+
 	@Autowired
 	private PerfilServico perfilServico;
 
@@ -95,7 +91,7 @@ public class RelatorioController {
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 
 			byte[] output = JasperExportManager.exportReportToPdf(jasperPrint);
-			
+
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.parseMediaType("application/pdf"));
 			String filename = "relatorio.pdf";
@@ -110,7 +106,7 @@ public class RelatorioController {
 		}
 		return null;
 	}
-	
+
 	@GetMapping(value = "/perfilUsuario")
 	public ResponseEntity<Response<List<PerfilDTO>>> listarPerfilUsuario() {
 		System.out.println("###############listarPerfilUsuario");
