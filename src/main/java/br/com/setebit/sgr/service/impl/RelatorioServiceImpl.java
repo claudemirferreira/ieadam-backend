@@ -63,6 +63,11 @@ public class RelatorioServiceImpl implements RelatorioService {
 		UsuarioDTO usuario = UsuarioDTO.toDTO(usuarioServico.findByOne( Integer.parseInt(user.getId())));
 		this.parametroRelatorioDTO.setUsuarioLogado(usuario);
 		this.preencherCombos(this.parametroRelatorioDTO.getUsuarioLogado());
+		/*
+		if (this.parametroRelatorioDTO.getZonas().size() == 1) {
+			this.parametroRelatorioDTO.setZona(this.parametroRelatorioDTO.getZonas().get(0));
+		}
+		*/
 
 		return parametroRelatorioDTO;
 	}
@@ -91,7 +96,6 @@ public class RelatorioServiceImpl implements RelatorioService {
 	}
 
 	public void preencherCombosOld(Usuario usuario) {
-
 		this.parametroRelatorioDTO.setZonas(new ArrayList<ZonaDTO>());
 		this.parametroRelatorioDTO.setNucleos(new ArrayList<NucleoDTO>());
 		this.parametroRelatorioDTO.setAreas(new ArrayList<AreaDTO>());
