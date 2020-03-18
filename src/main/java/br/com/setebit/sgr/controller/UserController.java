@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.response.Response;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.service.UsuarioServico;
@@ -83,6 +84,20 @@ public class UserController {
 			user.setSenha(passwordEncoder.encode(user.getSenha()));
 			Usuario userPersisted = (Usuario) service.salvar(user);
 			response.setData(userPersisted);
+		} catch (Exception e) {
+			response.getErrors().add(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping(value = "/pesquisar")
+	public ResponseEntity<Response<List<UsuarioDTO>>> pesquisar(HttpServletRequest request, @RequestBody Usuario user,
+			BindingResult result) {
+		Response<List<UsuarioDTO>> response = new Response<List<UsuarioDTO>>();
+		try {
+			List<UsuarioDTO> list = UsuarioDTO.toDTO(service.findByUsuario(user));
+			response.setData(list);
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);

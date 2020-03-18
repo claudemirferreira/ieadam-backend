@@ -32,7 +32,7 @@ public class UsuarioRepositorioJPAImpl extends RepositorioGenerico implements Us
 			if (notEmpty(usuario.getLogin()) && usuario.getLogin().length() >= 0) {
 				condictions.add(" usu.login = :login ");
 			}
-			if (usuario.getIdMembro() > 0) {
+			if (notEmpty(usuario.getIdMembro()) && usuario.getIdMembro() > 0) {
 				condictions.add(" usu.idMembro = :idMembro ");
 			}
 		}
@@ -48,7 +48,7 @@ public class UsuarioRepositorioJPAImpl extends RepositorioGenerico implements Us
 			if (notEmpty(usuario.getLogin()) && usuario.getLogin().length() >= 0) {
 				query.setParameter("login", usuario.getLogin());
 			}
-			if (usuario.getIdMembro() > 0) {
+			if (notEmpty(usuario.getIdMembro()) && usuario.getIdMembro() > 0) {
 				query.setParameter("idMembro", usuario.getIdMembro());
 			}
 		}
