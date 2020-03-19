@@ -24,6 +24,7 @@ public class RotinaServicoImpl implements RotinaServico, Serializable {
 
 	@Override
 	public List<Rotina> listarTodos() {
+		
 		return this.rotinaRepositorio.findAll();
 	}
 
@@ -45,11 +46,21 @@ public class RotinaServicoImpl implements RotinaServico, Serializable {
 
 	@Override
 	public List<Rotina> findByNomeLike(String nome) {
-		return this.rotinaRepositorio.findByNomeLike(nome);
+		return this.rotinaRepositorio.findByNomeLike(nome+"%");
 	}
 
 	@Override
 	public List<Rotina> listarRotinaPorPerfil(Integer idPerfil) {
 		return this.rotinaRepositorio.listarRotinaPorPerfil(idPerfil);
+	}
+
+	@Override
+	public Rotina findById(Integer id) {
+		return this.rotinaRepositorio.findById(id).get();
+	}
+
+	@Override
+	public void delete(Integer id) {
+		this.rotinaRepositorio.deleteById(id);
 	}
 }

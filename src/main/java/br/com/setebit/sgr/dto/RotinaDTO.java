@@ -66,7 +66,7 @@ public class RotinaDTO implements Serializable {
 			this.setAcao("membro");
 		}
 		else if(acao.equals("rotinaControlador.init")){
-			this.setAcao("rotina");
+			this.setAcao("list-rotina");
 		}
 		else if(acao.equals("perfilControlador.init")){
 			this.setAcao("perfil");

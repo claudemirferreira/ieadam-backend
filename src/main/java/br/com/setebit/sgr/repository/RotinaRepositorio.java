@@ -12,7 +12,7 @@ import br.com.setebit.sgr.security.entity.Rotina;
 import br.com.setebit.sgr.security.entity.Sistema;
 
 @Repository
-public interface RotinaRepositorio extends JpaRepository<Rotina, Long> {
+public interface RotinaRepositorio extends JpaRepository<Rotina, Integer> {
 
 	public final static String LISTAR_ROTINA_POR_PERFIL = "SELECT a "
 			+ "FROM PerfilRotina p LEFT JOIN p.perfilRotinaPk.rotina a " + "WHERE p.perfilRotinaPk.perfil = :perfil";
