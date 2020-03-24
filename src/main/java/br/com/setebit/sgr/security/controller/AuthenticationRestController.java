@@ -43,12 +43,12 @@ public class AuthenticationRestController {
 			throws AuthenticationException {
 
 		final Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+				.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getLogin(),
 						authenticationRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getLogin());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		final UsuarioDTO user = UsuarioDTO.getDTO(usuarioService.findByEmail(authenticationRequest.getEmail()));
+		final UsuarioDTO user = UsuarioDTO.getDTO(usuarioService.findByEmail(authenticationRequest.getLogin()));
 		user.setSenha(null);
 		return ResponseEntity.ok(new CurrentUser(token, user));
 	}

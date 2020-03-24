@@ -37,6 +37,8 @@ public class IeadamApplication {
 		admin.setNucleo(true);
 		admin.setStatus("1");
 		admin.setZona(true);
+		
+		System.out.println(admin.getSenha());
 
 		Usuario find = rep.findByLogin("admin");
 		if (find == null) {
