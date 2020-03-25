@@ -33,5 +33,4 @@ public class JwtAuthenticationRequest implements Serializable {
 		this.password = password;
 	}
 
-
 }

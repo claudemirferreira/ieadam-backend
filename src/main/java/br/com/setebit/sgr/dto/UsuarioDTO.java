@@ -67,7 +67,8 @@ public class UsuarioDTO implements Serializable {
 		dto.nucleo = entity.isNucleo();
 		dto.in_privilegio = entity.isIn_privilegio();
 		dto.telefone = entity.getTelefone();
-		dto.email = entity.getEmail();
+		//b = (a > 0) ? 1 : 2;
+		dto.email = entity.getEmail().length()==0? "informe um email " : entity.getEmail();
 		dto.idMembro = entity.getIdMembro();
 		dto.nome = entity.getNome();
 		

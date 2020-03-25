@@ -40,7 +40,6 @@ public class UserController {
 	private PasswordEncoder passwordEncoder;
 
 	@PostMapping()
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<Usuario>> create(HttpServletRequest request, @RequestBody Usuario user,
 			BindingResult result) {
 		Response<Usuario> response = new Response<Usuario>();
@@ -71,10 +70,9 @@ public class UserController {
 	}
 
 	@PutMapping()
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<Usuario>> update(HttpServletRequest request, @RequestBody Usuario user,
+	public ResponseEntity<Response<UsuarioDTO>> update(HttpServletRequest request, @RequestBody Usuario user,
 			BindingResult result) {
-		Response<Usuario> response = new Response<Usuario>();
+		Response<UsuarioDTO> response = new Response<UsuarioDTO>();
 		try {
 			validateUpdate(user, result);
 			if (result.hasErrors()) {
@@ -82,7 +80,7 @@ public class UserController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			user.setSenha(passwordEncoder.encode(user.getSenha()));
-			Usuario userPersisted = (Usuario) service.salvar(user);
+			UsuarioDTO userPersisted = UsuarioDTO.toDTO(service.salvar(user));
 			response.setData(userPersisted);
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
@@ -117,10 +115,9 @@ public class UserController {
 	}
 
 	@GetMapping(value = "{id}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<Usuario>> findById(@PathVariable("id") String id) {
-		Response<Usuario> response = new Response<Usuario>();
-		Usuario user = service.findByOne(Integer.parseInt(id));
+	public ResponseEntity<Response<UsuarioDTO>> findById(@PathVariable("id") Integer id) {
+		Response<UsuarioDTO> response = new Response<UsuarioDTO>();
+		UsuarioDTO user = UsuarioDTO.getDTO(service.findByOne(id));
 		if (user == null) {
 			response.getErrors().add("Register not found id:" + id);
 			return ResponseEntity.badRequest().body(response);
@@ -130,10 +127,9 @@ public class UserController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<String>> delete(@PathVariable("id") String id) {
+	public ResponseEntity<Response<String>> delete(@PathVariable("id") Integer id) {
 		Response<String> response = new Response<String>();
-		Usuario user = service.findByOne(Integer.parseInt(id));
+		Usuario user = service.findByOne(id);
 		if (user == null) {
 			response.getErrors().add("Register not found id:" + id);
 			return ResponseEntity.badRequest().body(response);
