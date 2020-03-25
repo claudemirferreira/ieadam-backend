@@ -34,7 +34,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Override
 	public Usuario findByLogin(String login) {
-		return this.usuarioRepositorio.findByLogin(login);
+		System.out.println("findByLogin = "+login);
+		Usuario u = this.usuarioRepositorio.findByLogin(login);
+		return u;
 	}
 
 	@Override
@@ -58,10 +60,11 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Usuario usuario = usuarioRepositorio.findByEmail(email);
+	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+		System.out.println("entrou no logar");
+		Usuario usuario = usuarioRepositorio.findByLogin(login);
 		if (usuario == null) {
-			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email));
+			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", login));
 		} else {
 			return JwtUserFactory.create(usuario);
 		}

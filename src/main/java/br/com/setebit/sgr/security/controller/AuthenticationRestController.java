@@ -48,7 +48,7 @@ public class AuthenticationRestController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getLogin());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		final UsuarioDTO user = UsuarioDTO.getDTO(usuarioService.findByEmail(authenticationRequest.getLogin()));
+		final UsuarioDTO user = UsuarioDTO.getDTO(usuarioService.findByLogin(authenticationRequest.getLogin()));
 		user.setSenha(null);
 		return ResponseEntity.ok(new CurrentUser(token, user));
 	}

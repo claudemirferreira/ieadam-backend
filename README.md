@@ -1,5 +1,8 @@
 # FACA BACKUP DO BANDO DE DADOS
 ## 1 execute o script de importacao do banco de dados src/main/resources/backup.sql
+## 1.1 ALTER TABLE `saa_usuario` ADD COLUMN `profile` VARCHAR(50) AFTER `logomarca`;
+## 1.2 UPDATE `saa_usuario` SET senha = '$2a$10$0bnrmA15bLbZb.LhOEGrVuFt5mAlz1FOU0hSClnBsPvRCLex1TvMi' where login = '1977'
+
 
 ## configure o usuario e senha no arquivo application.properties
 ## crie o usuario no banco de dados
