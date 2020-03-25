@@ -19,8 +19,6 @@ public class UsuarioDTO implements Serializable {
 
 	private String status;
 
-	private ProfileEnum profile;
-
 	private boolean zona;
 
 	private boolean area;
@@ -40,7 +38,7 @@ public class UsuarioDTO implements Serializable {
 	public UsuarioDTO() {
 	}
 
-	public UsuarioDTO(int id, String login, String senha, String status, ProfileEnum profile, boolean zona,
+	public UsuarioDTO(int id, String login, String senha, String status, boolean zona,
 			boolean area, boolean nucleo, boolean in_privilegio, String telefone, String email, Integer idMembro,
 			String nome) {
 		super();
@@ -48,7 +46,6 @@ public class UsuarioDTO implements Serializable {
 		this.login = login;
 		this.senha = senha;
 		this.status = status;
-		this.profile = profile;
 		this.zona = zona;
 		this.area = area;
 		this.nucleo = nucleo;
@@ -65,7 +62,6 @@ public class UsuarioDTO implements Serializable {
 		dto.login = entity.getLogin();
 		dto.senha = entity.getSenha();
 		dto.status = entity.getStatus();
-		dto.profile = entity.getProfile();
 		dto.zona = entity.isZona();
 		dto.area = entity.isArea();
 		dto.nucleo = entity.isNucleo();
@@ -118,14 +114,6 @@ public class UsuarioDTO implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public ProfileEnum getProfile() {
-		return profile;
-	}
-
-	public void setProfile(ProfileEnum profile) {
-		this.profile = profile;
 	}
 
 	public boolean isZona() {

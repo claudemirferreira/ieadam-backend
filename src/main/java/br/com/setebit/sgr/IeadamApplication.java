@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.setebit.sgr.repository.UsuarioRepositorio;
 import br.com.setebit.sgr.security.entity.Usuario;
-import br.com.setebit.sgr.security.enums.ProfileEnum;
 
 @SpringBootApplication
 public class IeadamApplication {
@@ -23,14 +22,12 @@ public class IeadamApplication {
 		return args -> {
 			initUsuario(rep, passwordEncoder);
 		};
-
 	}
 
 	private void initUsuario(UsuarioRepositorio rep, PasswordEncoder passwordEncoder) {
 		Usuario admin = new Usuario();
 		admin.setEmail("admin@gmail.com");
 		admin.setSenha(passwordEncoder.encode("123456"));
-		admin.setProfile(ProfileEnum.ROLE_ADMIN);
 		admin.setArea(true);
 		admin.setLogin("admin");
 		admin.setNome("Administrador");

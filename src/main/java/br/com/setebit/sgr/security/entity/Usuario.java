@@ -44,8 +44,6 @@ public class Usuario implements Serializable {
 	@Column(name = "status", length = 1, columnDefinition = "CHAR(1)", nullable = false)
 	private String status;
 
-	private ProfileEnum profile;
-
 	private boolean zona;
 
 	private boolean area;
@@ -200,17 +198,6 @@ public class Usuario implements Serializable {
 
 	public void setLogomarca(byte[] logomarca) {
 		this.logomarca = logomarca;
-	}
-
-	public ProfileEnum getProfile() {
-		if(profile == null) 
-			profile = ProfileEnum.ROLE_TECHNICIAN;
-		
-		return profile;
-	}
-
-	public void setProfile(ProfileEnum profile) {
-		this.profile = profile;
 	}
 
 	public List<Perfil> getPerfils() {
