@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.setebit.sgr.security.entity.Usuario;
-import br.com.setebit.sgr.security.enums.ProfileEnum;
 
 public class UsuarioDTO implements Serializable {
 
