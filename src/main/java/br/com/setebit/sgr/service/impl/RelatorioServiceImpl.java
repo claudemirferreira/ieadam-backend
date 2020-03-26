@@ -58,6 +58,8 @@ public class RelatorioServiceImpl implements RelatorioService {
 		this.parametroRelatorioDTO.setNucleo(new NucleoDTO());
 		this.parametroRelatorioDTO.setArea(new AreaDTO());		
 		
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		
 		JwtUser user = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		//TODO pega o usuario no banco de dados
 		UsuarioDTO usuario = UsuarioDTO.toDTO(usuarioServico.findByOne( Integer.parseInt(user.getId())));

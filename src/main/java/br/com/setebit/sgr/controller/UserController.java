@@ -74,7 +74,7 @@ public class UserController {
 			BindingResult result) {
 		Response<UsuarioDTO> response = new Response<UsuarioDTO>();
 		try {
-			validateUpdate(user, result);
+			validate(user, result);
 			if (result.hasErrors()) {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 				return ResponseEntity.badRequest().body(response);
@@ -112,6 +112,19 @@ public class UserController {
 			result.addError(new ObjectError("Usuario", "Email no information"));
 			return;
 		}
+	}
+
+	private void validate(Usuario user, BindingResult result) {
+		if (user.getId() == 0) {
+			if (service.findByLogin(user.getLogin()) != null) {
+				result.addError(new ObjectError("Usuario", "Ja existe um usuario com o login " + user.getLogin() ));
+				return;
+			}
+		}
+		if (user.getSenha() == null) {
+			user.setSenha("ieadam");
+		}
+			
 	}
 
 	@GetMapping(value = "{id}")
