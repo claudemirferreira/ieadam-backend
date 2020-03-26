@@ -12,9 +12,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.com.setebit.sgr.repository.UsuarioPerfilRepositorio;
 import br.com.setebit.sgr.repository.UsuarioRepositorio;
 import br.com.setebit.sgr.repository.UsuarioRepositorioJPA;
 import br.com.setebit.sgr.security.entity.Usuario;
+import br.com.setebit.sgr.security.entity.UsuarioPerfil;
 import br.com.setebit.sgr.security.jwt.JwtUserFactory;
 import br.com.setebit.sgr.service.UsuarioServico;
 
@@ -26,6 +28,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Autowired
 	private UsuarioRepositorioJPA usuarioRepositorioJPA;
+	
+	@Autowired
+	private UsuarioPerfilRepositorio usuarioPerfilRepositorio;
 
 	@Override
 	public Usuario findByLoginAndSenha(String login, String senha) throws NoResultException {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Usuario implements Serializable {
 	@Column(name = "id_usuario")
 	private int id;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioPerfilPk.usuario")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioPerfilPk.usuario", cascade={CascadeType.ALL})
 	private List<UsuarioPerfil> usuarioPerfil = new ArrayList<UsuarioPerfil>();
 
 	@Column(unique = true, length = 30)
