@@ -24,4 +24,8 @@ public interface UsuarioNucleoRepositorio extends JpaRepository<UsuarioNucleo, L
 
 	@Query("select a from UsuarioNucleo a where a.usuario = :usuario")
 	List<UsuarioNucleo> findByUsuario(@Param("usuario") Usuario usuario);
+
+	@Query(value = "select a.* from ieadam_usuario_nucleo a where a.id_usuario = :idUsuario and a.nucleo = :idNucleo order by a.nucleo.nome", nativeQuery = true)
+	public UsuarioNucleo findByUsuarioAndByNucleo(@Param("idUsuario") Integer idUsuario, @Param("idNucleo") Integer idNucleo);
+	
 }

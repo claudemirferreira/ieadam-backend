@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import br.com.setebit.sgr.dto.UsuarioAssociacaoDTO;
+import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.security.entity.Usuario;
 
 @Component
@@ -30,5 +32,7 @@ public interface UsuarioServico extends UserDetailsService {
 	public List<Usuario> findByUsuario(Usuario usuario) throws NoResultException;
 	
 	public Page<Usuario> findByNomeLike(String nome, int page, int size);
+	
+	public UsuarioAssociacaoDTO findUsuarioAssociacao(UsuarioDTO usuario);
 
 }

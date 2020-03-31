@@ -45,6 +45,14 @@ public class Nucleo implements Serializable {
 	@JoinColumn(name = "id_zona")
 	@JsonManagedReference
 	private Zona zona;
+	
+	public Nucleo() {
+		
+	}
+
+	public Nucleo(int id) {
+		this.id = id;
+	}
 
 	public int getId() {
 		return id;

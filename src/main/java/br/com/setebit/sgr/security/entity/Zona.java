@@ -50,6 +50,14 @@ public class Zona implements Serializable {
 	@OneToMany(mappedBy = "zona")
 	@JsonManagedReference
 	private List<UsuarioZona> usuarioZonas;
+	
+	public Zona() {
+		
+	}
+	
+	public Zona(int idZona) {
+		this.idZona = idZona;
+	}
 
 	public int getIdZona() {
 		return idZona;

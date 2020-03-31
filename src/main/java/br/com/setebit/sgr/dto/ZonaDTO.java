@@ -13,6 +13,8 @@ public class ZonaDTO implements Serializable {
 	private int id;
 
 	private String nome;
+	
+	private boolean usuarioZona;
 
 	public ZonaDTO() {
 	}
@@ -37,6 +39,14 @@ public class ZonaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public boolean isUsuarioZona() {
+		return usuarioZona;
+	}
+
+	public void setUsuarioZona(boolean usuarioZona) {
+		this.usuarioZona = usuarioZona;
 	}
 
 	public static ZonaDTO toDTO(Zona entity) {

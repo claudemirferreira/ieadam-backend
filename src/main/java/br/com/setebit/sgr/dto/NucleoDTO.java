@@ -13,6 +13,8 @@ public class NucleoDTO implements Serializable {
 	private int id;
 
 	private String nome;
+	
+	private boolean usuarioNucleo;
 
 	public NucleoDTO() {
 	}
@@ -41,6 +43,14 @@ public class NucleoDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public boolean isUsuarioNucleo() {
+		return usuarioNucleo;
+	}
+
+	public void setUsuarioNucleo(boolean usuarioNucleo) {
+		this.usuarioNucleo = usuarioNucleo;
 	}
 
 	public static NucleoDTO toDTO(Nucleo entity) {

@@ -45,6 +45,15 @@ public class Area implements Serializable {
 
 	@Transient
 	private boolean usuarioArea;
+	
+	public Area() {
+		
+	}
+
+	public Area(int idArea) {
+		super();
+		this.idArea = idArea;
+	}
 
 	public int getIdArea() {
 		return idArea;

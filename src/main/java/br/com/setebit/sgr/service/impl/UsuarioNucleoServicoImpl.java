@@ -53,4 +53,5 @@ public class UsuarioNucleoServicoImpl implements UsuarioNucleoServico {
 		}
 		return nucleos;
 	}
+
 }

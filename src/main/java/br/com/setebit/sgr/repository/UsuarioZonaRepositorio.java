@@ -25,4 +25,7 @@ public interface UsuarioZonaRepositorio extends JpaRepository<UsuarioZona, Long>
 	@Query("select a from UsuarioZona a where a.usuario = :usuario")
 	List<UsuarioZona> findByUsuario(@Param("usuario") Usuario usuario);
 
+	@Query(value = "SELECT * FROM ieadam_usuario_zona a WHERE a.id_usuario = :idUsuario and id_zona = :idZona order by a.zona.nome", nativeQuery = true)
+	public UsuarioZona findByUsuarioAndByZona(@Param("idUsuario") Integer idUsuario, @Param("idZona") Integer idZona);
+
 }

@@ -43,6 +43,13 @@ public class UsuarioZonaServicoImpl implements UsuarioZonaServico {
 	}
 
 	@Override
+	public UsuarioZona findByUsuarioAndByZona(Integer idUsuario, Integer idZona) {
+
+		UsuarioZona usuarioZona = repositorio.findByUsuarioAndByZona(idUsuario, idZona);
+		return usuarioZona;
+	}
+
+	@Override
 	public void deleteByUsuarioAndByZona(Usuario usuario, Zona zona) {
 		repositorio.deleteByUsuarioAndByZona(usuario, zona);
 	}

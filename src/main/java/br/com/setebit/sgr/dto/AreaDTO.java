@@ -13,6 +13,8 @@ public class AreaDTO implements Serializable {
 	private int id;
 
 	private String nome;
+	
+	private boolean usuarioArea;
 
 	public AreaDTO() {
 	}
@@ -37,6 +39,14 @@ public class AreaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public boolean isUsuarioArea() {
+		return usuarioArea;
+	}
+
+	public void setUsuarioArea(boolean usuarioArea) {
+		this.usuarioArea = usuarioArea;
 	}
 
 	public static AreaDTO toDTO(Area entity) {
