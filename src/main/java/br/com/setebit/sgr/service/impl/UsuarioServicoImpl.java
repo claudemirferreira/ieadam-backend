@@ -1,6 +1,7 @@
 package br.com.setebit.sgr.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.NoResultException;
 
@@ -17,10 +18,12 @@ import br.com.setebit.sgr.dto.NucleoDTO;
 import br.com.setebit.sgr.dto.UsuarioAssociacaoDTO;
 import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.dto.ZonaDTO;
+import br.com.setebit.sgr.repository.MembroRepositorio;
 import br.com.setebit.sgr.repository.UsuarioPerfilRepositorio;
 import br.com.setebit.sgr.repository.UsuarioRepositorio;
 import br.com.setebit.sgr.repository.UsuarioRepositorioJPA;
 import br.com.setebit.sgr.security.entity.Area;
+import br.com.setebit.sgr.security.entity.Membro;
 import br.com.setebit.sgr.security.entity.Nucleo;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.Zona;
@@ -38,6 +41,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Autowired
 	private UsuarioRepositorio usuarioRepositorio;
+	
+	@Autowired
+	private MembroRepositorio membroRepositorio;
 
 	@Autowired
 	private UsuarioRepositorioJPA usuarioRepositorioJPA;
@@ -123,8 +129,12 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	}
 
 	@Override
-	public UsuarioAssociacaoDTO findUsuarioAssociacao(UsuarioDTO usuario) {
+	public UsuarioAssociacaoDTO findUsuarioAssociacao(Integer id) {
+		Membro m = membroRepositorio.findById(id).get();
+		Optional<Usuario>  u = usuarioRepositorio.findById(id);
+		
 
+		UsuarioDTO usuario = UsuarioDTO.toDTO(u.get());
 		UsuarioAssociacaoDTO dto = new UsuarioAssociacaoDTO();
 
 		dto.setZonas(ZonaDTO.toDTO(zonaServico.listarTodos()));

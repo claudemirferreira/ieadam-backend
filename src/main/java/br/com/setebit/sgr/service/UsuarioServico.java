@@ -33,6 +33,6 @@ public interface UsuarioServico extends UserDetailsService {
 	
 	public Page<Usuario> findByNomeLike(String nome, int page, int size);
 	
-	public UsuarioAssociacaoDTO findUsuarioAssociacao(UsuarioDTO usuario);
+	public UsuarioAssociacaoDTO findUsuarioAssociacao(Integer id);
 
 }
