@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.setebit.sgr.dto.UsuarioZonaDTO;
 import br.com.setebit.sgr.repository.UsuarioZonaRepositorio;
+import br.com.setebit.sgr.security.entity.Area;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.UsuarioZona;
 import br.com.setebit.sgr.security.entity.Zona;
@@ -35,16 +37,12 @@ public class UsuarioZonaServicoImpl implements UsuarioZonaServico {
 
 	@Override
 	public UsuarioZona findByUsuarioAndByZona(Usuario usuario, Zona zona) {
-		System.out.println("usuario " + usuario.getId());
-		System.out.println("zona " + zona.getIdZona());
-
 		UsuarioZona usuarioZona = repositorio.findByUsuarioAndByZona(usuario, zona);
 		return usuarioZona;
 	}
 
 	@Override
 	public UsuarioZona findByUsuarioAndByZona(Integer idUsuario, Integer idZona) {
-
 		UsuarioZona usuarioZona = repositorio.findByUsuarioAndByZona(idUsuario, idZona);
 		return usuarioZona;
 	}
@@ -62,6 +60,18 @@ public class UsuarioZonaServicoImpl implements UsuarioZonaServico {
 			zonas.add(usuarioZona.getZona());
 		}
 		return zonas;
+	}
+
+	@Override
+	public UsuarioZonaDTO atualizar(UsuarioZonaDTO dto) {
+		UsuarioZona usuarioZona = UsuarioZonaDTO.toEntity(dto);
+		if (dto.isUsuarioZona())
+			repositorio.save(usuarioZona);		
+		else {
+			usuarioZona = repositorio.findByUsuarioAndByZona(new Usuario(dto.getIdUsuario()), new Zona(dto.getIdZona()));
+			repositorio.deleteById(dto.getIdUsuarioZona());
+		}
+		return dto;
 	}
 
 }

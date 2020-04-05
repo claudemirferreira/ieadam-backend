@@ -12,7 +12,7 @@ import br.com.setebit.sgr.security.entity.Nucleo;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.UsuarioNucleo;
 
-public interface UsuarioNucleoRepositorio extends JpaRepository<UsuarioNucleo, Long> {
+public interface UsuarioNucleoRepositorio extends JpaRepository<UsuarioNucleo, Integer> {
 
 	@Query("select a from UsuarioNucleo a where a.usuario = :usuario and  a.nucleo = :nucleo order by a.nucleo.nome")
 	public UsuarioNucleo findByUsuarioAndByNucleo(@Param("usuario") Usuario usuario, @Param("nucleo") Nucleo nucleo);

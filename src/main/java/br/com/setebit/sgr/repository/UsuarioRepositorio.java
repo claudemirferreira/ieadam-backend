@@ -29,4 +29,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
 	
 	public Page<Usuario> findByNomeLike(String nome, Pageable pages);
 
+	public Usuario findByIdMembro(Integer idMembro);
+
 }

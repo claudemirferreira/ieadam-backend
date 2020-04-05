@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.setebit.sgr.dto.UsuarioNucleoDTO;
 import br.com.setebit.sgr.repository.UsuarioNucleoRepositorio;
 import br.com.setebit.sgr.security.entity.Nucleo;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.UsuarioNucleo;
+import br.com.setebit.sgr.security.entity.Zona;
 import br.com.setebit.sgr.service.UsuarioNucleoServico;
 
 @Service
@@ -52,6 +54,20 @@ public class UsuarioNucleoServicoImpl implements UsuarioNucleoServico {
 			nucleos.add(usuarioNucleo.getNucleo());
 		}
 		return nucleos;
+	}
+
+	@Override
+	public UsuarioNucleoDTO atualizar(UsuarioNucleoDTO dto) {
+		// TODO Auto-generated method stub
+		UsuarioNucleo usuarioZona = UsuarioNucleoDTO.toEntity(dto);
+		if (dto.isUsuarioNucleo())
+			repositorio.save(usuarioZona);
+		else {
+			usuarioZona = repositorio.findByUsuarioAndByNucleo(new Usuario(dto.getIdUsuario()), new Nucleo(dto.getIdNucleo()));
+			repositorio.deleteById(usuarioZona.getIdUsuarioNucleo());
+		}
+			
+		return dto;
 	}
 
 }

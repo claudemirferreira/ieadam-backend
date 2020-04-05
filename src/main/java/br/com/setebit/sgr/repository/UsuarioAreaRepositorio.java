@@ -12,7 +12,7 @@ import br.com.setebit.sgr.security.entity.Area;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.UsuarioArea;
 
-public interface UsuarioAreaRepositorio extends JpaRepository<UsuarioArea, Long> {
+public interface UsuarioAreaRepositorio extends JpaRepository<UsuarioArea, Integer> {
 
 	@Query("select a from UsuarioArea a where a.usuario = :usuario and  a.area = :area order by a.area.nome")
 	public UsuarioArea findByUsuarioAndByArea(@Param("usuario") Usuario usuario, @Param("area") Area area);

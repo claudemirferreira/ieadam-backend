@@ -7,37 +7,29 @@ import java.util.List;
 public class UsuarioAssociacaoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private List<UsuarioZonaDTO> usuarioZonas = new ArrayList<UsuarioZonaDTO>();
 
-	private List<ZonaDTO> zonas = new ArrayList<ZonaDTO>();
+	private List<UsuarioNucleoDTO> usuarioNucleos = new ArrayList<UsuarioNucleoDTO>();
 
-	private List<NucleoDTO> nucleos = new ArrayList<NucleoDTO>();
-
-	private List<AreaDTO> areas = new ArrayList<AreaDTO>();
+	private List<UsuarioAreaDTO> usuarioAreas = new ArrayList<UsuarioAreaDTO>();
 
 	private UsuarioDTO usuario;
 
-	public List<ZonaDTO> getZonas() {
-		return zonas;
+	public List<UsuarioNucleoDTO> getUsuarioNucleos() {
+		return usuarioNucleos;
 	}
 
-	public void setZonas(List<ZonaDTO> zonas) {
-		this.zonas = zonas;
+	public void setUsuarioNucleos(List<UsuarioNucleoDTO> usuarioNucleos) {
+		this.usuarioNucleos = usuarioNucleos;
 	}
 
-	public List<NucleoDTO> getNucleos() {
-		return nucleos;
+	public List<UsuarioAreaDTO> getUsuarioAreas() {
+		return usuarioAreas;
 	}
 
-	public void setNucleos(List<NucleoDTO> nucleos) {
-		this.nucleos = nucleos;
-	}
-
-	public List<AreaDTO> getAreas() {
-		return areas;
-	}
-
-	public void setAreas(List<AreaDTO> areas) {
-		this.areas = areas;
+	public void setUsuarioAreas(List<UsuarioAreaDTO> usuarioAreas) {
+		this.usuarioAreas = usuarioAreas;
 	}
 
 	public UsuarioDTO getUsuario() {
@@ -46,6 +38,14 @@ public class UsuarioAssociacaoDTO implements Serializable {
 
 	public void setUsuario(UsuarioDTO usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<UsuarioZonaDTO> getUsuarioZonas() {
+		return usuarioZonas;
+	}
+
+	public void setUsuarioZonas(List<UsuarioZonaDTO> usuarioZonas) {
+		this.usuarioZonas = usuarioZonas;
 	}
 
 }
