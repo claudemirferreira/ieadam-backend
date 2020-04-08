@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.dto.RotinaDTO;
+import br.com.setebit.sgr.dto.UsuarioPerfilDTO;
 import br.com.setebit.sgr.response.Response;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.ViewPerfilRotina;
@@ -62,6 +63,16 @@ public class PerfilController {
 		Response<List<RotinaDTO>> response = new Response<List<RotinaDTO>>();
 		List<RotinaDTO> dto = perfilServico.listarRotinaPorPerfil(idPerfil);
 		response.setData(dto);
+		return ResponseEntity.ok(response);
+		
+	}
+
+	@GetMapping(value = "/usuario-perfil/{id}")
+	public ResponseEntity<Response<List<UsuarioPerfilDTO>>> listarPerfil(@PathVariable("id") Integer idUsuario) {
+		System.out.println("###############listarPerfil");
+		Response<List<UsuarioPerfilDTO>> response = new Response<List<UsuarioPerfilDTO>>();
+		List<UsuarioPerfilDTO> list = perfilServico.listarUsuarioPerfil(idUsuario);
+		response.setData(list);
 		return ResponseEntity.ok(response);
 		
 	}

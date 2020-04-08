@@ -65,7 +65,7 @@ public class UsuarioAreaServicoImpl implements UsuarioAreaServico {
 			repositorio.save(usuarioArea);
 		else {
 			usuarioArea = repositorio.findByUsuarioAndByArea(new Usuario(dto.getIdUsuario()), new Area(dto.getIdArea()));
-			repositorio.deleteById(dto.getIdUsuarioArea());
+			repositorio.deleteById(usuarioArea.getIdUsuarioArea());
 		}
 		return dto;
 	}

@@ -9,13 +9,16 @@ import org.springframework.stereotype.Service;
 
 import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.dto.RotinaDTO;
+import br.com.setebit.sgr.dto.UsuarioPerfilDTO;
 import br.com.setebit.sgr.repository.PerfilRepositorio;
 import br.com.setebit.sgr.repository.PerfilRepositorioSql;
 import br.com.setebit.sgr.repository.PerfilRotinaRepositorioSql;
 import br.com.setebit.sgr.repository.RotinaRepositorio;
+import br.com.setebit.sgr.repository.UsuarioPerfilRepositorio;
 import br.com.setebit.sgr.repository.ViewPerfilRotinaRepositorioSql;
 import br.com.setebit.sgr.security.entity.Perfil;
 import br.com.setebit.sgr.security.entity.Rotina;
+import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.ViewPerfilRotina;
 import br.com.setebit.sgr.security.jwt.JwtUser;
 import br.com.setebit.sgr.service.PerfilServico;
@@ -34,6 +37,9 @@ public class PerfilServicoImpl implements PerfilServico {
 	
 	@Autowired
 	private PerfilRotinaRepositorioSql perfilRotinaRepositorioSql;
+	
+	@Autowired
+	private UsuarioPerfilRepositorio usuarioPerfilRepositorio;
 
 	@Override
 	public List<Perfil> listarTodos() {
@@ -69,6 +75,22 @@ public class PerfilServicoImpl implements PerfilServico {
 	public List<Perfil> listarPerfil() {
 		JwtUser user = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return this.perfilRepositorio.listarPerfilUsuario(2, Integer.parseInt(user.getId()));
+	}
+
+	@Override
+	public List<UsuarioPerfilDTO> listarUsuarioPerfil(Integer idUsuario) {
+		Usuario usuario = new Usuario(idUsuario);
+		List<Perfil> list = this.perfilRepositorio.findAll();
+		List<UsuarioPerfilDTO> listDto = new ArrayList<UsuarioPerfilDTO>();
+		UsuarioPerfilDTO dto;
+		for (Perfil perfil : list) {
+			dto = UsuarioPerfilDTO.toDTO(perfil);
+			dto.setIdUsuario(idUsuario);
+			if (null != usuarioPerfilRepositorio.findByUsuarioAndPerfil(usuario, perfil)) 
+				dto.setChecked(true);
+			listDto.add(dto);
+		}
+		return listDto;
 	}
 	
 	public List<PerfilDTO> listarPerfilDto() {

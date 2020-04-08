@@ -69,7 +69,8 @@ public class UsuarioZonaServicoImpl implements UsuarioZonaServico {
 			repositorio.save(usuarioZona);		
 		else {
 			usuarioZona = repositorio.findByUsuarioAndByZona(new Usuario(dto.getIdUsuario()), new Zona(dto.getIdZona()));
-			repositorio.deleteById(dto.getIdUsuarioZona());
+			System.out.println("deletando o id ");
+			repositorio.deleteById(usuarioZona.getIdUsuarioZona());
 		}
 		return dto;
 	}

@@ -30,7 +30,7 @@ public class Perfil implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_perfil")
-	private Long id;
+	private Integer id;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioPerfilPk.perfil")
 	private List<UsuarioPerfil> usuarioPerfil = new ArrayList<UsuarioPerfil>();
@@ -52,12 +52,18 @@ public class Perfil implements Serializable {
 
 	@Transient
 	private boolean checked;
+	
+	public Perfil() {}
 
-	public Long getId() {
+	public Perfil(Integer idPerfil) {
+		this.id = idPerfil;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

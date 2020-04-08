@@ -10,7 +10,7 @@ public class PerfilDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private Integer id;
 
 	private String nome;
 
@@ -21,7 +21,7 @@ public class PerfilDTO implements Serializable {
 	public PerfilDTO() {
 	}
 
-	public PerfilDTO(Long id, String nome) {
+	public PerfilDTO(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -35,11 +35,11 @@ public class PerfilDTO implements Serializable {
 		this.imagem = perfil.getImagem().replace("resources/imagens/perfil/", "").replace(".png", "");
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

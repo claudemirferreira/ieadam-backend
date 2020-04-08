@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.dto.RotinaDTO;
+import br.com.setebit.sgr.dto.UsuarioPerfilDTO;
 import br.com.setebit.sgr.security.entity.Perfil;
 import br.com.setebit.sgr.security.entity.ViewPerfilRotina;
 
@@ -28,5 +29,7 @@ public interface PerfilServico {
 	public PerfilDTO listarPerfilDto(Long idPerfil);
 	
 	public List<RotinaDTO> listarRotinaPorPerfil(int idPerfil);
+
+	List<UsuarioPerfilDTO> listarUsuarioPerfil(Integer idUsuario);
 
 }
