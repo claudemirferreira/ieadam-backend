@@ -30,6 +30,8 @@ public interface PerfilServico {
 	
 	public List<RotinaDTO> listarRotinaPorPerfil(int idPerfil);
 
-	List<UsuarioPerfilDTO> listarUsuarioPerfil(Integer idUsuario);
+	List<UsuarioPerfilDTO> listarUsuarioPerfil();
+
+	UsuarioPerfilDTO atualizar(UsuarioPerfilDTO dto);
 
 }
