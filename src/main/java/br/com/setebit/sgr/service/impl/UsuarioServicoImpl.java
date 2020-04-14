@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.setebit.sgr.dto.AreaDTO;
@@ -55,7 +56,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	private UsuarioRepositorioJPA usuarioRepositorioJPA;
 
 	@Autowired
-	private UsuarioPerfilRepositorio usuarioPerfilRepositorio;
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private ZonaServico zonaServico;
@@ -94,6 +95,8 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Override
 	public Usuario salvar(Usuario usuario) {
+		if(usuario.getSenha() == null)
+			usuario.setSenha(passwordEncoder.encode("ieadam"));
 		return this.usuarioRepositorio.save(usuario);
 	}
 
@@ -176,6 +179,17 @@ public class UsuarioServicoImpl implements UsuarioServico {
 		}
 
 		return dto;
+	}
+	
+
+
+	@Override
+	public Usuario alterarSenha(UsuarioDTO dto) {
+		Usuario usuario = this.usuarioRepositorio.findByLogin(dto.getLogin());
+		System.out.println("nova senha="+dto.getSenha());
+		usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
+		this.usuarioRepositorio.save(usuario);
+		return usuario;
 	}
 
 }

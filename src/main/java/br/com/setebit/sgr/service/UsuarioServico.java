@@ -35,4 +35,6 @@ public interface UsuarioServico extends UserDetailsService {
 	
 	public UsuarioAssociacaoDTO findUsuarioAssociacao(Integer id);
 
+	Usuario alterarSenha(UsuarioDTO dto);
+
 }

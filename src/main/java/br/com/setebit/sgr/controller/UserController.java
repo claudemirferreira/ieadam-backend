@@ -36,9 +36,6 @@ public class UserController {
 	@Autowired
 	private UsuarioServico service;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
 	@PostMapping()
 	public ResponseEntity<Response<Usuario>> create(HttpServletRequest request, @RequestBody Usuario user,
 			BindingResult result) {
@@ -49,7 +46,6 @@ public class UserController {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 				return ResponseEntity.badRequest().body(response);
 			}
-			user.setSenha(passwordEncoder.encode(user.getSenha()));
 			Usuario userPersisted = (Usuario) service.salvar(user);
 			response.setData(userPersisted);
 		} catch (DuplicateKeyException dE) {
@@ -79,8 +75,21 @@ public class UserController {
 				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 				return ResponseEntity.badRequest().body(response);
 			}
-			user.setSenha(passwordEncoder.encode(user.getSenha()));
 			UsuarioDTO userPersisted = UsuarioDTO.toDTO(service.salvar(user));
+			response.setData(userPersisted);
+		} catch (Exception e) {
+			response.getErrors().add(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok(response);
+	}
+
+	@PutMapping("/alterar-senha")
+	public ResponseEntity<Response<UsuarioDTO>> alterarSenha(HttpServletRequest request, @RequestBody UsuarioDTO user,
+			BindingResult result) {
+		Response<UsuarioDTO> response = new Response<UsuarioDTO>();
+		try {
+			UsuarioDTO userPersisted = UsuarioDTO.toDTO(service.alterarSenha(user));
 			response.setData(userPersisted);
 		} catch (Exception e) {
 			response.getErrors().add(e.getMessage());
@@ -115,6 +124,8 @@ public class UserController {
 	}
 
 	private void validate(Usuario user, BindingResult result) {
+		System.out.println(user.getId());
+		System.out.println("getLogin="+user.getLogin());
 		if (user.getId() == 0) {
 			if (service.findByLogin(user.getLogin()) != null) {
 				result.addError(new ObjectError("Usuario", "Ja existe um usuario com o login " + user.getLogin() ));

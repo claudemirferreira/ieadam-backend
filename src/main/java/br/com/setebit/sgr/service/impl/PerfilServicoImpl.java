@@ -62,7 +62,7 @@ public class PerfilServicoImpl implements PerfilServico {
 
 	@Override
 	public List<Perfil> findByNomeLike(String nome) {
-		return this.perfilRepositorio.findByNomeLike(nome);
+		return this.perfilRepositorio.findByNomeLike(nome+"%");
 	}
 
 	@Override

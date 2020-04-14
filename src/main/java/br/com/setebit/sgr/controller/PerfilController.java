@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.dto.RotinaDTO;
+import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.dto.UsuarioPerfilDTO;
-import br.com.setebit.sgr.dto.UsuarioZonaDTO;
 import br.com.setebit.sgr.response.Response;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.ViewPerfilRotina;
@@ -90,6 +90,20 @@ public class PerfilController {
 		perfilServico.atualizar(dto);
 		response.setData(dto);
 
+		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping(value = "/pesquisar")
+	public ResponseEntity<Response<List<PerfilDTO>>> pesquisar(HttpServletRequest request, @RequestBody PerfilDTO pefil,
+			BindingResult result) {
+		Response<List<PerfilDTO>> response = new Response<List<PerfilDTO>>();
+		try {
+			List<PerfilDTO> list = PerfilDTO.toDTO(perfilServico.findByNomeLike(pefil.getNome()));
+			response.setData(list);
+		} catch (Exception e) {
+			response.getErrors().add(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
 		return ResponseEntity.ok(response);
 	}
 
