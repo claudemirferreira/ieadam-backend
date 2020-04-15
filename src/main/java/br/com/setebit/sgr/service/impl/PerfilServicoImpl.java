@@ -82,9 +82,7 @@ public class PerfilServicoImpl implements PerfilServico {
 	}
 
 	@Override
-	public List<UsuarioPerfilDTO> listarUsuarioPerfil() {
-		JwtUser user = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Integer idUsuario = Integer.parseInt(user.getId());
+	public List<UsuarioPerfilDTO> listarUsuarioPerfil(Integer idUsuario) {
 		Usuario usuario = new Usuario(idUsuario);
 		List<Perfil> list = this.perfilRepositorio.findAll();
 		List<UsuarioPerfilDTO> listDto = new ArrayList<UsuarioPerfilDTO>();

@@ -72,15 +72,16 @@ public class PerfilController {
 		
 	}
 	
-	@GetMapping(value = "/usuario-perfil")
-	public ResponseEntity<Response<List<UsuarioPerfilDTO>>> listarPerfil() {
+	@GetMapping(value = "/usuario-perfil/{idUsuario}")
+	public ResponseEntity<Response<List<UsuarioPerfilDTO>>> listarPerfil(@PathVariable("idUsuario") Integer idUsuario) {
 		System.out.println("###############listarPerfil");
 		Response<List<UsuarioPerfilDTO>> response = new Response<List<UsuarioPerfilDTO>>();
-		List<UsuarioPerfilDTO> list = perfilServico.listarUsuarioPerfil();
+		List<UsuarioPerfilDTO> list = perfilServico.listarUsuarioPerfil(idUsuario);
 		response.setData(list);
 		return ResponseEntity.ok(response);
 		
 	}
+	
 
 	@PostMapping(value = "/atualizar-perfil")
 	public ResponseEntity<Response<UsuarioPerfilDTO>> atualizarPerfil(HttpServletRequest request,
