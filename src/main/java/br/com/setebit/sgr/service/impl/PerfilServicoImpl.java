@@ -8,22 +8,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import br.com.setebit.sgr.dto.PerfilDTO;
+import br.com.setebit.sgr.dto.PerfilRotinaDTO;
 import br.com.setebit.sgr.dto.RotinaDTO;
 import br.com.setebit.sgr.dto.UsuarioPerfilDTO;
-import br.com.setebit.sgr.dto.UsuarioZonaDTO;
 import br.com.setebit.sgr.repository.PerfilRepositorio;
 import br.com.setebit.sgr.repository.PerfilRepositorioSql;
 import br.com.setebit.sgr.repository.PerfilRotinaRepositorioSql;
 import br.com.setebit.sgr.repository.RotinaRepositorio;
 import br.com.setebit.sgr.repository.UsuarioPerfilRepositorio;
-import br.com.setebit.sgr.repository.ViewPerfilRotinaRepositorioSql;
 import br.com.setebit.sgr.security.entity.Perfil;
 import br.com.setebit.sgr.security.entity.Rotina;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.UsuarioPerfil;
-import br.com.setebit.sgr.security.entity.UsuarioZona;
-import br.com.setebit.sgr.security.entity.ViewPerfilRotina;
-import br.com.setebit.sgr.security.entity.Zona;
 import br.com.setebit.sgr.security.jwt.JwtUser;
 import br.com.setebit.sgr.service.PerfilServico;
 
@@ -35,13 +31,13 @@ public class PerfilServicoImpl implements PerfilServico {
 
 	@Autowired
 	private PerfilRepositorioSql perfilRepositorioSql;
-	
+
 	@Autowired
 	private RotinaRepositorio rotinaRepositorio;
-	
+
 	@Autowired
 	private PerfilRotinaRepositorioSql perfilRotinaRepositorioSql;
-	
+
 	@Autowired
 	private UsuarioPerfilRepositorio usuarioPerfilRepositorio;
 
@@ -62,7 +58,7 @@ public class PerfilServicoImpl implements PerfilServico {
 
 	@Override
 	public List<Perfil> findByNomeLike(String nome) {
-		return this.perfilRepositorio.findByNomeLike(nome+"%");
+		return this.perfilRepositorio.findByNomeLike(nome + "%");
 	}
 
 	@Override
@@ -90,34 +86,34 @@ public class PerfilServicoImpl implements PerfilServico {
 		for (Perfil perfil : list) {
 			dto = UsuarioPerfilDTO.toDTO(perfil);
 			dto.setIdUsuario(idUsuario);
-			if (null != usuarioPerfilRepositorio.findByUsuarioAndPerfil(usuario, perfil)) 
+			if (null != usuarioPerfilRepositorio.findByUsuarioAndPerfil(usuario, perfil))
 				dto.setChecked(true);
 			listDto.add(dto);
 		}
 		return listDto;
 	}
-	
+
 	public List<PerfilDTO> listarPerfilDto() {
 		JwtUser user = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Perfil> list = this.perfilRepositorio.listarPerfilUsuario(2, Integer.parseInt(user.getId()));
-		
+
 		List<PerfilDTO> listDto = new ArrayList<PerfilDTO>();
 		PerfilDTO dto;
-	    for (Perfil perfil : list) {
-	    	dto = new PerfilDTO();
-	    	dto = PerfilDTO.toDTO(perfil);
-			//TODO seta no codigo do sistema na variavel
-	    	dto.setRotinas( RotinaDTO.toDTO( rotinaRepositorio.findByPerfil(perfil)));
-	    	listDto.add(dto);
+		for (Perfil perfil : list) {
+			dto = new PerfilDTO();
+			dto = PerfilDTO.toDTO(perfil);
+			// TODO seta no codigo do sistema na variavel
+			dto.setRotinas(RotinaDTO.toDTO(rotinaRepositorio.findByPerfil(perfil)));
+			listDto.add(dto);
 		}
-		
+
 		return listDto;
 	}
-	
-	public PerfilDTO listarPerfilDto(Long idPerfil) {		
+
+	public PerfilDTO listarPerfilDto(Long idPerfil) {
 		Perfil perfil = perfilRepositorioSql.getPerfil(idPerfil);
 		PerfilDTO perfilDTO = PerfilDTO.toDTO(perfil);
-		perfilDTO.setRotinas( RotinaDTO.toDTO( rotinaRepositorio.findByPerfil(perfil)));		
+		perfilDTO.setRotinas(RotinaDTO.toDTO(rotinaRepositorio.findByPerfil(perfil)));
 		return perfilDTO;
 	}
 
@@ -126,32 +122,52 @@ public class PerfilServicoImpl implements PerfilServico {
 		List<RotinaDTO> list = RotinaDTO.toDTO(rotinaRepositorio.findAll());
 		List<RotinaDTO> dtos = new ArrayList<RotinaDTO>();
 		Rotina rotina;
-		for (RotinaDTO rotinaDTO : list) {	
+		for (RotinaDTO rotinaDTO : list) {
 			try {
 				rotina = perfilRotinaRepositorioSql.existeRotinaAssociada(idPerfil, rotinaDTO.getId());
-				if(rotina != null)
+				if (rotina != null)
 					rotinaDTO.setChecked(true);
-				
-				
+
 			} catch (Exception e) {
 			}
 			dtos.add(rotinaDTO);
-		}		
+		}
 		return dtos;
 	}
-	
-
 
 	@Override
 	public UsuarioPerfilDTO atualizar(UsuarioPerfilDTO dto) {
 		UsuarioPerfil usuarioPerfil = UsuarioPerfilDTO.toEntity(dto);
 		if (dto.isChecked())
-			usuarioPerfilRepositorio.save(usuarioPerfil);		
+			usuarioPerfilRepositorio.save(usuarioPerfil);
 		else {
-			//usuarioPerfil = usuarioPerfilRepositorio.findByUsuarioAndPerfil(new Usuario(dto.getIdUsuario()), new Perfil(dto.getIdPerfil()));
-			System.out.println("deletando o id ");
 			usuarioPerfilRepositorio.delete(usuarioPerfil);
 		}
 		return dto;
+	}
+
+	@Override
+	public void delete(Perfil perfil) {
+		perfilRepositorio.delete(perfil);
+		;
+	}
+
+	@Override
+	public Perfil findById(Integer id) {
+		return perfilRepositorio.findById(id).get();
+	}
+	
+	@Override
+	public List<PerfilRotinaDTO> listarPerfilRotina(Integer idPerfil) {
+		List<Rotina> list = this.rotinaRepositorio.findAll();
+		List<PerfilRotinaDTO> listDto = new ArrayList<PerfilRotinaDTO>();
+		PerfilRotinaDTO dto;
+		for (Rotina rotina : list) {
+			dto = PerfilRotinaDTO.toDTO(rotina);
+			if (null != perfilRotinaRepositorioSql.existeRotinaAssociada(idPerfil, dto.getIdRotina()))
+				dto.setChecked(true);
+			listDto.add(dto);
+		}
+		return listDto;
 	}
 }

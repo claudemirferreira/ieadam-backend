@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.setebit.sgr.dto.PerfilDTO;
+import br.com.setebit.sgr.dto.PerfilRotinaDTO;
 import br.com.setebit.sgr.dto.RotinaDTO;
-import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.dto.UsuarioPerfilDTO;
 import br.com.setebit.sgr.response.Response;
-import br.com.setebit.sgr.security.entity.Usuario;
-import br.com.setebit.sgr.security.entity.ViewPerfilRotina;
+import br.com.setebit.sgr.security.entity.Perfil;
 import br.com.setebit.sgr.service.PerfilServico;
 
 @RestController
@@ -39,9 +39,9 @@ public class PerfilController {
 		List<PerfilDTO> list = perfilServico.listarPerfilDto();
 		response.setData(list);
 		return ResponseEntity.ok(response);
-		
+
 	}
-	
+
 	@GetMapping(value = "/")
 	public ResponseEntity<Response<List<PerfilDTO>>> listarTodos() {
 		System.out.println("###############listarPerfilUsuario");
@@ -49,9 +49,9 @@ public class PerfilController {
 		List<PerfilDTO> list = PerfilDTO.toDTO(perfilServico.listarTodos());
 		response.setData(list);
 		return ResponseEntity.ok(response);
-		
+
 	}
-	
+
 	@GetMapping(value = "{id}")
 	public ResponseEntity<Response<PerfilDTO>> listarPerfilRotina(@PathVariable("id") Long idPerfil) {
 		System.out.println("###############listarPerfilUsuario");
@@ -59,9 +59,9 @@ public class PerfilController {
 		PerfilDTO dto = perfilServico.listarPerfilDto(idPerfil);
 		response.setData(dto);
 		return ResponseEntity.ok(response);
-		
+
 	}
-	
+
 	@GetMapping(value = "/listarRotinaPorPerfil/{id}")
 	public ResponseEntity<Response<List<RotinaDTO>>> listarRotinaPorPerfil(@PathVariable("id") int idPerfil) {
 		System.out.println("###############listarRotinaPorPerfil");
@@ -69,9 +69,9 @@ public class PerfilController {
 		List<RotinaDTO> dto = perfilServico.listarRotinaPorPerfil(idPerfil);
 		response.setData(dto);
 		return ResponseEntity.ok(response);
-		
+
 	}
-	
+
 	@GetMapping(value = "/usuario-perfil/{idUsuario}")
 	public ResponseEntity<Response<List<UsuarioPerfilDTO>>> listarPerfil(@PathVariable("idUsuario") Integer idUsuario) {
 		System.out.println("###############listarPerfil");
@@ -79,9 +79,32 @@ public class PerfilController {
 		List<UsuarioPerfilDTO> list = perfilServico.listarUsuarioPerfil(idUsuario);
 		response.setData(list);
 		return ResponseEntity.ok(response);
-		
+
 	}
-	
+
+	@PostMapping(value = "/")
+	public ResponseEntity<Response<PerfilDTO>> create(HttpServletRequest request, @RequestBody Perfil dto) {
+		System.out.println("entrou no create");
+
+		Response<PerfilDTO> response = new Response<PerfilDTO>();
+		PerfilDTO perfilDTO = PerfilDTO.toDTO(perfilServico.salvar(dto));
+		response.setData(perfilDTO);
+
+		return ResponseEntity.ok(response);
+	}
+
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Response<String>> delete(@PathVariable("id") Integer id) {
+		Response<String> response = new Response<String>();
+		Perfil obj = perfilServico.findById(id);
+		if (obj == null) {
+			response.getErrors().add("Register not found id:" + id);
+			return ResponseEntity.badRequest().body(response);
+		}
+		perfilServico.delete(obj);
+		return ResponseEntity.ok(new Response<String>());
+	}
 
 	@PostMapping(value = "/atualizar-perfil")
 	public ResponseEntity<Response<UsuarioPerfilDTO>> atualizarPerfil(HttpServletRequest request,
@@ -105,6 +128,15 @@ public class PerfilController {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);
 		}
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping(value = "/perfil-rotina/{idPerfil}")
+	public ResponseEntity<Response<List<PerfilRotinaDTO>>> listarPerfilRotina(@PathVariable("idPerfil") Integer idPerfil) {
+		System.out.println("###############listarPerfilRotina");
+		Response<List<PerfilRotinaDTO>> response = new Response<List<PerfilRotinaDTO>>();
+		List<PerfilRotinaDTO> list = perfilServico.listarPerfilRotina(idPerfil);
+		response.setData(list);
 		return ResponseEntity.ok(response);
 	}
 

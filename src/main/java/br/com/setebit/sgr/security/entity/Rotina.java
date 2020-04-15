@@ -115,4 +115,10 @@ public class Rotina implements Serializable {
 		this.logomarca = logomarca;
 	}
 
+	public Rotina(int id) {
+		this.id = id;
+	}
+	
+	public Rotina() {}
+
 }

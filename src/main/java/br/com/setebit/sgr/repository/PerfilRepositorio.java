@@ -11,7 +11,7 @@ import br.com.setebit.sgr.security.entity.Perfil;
 import br.com.setebit.sgr.security.entity.Sistema;
 
 @Repository
-public interface PerfilRepositorio extends JpaRepository<Perfil, Long> {
+public interface PerfilRepositorio extends JpaRepository<Perfil, Integer> {
 
 	@Query("select r from Perfil r where r.nome like :nome")
 	public List<Perfil> findByNomeLike(@Param("nome") String nome);
