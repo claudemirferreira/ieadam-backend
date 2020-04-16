@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * 
@@ -35,9 +34,7 @@ public class Perfil implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioPerfilPk.perfil")
 	private List<UsuarioPerfil> usuarioPerfil = new ArrayList<UsuarioPerfil>();
 
-	@OneToMany(fetch = FetchType.EAGER,
-			cascade = { CascadeType.MERGE, CascadeType.REMOVE },
-			mappedBy = "perfilRotinaPk.perfil")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "perfilRotinaPk.perfil")
 	private List<PerfilRotina> perfilRotina = new ArrayList<PerfilRotina>();
 
 	@Column(length = 30, nullable = false)
@@ -50,9 +47,6 @@ public class Perfil implements Serializable {
 	@JoinColumn(name = "id_sistema")
 	private Sistema sistema;
 
-	@Transient
-	private boolean checked;
-	
 	public Perfil() {}
 
 	public Perfil(Integer idPerfil) {
@@ -81,14 +75,6 @@ public class Perfil implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked(boolean checked) {
-		this.checked = checked;
 	}
 
 	public String getImagem() {
