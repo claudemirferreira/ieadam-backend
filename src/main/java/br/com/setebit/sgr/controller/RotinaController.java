@@ -85,16 +85,12 @@ public class RotinaController {
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity<Response<RotinaDTO>> create(HttpServletRequest request, @RequestBody Rotina rotina,
+	public ResponseEntity<Response<RotinaDTO>> create(HttpServletRequest request, @RequestBody RotinaDTO rotina,
 			BindingResult result) {
+		System.out.println("################################entrou no create");
 		Response<RotinaDTO> response = new Response<RotinaDTO>();
 		try {
-			validateCreate(rotina, result);
-			if (result.hasErrors()) {
-				result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
-				return ResponseEntity.badRequest().body(response);
-			}
-			RotinaDTO dto = RotinaDTO.toDTO(servico.salvar(rotina));
+			RotinaDTO dto = RotinaDTO.toDTO(servico.salvar(RotinaDTO.toEntity(rotina)));
 			response.setData(dto);
 		} catch (DuplicateKeyException dE) {
 			response.getErrors().add("E-mail already registered !");
@@ -104,13 +100,6 @@ public class RotinaController {
 			return ResponseEntity.badRequest().body(response);
 		}
 		return ResponseEntity.ok(response);
-	}
-
-	private void validateCreate(Rotina rotina, BindingResult result) {
-		if (rotina.getNome() == null) {
-			result.addError(new ObjectError("Usuario", "Email no information"));
-			return;
-		}
 	}
 
 }

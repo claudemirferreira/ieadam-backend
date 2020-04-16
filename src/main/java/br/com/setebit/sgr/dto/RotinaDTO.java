@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.setebit.sgr.security.entity.Rotina;
+import br.com.setebit.sgr.security.entity.Sistema;
 
 public class RotinaDTO implements Serializable {
 
@@ -97,6 +98,8 @@ public class RotinaDTO implements Serializable {
 	}
 
 	public String getAcao() {
+		if (acao==null)
+			return "teste";
 		return acao;
 	}
 
@@ -118,6 +121,10 @@ public class RotinaDTO implements Serializable {
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+	
+	public static Rotina toEntity(RotinaDTO dto) {
+		return new Rotina(dto.getId(), dto.getImagem(), dto.getNome(), dto.getAcao(), new Sistema(2));
 	}
 	
 	public static RotinaDTO toDTO(Rotina entity) {

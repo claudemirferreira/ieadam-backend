@@ -26,7 +26,7 @@ public class Rotina implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_rotina")
-	private int id;
+	private Integer id;
 
 	@Column(length = 100, nullable = false)
 	private String imagem;
@@ -48,9 +48,6 @@ public class Rotina implements Serializable {
 	@Column(name = "logomarca")
 	private byte[] logomarca;
 
-	@Transient
-	private boolean checked;
-
 	public int getId() {
 		return id;
 	}
@@ -65,14 +62,6 @@ public class Rotina implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked(boolean checked) {
-		this.checked = checked;
 	}
 
 	public String getImagem() {
@@ -100,6 +89,8 @@ public class Rotina implements Serializable {
 	}
 
 	public String getAcao() {
+		if(acao==null)
+			return " ";
 		return acao;
 	}
 
@@ -120,5 +111,14 @@ public class Rotina implements Serializable {
 	}
 	
 	public Rotina() {}
+
+	public Rotina(Integer id, String imagem, String nome, String acao, Sistema sistema) {
+		this.id = id;
+		this.imagem = imagem;
+		this.nome = nome;
+		this.acao = acao;
+		this.sistema = sistema;
+		this.status = 1;
+	}
 
 }

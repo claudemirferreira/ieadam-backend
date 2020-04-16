@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.setebit.sgr.security.entity.Nucleo;
 import br.com.setebit.sgr.security.entity.Perfil;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.UsuarioPerfil;
