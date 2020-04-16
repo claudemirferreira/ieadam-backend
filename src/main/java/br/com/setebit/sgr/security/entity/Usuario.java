@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import br.com.setebit.sgr.security.enums.ProfileEnum;
-
 /**
  * 
  * @author altitdb
@@ -62,9 +60,6 @@ public class Usuario implements Serializable {
 
 	@Column(unique = true, length = 100)
 	private String email;
-
-	@OneToMany(mappedBy = "sistema")
-	private List<Perfil> perfils;
 
 	@Column(name = "id_membro")
 	private Integer idMembro;
@@ -199,14 +194,6 @@ public class Usuario implements Serializable {
 
 	public void setLogomarca(byte[] logomarca) {
 		this.logomarca = logomarca;
-	}
-
-	public List<Perfil> getPerfils() {
-		return perfils;
-	}
-
-	public void setPerfils(List<Perfil> perfils) {
-		this.perfils = perfils;
 	}
 
 	public void setId(int id) {
