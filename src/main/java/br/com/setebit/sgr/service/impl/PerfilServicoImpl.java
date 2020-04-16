@@ -13,10 +13,12 @@ import br.com.setebit.sgr.dto.RotinaDTO;
 import br.com.setebit.sgr.dto.UsuarioPerfilDTO;
 import br.com.setebit.sgr.repository.PerfilRepositorio;
 import br.com.setebit.sgr.repository.PerfilRepositorioSql;
+import br.com.setebit.sgr.repository.PerfilRotinaRepositorio;
 import br.com.setebit.sgr.repository.PerfilRotinaRepositorioSql;
 import br.com.setebit.sgr.repository.RotinaRepositorio;
 import br.com.setebit.sgr.repository.UsuarioPerfilRepositorio;
 import br.com.setebit.sgr.security.entity.Perfil;
+import br.com.setebit.sgr.security.entity.PerfilRotina;
 import br.com.setebit.sgr.security.entity.Rotina;
 import br.com.setebit.sgr.security.entity.Usuario;
 import br.com.setebit.sgr.security.entity.UsuarioPerfil;
@@ -28,6 +30,9 @@ public class PerfilServicoImpl implements PerfilServico {
 
 	@Autowired
 	private PerfilRepositorio perfilRepositorio;
+	
+	@Autowired
+	private PerfilRotinaRepositorio perfilRotinaRepositorio;
 
 	@Autowired
 	private PerfilRepositorioSql perfilRepositorioSql;
@@ -147,6 +152,17 @@ public class PerfilServicoImpl implements PerfilServico {
 	}
 
 	@Override
+	public PerfilRotinaDTO atualizarPerfilRotina(PerfilRotinaDTO dto) {
+		PerfilRotina usuarioPerfil = PerfilRotinaDTO.toEntity(dto);
+		if (dto.isChecked())
+			perfilRotinaRepositorio.save(usuarioPerfil);
+		else {
+			perfilRotinaRepositorio.delete(usuarioPerfil);
+		}
+		return dto;
+	}
+
+	@Override
 	public void delete(Perfil perfil) {
 		perfilRepositorio.delete(perfil);
 		;
@@ -164,8 +180,15 @@ public class PerfilServicoImpl implements PerfilServico {
 		PerfilRotinaDTO dto;
 		for (Rotina rotina : list) {
 			dto = PerfilRotinaDTO.toDTO(rotina);
-			if (null != perfilRotinaRepositorioSql.existeRotinaAssociada(idPerfil, dto.getIdRotina()))
+			dto.setIdPerfil(idPerfil);
+			
+			try {
+				perfilRotinaRepositorioSql.existeRotinaAssociada(idPerfil, rotina.getId());
 				dto.setChecked(true);
+			} catch (Exception e) {
+				dto.setChecked(false);
+			}
+			
 			listDto.add(dto);
 		}
 		return listDto;

@@ -119,6 +119,17 @@ public class PerfilController {
 		return ResponseEntity.ok(response);
 	}
 
+	@PostMapping(value = "/atualizar-perfil-rotina")
+	public ResponseEntity<Response<PerfilRotinaDTO>> atualizarPerfilRotina(HttpServletRequest request,
+			@RequestBody PerfilRotinaDTO dto) {
+
+		Response<PerfilRotinaDTO> response = new Response<PerfilRotinaDTO>();
+		perfilServico.atualizarPerfilRotina(dto);
+		response.setData(dto);
+
+		return ResponseEntity.ok(response);
+	}
+
 	@PostMapping(value = "/pesquisar")
 	public ResponseEntity<Response<List<PerfilDTO>>> pesquisar(HttpServletRequest request, @RequestBody PerfilDTO pefil,
 			BindingResult result) {

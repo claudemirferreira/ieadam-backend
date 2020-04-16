@@ -36,6 +36,11 @@ public class PerfilRotinaDTO implements Serializable {
 		this.checked = false;
 	}
 
+	public PerfilRotinaDTO(Rotina entity) {
+		this.idRotina =entity.getId();
+		this.nome = entity.getNome();
+	}
+
 	public Integer getIdRotina() {
 		return idRotina;
 	}
@@ -77,7 +82,7 @@ public class PerfilRotinaDTO implements Serializable {
 	}
 
 	public static PerfilRotinaDTO toDTO(Rotina entity) {
-		return new PerfilRotinaDTO(entity.getId(), entity.getNome());
+		return new PerfilRotinaDTO(entity);
 	}
 
 	public static List<PerfilRotinaDTO> toDTO(List<Rotina> list) {
