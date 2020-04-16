@@ -115,4 +115,11 @@ public class Perfil implements Serializable {
 		this.perfilRotina = perfilRotina;
 	}
 
+	public Perfil(Integer id, String nome, String imagem, Sistema sistema) {
+		this.id = id;
+		this.nome = nome;
+		this.imagem = imagem;
+		this.sistema = sistema;
+	}
+
 }

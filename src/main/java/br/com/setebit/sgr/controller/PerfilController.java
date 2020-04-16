@@ -83,11 +83,13 @@ public class PerfilController {
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity<Response<PerfilDTO>> create(HttpServletRequest request, @RequestBody Perfil dto) {
+	public ResponseEntity<Response<PerfilDTO>> create(HttpServletRequest request, @RequestBody PerfilDTO dto) {
 		System.out.println("entrou no create");
+		System.out.println("###############create");
+		System.out.println("###############create");
 
 		Response<PerfilDTO> response = new Response<PerfilDTO>();
-		PerfilDTO perfilDTO = PerfilDTO.toDTO(perfilServico.salvar(dto));
+		PerfilDTO perfilDTO = PerfilDTO.toDTO(perfilServico.salvar(PerfilDTO.toDTO(dto)));
 		response.setData(perfilDTO);
 
 		return ResponseEntity.ok(response);

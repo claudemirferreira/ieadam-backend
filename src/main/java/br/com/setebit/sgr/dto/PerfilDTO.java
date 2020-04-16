@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.setebit.sgr.security.entity.Perfil;
+import br.com.setebit.sgr.security.entity.Sistema;
 
 public class PerfilDTO implements Serializable {
 
@@ -65,6 +66,10 @@ public class PerfilDTO implements Serializable {
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
+	}
+
+	public static Perfil toDTO(PerfilDTO dto) {
+		return new Perfil(dto.getId(), dto.getNome(), dto.getImagem(), new Sistema(2));
 	}
 
 	public static PerfilDTO toDTO(Perfil entity) {
