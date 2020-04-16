@@ -77,6 +77,8 @@ public class RotinaDTO implements Serializable {
 		}
 		else if(acao.equals("logAppControlador.init")){
 			this.setAcao("log");
+		} else {
+			this.acao = acao;
 		}
 		
 	}

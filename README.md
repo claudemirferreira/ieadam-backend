@@ -11,7 +11,18 @@
 
 # mvn install
 
-# java -jar ieadam-service-app-0.0.1-SNAPSHOT.jar
+# mvn clean install && java -jar ieadam-service-app-0.0.1-SNAPSHOT.jar
+
+# Atualizar as rotinas 
+# http://localhost:8080/api/script/atualizar-rotinas
+
+# Atualização de Senha
+
+## criptografa a senha de todos os usuario
+## http://localhost:8080/api/script/atualizar-senhas/
+
+## seta a senha ieadam para o usuario admin
+## http://localhost:8080/api/script/atualizar-senhas/admin
 
 # PENDÊNCIA 
 ## 1 - CRUD ROTINA;
