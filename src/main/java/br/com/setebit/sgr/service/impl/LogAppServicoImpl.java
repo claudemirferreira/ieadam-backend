@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.setebit.sgr.dto.LogDTO;
 import br.com.setebit.sgr.repository.LogAppRepositorio;
 import br.com.setebit.sgr.repository.LogAppRepositorioSql;
 import br.com.setebit.sgr.security.entity.LogApp;
@@ -34,7 +35,7 @@ public class LogAppServicoImpl implements LogAppServico {
 		return this.repositorio.findByUsuario(idUsuario);
 	}
 
-	public List<LogApp> listarPorFiltros(String nomeUsuario, Date dataInicio, Date dataFim) {
-		return this.repositorioSql.listarLogByFiltros(nomeUsuario, dataInicio, dataFim);
+	public List<LogApp> listarPorFiltros(LogDTO logApp) {
+		return this.repositorioSql.listarLogByFiltros(logApp);
 	}
 }

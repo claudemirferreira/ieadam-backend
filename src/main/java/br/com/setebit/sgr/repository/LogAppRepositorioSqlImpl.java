@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import br.com.setebit.sgr.dto.LogDTO;
 import br.com.setebit.sgr.security.entity.LogApp;
 
 @SuppressWarnings("unchecked")
@@ -20,22 +21,22 @@ public class LogAppRepositorioSqlImpl extends RepositorioGenerico implements Log
 	private EntityManager entityManager;
 
 	@Override
-	public List<LogApp> listarLogByFiltros(String nomeUsuario, Date dataInicio, Date dataFim) {
+	public List<LogApp> listarLogByFiltros(LogDTO dto) {
 
 		StringBuilder sb = new StringBuilder();
 		List<String> condictions = new ArrayList<String>();
 
 		sb.append("select l from LogApp l, Usuario u ");
 
-		if (notEmpty(nomeUsuario) || notEmpty(dataInicio)) {
+		if (notEmpty(dto.getNomeUsuario()) || notEmpty(dto.getDataInicio())) {
 
 			condictions.add("l.usuario.idUsuario = u.idUsuario ");
 
-			if (notEmpty(nomeUsuario)) {
+			if (notEmpty(dto.getNomeUsuario())) {
 				condictions.add("u.nome like :usuario ");
 			}
 
-			if (notEmpty(dataInicio)) {
+			if (notEmpty(dto.getDataInicio())) {
 				condictions.add("l.dataHoraAcao between :dataInicio and :dataFim ");
 			}
 		}
@@ -44,17 +45,17 @@ public class LogAppRepositorioSqlImpl extends RepositorioGenerico implements Log
 
 		Query query = entityManager.createQuery(generateHql(sb.toString(), condictions) + orderBy);
 
-		if (notEmpty(nomeUsuario)) {
-			if (notEmpty(nomeUsuario)) {
-				query.setParameter("usuario", nomeUsuario + "%");
+		if (notEmpty(dto.getNomeUsuario())) {
+			if (notEmpty(dto.getNomeUsuario())) {
+				query.setParameter("usuario", dto.getNomeUsuario() + "%");
 			}
 		}
 
-		if (notEmpty(dataInicio)) {
-			query.setParameter("dataInicio", dataInicio);
+		if (notEmpty(dto.getDataInicio())) {
+			query.setParameter("dataInicio", dto.getDataInicio());
 
-			if (notEmpty(dataFim)) {
-				query.setParameter("dataFim", dataFim);
+			if (notEmpty(dto.getDataFim())) {
+				query.setParameter("dataFim", dto.getDataFim());
 			} else {
 				query.setParameter("dataFim", new Date());
 			}

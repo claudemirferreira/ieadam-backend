@@ -1,8 +1,8 @@
 package br.com.setebit.sgr.service;
 
-import java.util.Date;
 import java.util.List;
 
+import br.com.setebit.sgr.dto.LogDTO;
 import br.com.setebit.sgr.security.entity.LogApp;
 
 public interface LogAppServico {
@@ -13,5 +13,5 @@ public interface LogAppServico {
 
 	public List<LogApp> listarPorUsuario(int idUsuario);
 
-	public List<LogApp> listarPorFiltros(String nomeUsuario, Date dataInicio, Date dataFim);
+	public List<LogApp> listarPorFiltros(LogDTO logApp);
 }
