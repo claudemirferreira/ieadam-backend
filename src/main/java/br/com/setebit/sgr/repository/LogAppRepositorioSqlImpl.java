@@ -30,7 +30,7 @@ public class LogAppRepositorioSqlImpl extends RepositorioGenerico implements Log
 
 		if (notEmpty(dto.getNomeUsuario()) || notEmpty(dto.getDataInicio())) {
 
-			condictions.add("l.usuario.idUsuario = u.idUsuario ");
+			condictions.add("l.usuario.id = u.id ");
 
 			if (notEmpty(dto.getNomeUsuario())) {
 				condictions.add("u.nome like :usuario ");

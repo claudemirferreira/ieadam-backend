@@ -2,6 +2,9 @@
 ## 1 execute o script de importacao do banco de dados src/main/resources/backup.sql
 ## 1.1 UPDATE `saa_usuario` SET senha = '$2a$10$0bnrmA15bLbZb.LhOEGrVuFt5mAlz1FOU0hSClnBsPvRCLex1TvMi' where login = 'admin'
 
+# alterar o nome do campo na tabela IEADAM_LOG_APP
+## ALTER TABLE `ieadam_log_app` CHANGE COLUMN `usuario` `id_usuario` INT(11) DEFAULT NULL;
+
 
 ## configure o usuario e senha no arquivo application.properties
 ## crie o usuario no banco de dados
@@ -24,14 +27,9 @@
 ## seta a senha ieadam para o usuario admin
 ## http://localhost:8080/api/script/atualizar-senhas/admin
 
-# PENDÊNCIA 
-## 1 - CRUD ROTINA;
-## 2 - CRUD PERFIL;
-## 3 - CRUD USUARIO;
-## 4 - ASSOCIAR PERFIL ROTINA
-## 5 - ASSOCIAR USUARIO PERFIL;
-## 6 - RELATORIO MEMBROS;
-## 7 - LAYOUT;
+# PENDÊNCIA
+
+
 
 -----
 # relatorio de membro

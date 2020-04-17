@@ -14,8 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "ieadam_log_app")
 public class LogApp implements Serializable {
@@ -33,9 +31,9 @@ public class LogApp implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
-	@JsonManagedReference
 	private Usuario usuario;
 
+	@Column(name = "acao_usuario")
 	private String acaoUsuario;
 
 	public LogApp() {
