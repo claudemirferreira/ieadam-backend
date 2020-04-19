@@ -27,6 +27,7 @@ import br.com.setebit.sgr.dto.FiltroRelatorioDTO;
 import br.com.setebit.sgr.dto.NucleoDTO;
 import br.com.setebit.sgr.dto.PerfilDTO;
 import br.com.setebit.sgr.response.Response;
+import br.com.setebit.sgr.service.LogAppServico;
 import br.com.setebit.sgr.service.PerfilServico;
 import br.com.setebit.sgr.service.RelatorioService;
 import br.com.setebit.sgr.util.RelatorioUtil;
@@ -47,6 +48,9 @@ public class RelatorioController {
 
 	@Autowired
 	private RelatorioService service;
+	
+	@Autowired
+	private LogAppServico logService;
 
 	@GetMapping(value = "/carregarDados")
 	public ResponseEntity<Response<FiltroRelatorioDTO>> carregarDados() {
@@ -98,6 +102,10 @@ public class RelatorioController {
 			headers.setContentDispositionFormData(filename, filename);
 			ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(output, headers, HttpStatus.OK);
 
+			//inseri o log 
+			System.out.println(dto.getNomeRelatorio());
+			logService.salvarLog(dto.getNomeRelatorio());
+			
 			return responseEntity;
 		} catch (FileNotFoundException e) {
 			System.err.println(e);

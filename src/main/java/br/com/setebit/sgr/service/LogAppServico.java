@@ -14,4 +14,6 @@ public interface LogAppServico {
 	public List<LogApp> listarPorUsuario(int idUsuario);
 
 	public List<LogApp> listarPorFiltros(LogDTO logApp);
+
+	LogApp salvarLog(String nomeRelatorio);
 }
