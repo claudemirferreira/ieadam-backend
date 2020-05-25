@@ -98,25 +98,6 @@ public class UserController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@PostMapping(value = "/pesquisar1")
-	public ResponseEntity<Response<List<UsuarioDTO>>> pesquisar(
-			HttpServletRequest request, 
-			@RequestBody Usuario user,
-			@RequestParam(value = "page", required = false, defaultValue = "0") int page,
-			@RequestParam(value = "size", required = false, defaultValue = "10") int size,
-			BindingResult result) {
-		Response<List<UsuarioDTO>> response = new Response<List<UsuarioDTO>>();
-		try {
-			List<UsuarioDTO> list = UsuarioDTO.toDTO(service.findByUsuario(user, page, size));
-			response.setData(list);
-		} catch (Exception e) {
-			response.getErrors().add(e.getMessage());
-			return ResponseEntity.badRequest().body(response);
-		}
-		return ResponseEntity.ok(response);
-	}	
-
-	
 	@PostMapping(value = "/pesquisar")
 	public Page<Usuario> pesquisar1(
 			HttpServletRequest request, 
@@ -127,7 +108,6 @@ public class UserController {
 		
 			return service.pesquisarUsuario(user, page, size);
 	}
-
 
 	private void validateUpdate(Usuario user, BindingResult result) {
 		if (user.getId() == 0) {
@@ -152,7 +132,6 @@ public class UserController {
 		if (user.getSenha() == null) {
 			user.setSenha("ieadam");
 		}
-			
 	}
 
 	@GetMapping(value = "{id}")
