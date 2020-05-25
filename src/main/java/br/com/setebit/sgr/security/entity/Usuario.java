@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 
  * @author altitdb
@@ -32,6 +34,7 @@ public class Usuario implements Serializable {
 	private int id;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioPerfilPk.usuario", cascade={CascadeType.ALL})
+	@JsonIgnore
 	private List<UsuarioPerfil> usuarioPerfil = new ArrayList<UsuarioPerfil>();
 
 	@Column(unique = true, length = 30)

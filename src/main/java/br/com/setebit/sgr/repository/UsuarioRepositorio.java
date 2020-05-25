@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import br.com.setebit.sgr.dto.UsuarioDTO;
 import br.com.setebit.sgr.security.entity.Usuario;
 
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
@@ -30,5 +31,14 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
 	public Page<Usuario> findByNomeLike(String nome, Pageable pages);
 
 	public Usuario findByIdMembro(Integer idMembro);
+	
+	@Query( value = " select id_usuario, login, senha, status, zona, area, nucleo, in_privilegio, \n" + 
+			"email, id_membro, nome, logomarca, telefone "
+			+ " from saa_usuario nome like :nome or login = :login or id_membro = :id_membro", 
+			nativeQuery = true)
+	public Page<Usuario> pesquisarUsuario(@Param("nome") String nome, 
+			@Param("login") String login, 
+			@Param("id_membro") Integer idMembro, 
+			Pageable pages);
 
 }

@@ -19,7 +19,7 @@ public class UsuarioRepositorioJPAImpl extends RepositorioGenerico implements Us
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Usuario> findByUsuario(Usuario usuario) {
+	public List<Usuario> findByUsuario(Usuario usuario, int pageNumber, int pageSize) {
 
 		StringBuilder sb = new StringBuilder();
 		List<String> condictions = new ArrayList<String>();
@@ -52,6 +52,9 @@ public class UsuarioRepositorioJPAImpl extends RepositorioGenerico implements Us
 				query.setParameter("idMembro", usuario.getIdMembro());
 			}
 		}
+		
+		query.setFirstResult((pageNumber-1) * pageSize); 
+		query.setMaxResults(pageSize);
 
 		return query.getResultList();
 	}

@@ -29,12 +29,14 @@ public interface UsuarioServico extends UserDetailsService {
 
 	public Usuario findByLoginAndSenha(String login, String senha) throws NoResultException;
 
-	public List<Usuario> findByUsuario(Usuario usuario) throws NoResultException;
+	public List<Usuario> findByUsuario(Usuario usuario, int pageNumber, int pageSize) throws NoResultException;
 	
 	public Page<Usuario> findByNomeLike(String nome, int page, int size);
 	
 	public UsuarioAssociacaoDTO findUsuarioAssociacao(Integer id);
 
 	Usuario alterarSenha(UsuarioDTO dto);
+	
+	Page<Usuario> pesquisarUsuario(Usuario usuario, int page, int size);
 
 }

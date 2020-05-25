@@ -6,6 +6,6 @@ import br.com.setebit.sgr.security.entity.Usuario;
 
 public interface UsuarioRepositorioJPA {
 
-	List<Usuario> findByUsuario(Usuario usuario);
+	List<Usuario> findByUsuario(Usuario usuario, int pageNumber, int pageSize);
 
 }

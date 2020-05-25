@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,6 +43,7 @@ import br.com.setebit.sgr.service.UsuarioNucleoServico;
 import br.com.setebit.sgr.service.UsuarioServico;
 import br.com.setebit.sgr.service.UsuarioZonaServico;
 import br.com.setebit.sgr.service.ZonaServico;
+import net.sf.jasperreports.repo.RepositoryUtil;
 
 @Service
 public class UsuarioServicoImpl implements UsuarioServico {
@@ -103,11 +105,6 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	@Override
 	public void remover(Usuario usuario) {
 		this.usuarioRepositorio.delete(usuario);
-	}
-
-	@Override
-	public List<Usuario> findByUsuario(Usuario usuario) {
-		return usuarioRepositorioJPA.findByUsuario(usuario);
 	}
 
 	@Override
@@ -190,6 +187,19 @@ public class UsuarioServicoImpl implements UsuarioServico {
 		usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
 		this.usuarioRepositorio.save(usuario);
 		return usuario;
+	}
+
+	@Override
+	public Page<Usuario> pesquisarUsuario(Usuario usuario, int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
+		usuario.setNome("%"+usuario.getNome()+"%");		
+		return usuarioRepositorio.pesquisarUsuario(usuario.getNome(), usuario.getLogin(), usuario.getIdMembro(), pageRequest);
+	}
+
+	@Override
+	public List<Usuario> findByUsuario(Usuario usuario, int pageNumber, int pageSize) throws NoResultException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
