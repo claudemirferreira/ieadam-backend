@@ -101,7 +101,7 @@ public class UserController {
 	@PostMapping(value = "/pesquisar")
 	public Page<Usuario> pesquisar1(
 			HttpServletRequest request, 
-			@RequestBody Usuario user,
+			@RequestBody UsuarioDTO user,
 			@RequestParam(value = "page", required = false, defaultValue = "0") int page,
 			@RequestParam(value = "size", required = false, defaultValue = "10") int size,
 			BindingResult result) {

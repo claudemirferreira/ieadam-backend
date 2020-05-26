@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ import br.com.setebit.sgr.dto.UsuarioNucleoDTO;
 import br.com.setebit.sgr.dto.UsuarioZonaDTO;
 import br.com.setebit.sgr.dto.ZonaDTO;
 import br.com.setebit.sgr.repository.MembroRepositorio;
+import br.com.setebit.sgr.repository.UsuarioPagination;
 import br.com.setebit.sgr.repository.UsuarioPerfilRepositorio;
 import br.com.setebit.sgr.repository.UsuarioRepositorio;
 import br.com.setebit.sgr.repository.UsuarioRepositorioJPA;
@@ -77,6 +79,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Autowired
 	private UsuarioAreaServico usuarioAreaServico;
+	
+	@Autowired
+	private UsuarioPagination usuarioPagination;
 
 	@Override
 	public Usuario findByLoginAndSenha(String login, String senha) throws NoResultException {
@@ -130,8 +135,8 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Override
 	public Page<Usuario> findByNomeLike(String nome, int page, int size) {
-		PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
-		return usuarioRepositorio.findByNomeLike(nome, pageRequest);
+		//PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
+		return null; //usuarioRepositorio.findByNomeLike(nome, pageRequest);
 	}
 
 	@Override
@@ -190,16 +195,15 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	}
 
 	@Override
-	public Page<Usuario> pesquisarUsuario(Usuario usuario, int page, int size) {
+	public Page<Usuario> pesquisarUsuario(UsuarioDTO usuario, int page, int size) {
 		PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
-		usuario.setNome("%"+usuario.getNome()+"%");		
-		return usuarioRepositorio.pesquisarUsuario(usuario.getNome(), usuario.getLogin(), usuario.getIdMembro(), pageRequest);
-	}
-
-	@Override
-	public List<Usuario> findByUsuario(Usuario usuario, int pageNumber, int pageSize) throws NoResultException {
-		// TODO Auto-generated method stub
-		return null;
+		if (usuario.getNome().length() > 0)
+			return usuarioRepositorio.findByNomeLike(usuario.getNome(), pageRequest);
+		else if (usuario.getLogin().length() > 0)			
+			return usuarioRepositorio.findByLogin(usuario.getLogin(), pageRequest);
+		else if (usuario.getIdMembro() > 0)
+			return usuarioRepositorio.findByIdMembro(usuario.getIdMembro(), pageRequest);
+		return usuarioRepositorio.findAll(pageRequest);
 	}
 
 }
